@@ -1,0 +1,55 @@
+PODS:
+  - ChaosCore (1.0.0):
+    - PromisesSwift (~> 1.2.8)
+  - FBSnapshotTestCase (2.1.4):
+    - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
+  - FBSnapshotTestCase/Core (2.1.4)
+  - FBSnapshotTestCase/SwiftSupport (2.1.4):
+    - FBSnapshotTestCase/Core
+  - Nimble (7.3.4)
+  - Nimble-Snapshots (6.3.0):
+    - Nimble-Snapshots/Core (= 6.3.0)
+  - Nimble-Snapshots/Core (6.3.0):
+    - FBSnapshotTestCase (~> 2.0)
+    - Nimble (~> 7.0)
+  - PromisesObjC (1.2.10)
+  - PromisesSwift (1.2.10):
+    - PromisesObjC (= 1.2.10)
+  - Quick (1.2.0)
+  - SwiftLint (0.40.2)
+
+DEPENDENCIES:
+  - ChaosCore (from `../`)
+  - FBSnapshotTestCase (~> 2.1.4)
+  - Nimble (~> 7.0)
+  - Nimble-Snapshots (~> 6.3.0)
+  - Quick (~> 1.2.0)
+  - SwiftLint
+
+SPEC REPOS:
+  trunk:
+    - FBSnapshotTestCase
+    - Nimble
+    - Nimble-Snapshots
+    - PromisesObjC
+    - PromisesSwift
+    - Quick
+    - SwiftLint
+
+EXTERNAL SOURCES:
+  ChaosCore:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  ChaosCore: 373b105be765819cc6c073520bc27a6cef23e41d
+  FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
+  Nimble: 051e3d8912d40138fa5591c78594f95fb172af37
+  Nimble-Snapshots: f5459b5b091678dc942d03ec4741cacb58ba4a52
+  PromisesObjC: b14b1c6b68e306650688599de8a45e49fae81151
+  PromisesSwift: ce4c7602f91a6bfc8732039f1bc1a3fcded1a302
+  Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
+  SwiftLint: 1216c910d27c2633ade33b4f071bb6b930982e62
+
+PODFILE CHECKSUM: fff9986a3807198608e1cf446e6b616272b33de2
+
+COCOAPODS: 1.9.1
