@@ -14,6 +14,9 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		684ECDDA253E02CE00DA04D5 /* UITimelineViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684ECDD9253E02CE00DA04D5 /* UITimelineViewTest.swift */; };
+		684ECDE3253E031000DA04D5 /* EnvironmentManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684ECDE2253E031000DA04D5 /* EnvironmentManagerTest.swift */; };
+		684ECDEA253E044400DA04D5 /* environments.json in Resources */ = {isa = PBXBuildFile; fileRef = 684ECDE9253E044400DA04D5 /* environments.json */; };
 		8B3653E74AC9CAB6763D5788 /* Pods_Chaos_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5047144D23B39F8791F0EBB0 /* Pods_Chaos_Example.framework */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +46,9 @@
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		635FFEFC7FF3FAA4E9310293 /* Chaos.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Chaos.podspec; path = ../Chaos.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		6469A0E44D003F5F9E522938 /* Pods-Chaos_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chaos_Tests.release.xcconfig"; path = "Target Support Files/Pods-Chaos_Tests/Pods-Chaos_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		684ECDD9253E02CE00DA04D5 /* UITimelineViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITimelineViewTest.swift; sourceTree = "<group>"; };
+		684ECDE2253E031000DA04D5 /* EnvironmentManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentManagerTest.swift; sourceTree = "<group>"; };
+		684ECDE9253E044400DA04D5 /* environments.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = environments.json; sourceTree = "<group>"; };
 		72A1FE5C36D2D8B561F68486 /* Pods_Chaos_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chaos_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E84B7DE021A147BC801FF97A /* Pods-Chaos_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chaos_Example.release.xcconfig"; path = "Target Support Files/Pods-Chaos_Example/Pods-Chaos_Example.release.xcconfig"; sourceTree = "<group>"; };
 		F4BBFE02143DA114020C760A /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
@@ -114,6 +120,8 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				684ECDE0253E02E900DA04D5 /* ChaosKit */,
+				684ECDDF253E02DE00DA04D5 /* ChaosUi */,
 				607FACEB1AFB9204008FA782 /* Tests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
@@ -135,6 +143,55 @@
 				F4BBFE02143DA114020C760A /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		684ECDD8253E02B200DA04D5 /* Timeline */ = {
+			isa = PBXGroup;
+			children = (
+				684ECDD9253E02CE00DA04D5 /* UITimelineViewTest.swift */,
+			);
+			path = Timeline;
+			sourceTree = "<group>";
+		};
+		684ECDDF253E02DE00DA04D5 /* ChaosUi */ = {
+			isa = PBXGroup;
+			children = (
+				684ECDD8253E02B200DA04D5 /* Timeline */,
+			);
+			path = ChaosUi;
+			sourceTree = "<group>";
+		};
+		684ECDE0253E02E900DA04D5 /* ChaosKit */ = {
+			isa = PBXGroup;
+			children = (
+				684ECDE8253E041B00DA04D5 /* Resources */,
+				684ECDE1253E02F200DA04D5 /* Environment */,
+			);
+			path = ChaosKit;
+			sourceTree = "<group>";
+		};
+		684ECDE1253E02F200DA04D5 /* Environment */ = {
+			isa = PBXGroup;
+			children = (
+				684ECDE2253E031000DA04D5 /* EnvironmentManagerTest.swift */,
+			);
+			path = Environment;
+			sourceTree = "<group>";
+		};
+		684ECDE8253E041B00DA04D5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				684ECE29253ED6BD00DA04D5 /* Environment */,
+				684ECDE9253E044400DA04D5 /* environments.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		684ECE29253ED6BD00DA04D5 /* Environment */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Environment;
 			sourceTree = "<group>";
 		};
 		7A145E401A1E9585C691299C /* Pods */ = {
@@ -206,7 +263,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
@@ -255,6 +312,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				684ECDEA253E044400DA04D5 /* environments.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,11 +326,17 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Chaos_Example/Pods-Chaos_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ChaosCore/ChaosCore.framework",
+				"${BUILT_PRODUCTS_DIR}/ChaosKit/ChaosKit.framework",
+				"${BUILT_PRODUCTS_DIR}/ChaosUi/ChaosUi.framework",
 				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
 				"${BUILT_PRODUCTS_DIR}/PromisesSwift/Promises.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosUi.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Promises.framework",
 			);
@@ -366,6 +430,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				684ECDDA253E02CE00DA04D5 /* UITimelineViewTest.swift in Sources */,
+				684ECDE3253E031000DA04D5 /* EnvironmentManagerTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,6 +469,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -411,14 +478,17 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -444,7 +514,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -456,6 +526,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -464,14 +535,17 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -490,7 +564,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

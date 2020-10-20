@@ -1,6 +1,14 @@
 PODS:
   - ChaosCore (1.0.0):
     - PromisesSwift (~> 1.2.8)
+  - ChaosKit (1.0.0):
+    - ChaosCore (~> 1.0.0)
+    - ChaosNet (~> 1.0.0)
+    - ChaosUi (~> 1.0.0)
+  - ChaosNet (1.0.0):
+    - ChaosCore (~> 1.0.0)
+  - ChaosUi (1.0.0):
+    - ChaosCore (~> 1.0.0)
   - FBSnapshotTestCase (2.1.4):
     - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
   - FBSnapshotTestCase/Core (2.1.4)
@@ -20,6 +28,9 @@ PODS:
 
 DEPENDENCIES:
   - ChaosCore (from `../`)
+  - ChaosKit (from `../`)
+  - ChaosNet (from `../`)
+  - ChaosUi (from `../`)
   - FBSnapshotTestCase (~> 2.1.4)
   - Nimble (~> 7.0)
   - Nimble-Snapshots (~> 6.3.0)
@@ -39,9 +50,18 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   ChaosCore:
     :path: "../"
+  ChaosKit:
+    :path: "../"
+  ChaosNet:
+    :path: "../"
+  ChaosUi:
+    :path: "../"
 
 SPEC CHECKSUMS:
   ChaosCore: 373b105be765819cc6c073520bc27a6cef23e41d
+  ChaosKit: 4fa8be84a9350574bf07d291636c19ef446aaba2
+  ChaosNet: a7a6f8fe5b1b3401bc8b88c9bea914d62c54ff43
+  ChaosUi: bd129724e7d1e7078894d1c8409c3ead736fc39d
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
   Nimble: 051e3d8912d40138fa5591c78594f95fb172af37
   Nimble-Snapshots: f5459b5b091678dc942d03ec4741cacb58ba4a52
@@ -50,6 +70,6 @@ SPEC CHECKSUMS:
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
   SwiftLint: 1216c910d27c2633ade33b4f071bb6b930982e62
 
-PODFILE CHECKSUM: fff9986a3807198608e1cf446e6b616272b33de2
+PODFILE CHECKSUM: a5f3f08c181286c96a53150a9591e5f3f8789776
 
 COCOAPODS: 1.9.1

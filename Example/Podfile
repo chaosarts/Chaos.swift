@@ -7,6 +7,9 @@ pod 'SwiftLint'
 
 target 'Chaos_Example' do
   pod 'ChaosCore', :path => '../'
+  pod 'ChaosNet', :path => '../'
+  pod 'ChaosUi', :path => '../'
+  pod 'ChaosKit', :path => '../'
 
   target 'Chaos_Tests' do
     inherit! :search_paths

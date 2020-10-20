@@ -7,7 +7,7 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = 'ChaosNet'
+  s.name             = 'ChaosCore'
   s.version          = '1.0.0'
   s.summary          = 'Framework for missing functionality in Apple frameworks.'
 

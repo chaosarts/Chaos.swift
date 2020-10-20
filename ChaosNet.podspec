@@ -36,5 +36,5 @@ Framework network specific issues
   s.source_files = 'ChaosNet/Classes/**/*'
   s.swift_version = '5.1'
   
-  s.dependency 'Chaos', '~> 1.0.0'
+  s.dependency 'ChaosCore', '~> 1.0.0'
 end
