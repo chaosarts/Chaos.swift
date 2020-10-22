@@ -23,7 +23,7 @@ public final class EnvironmentManager: NSObject {
     public weak var delegate: EnvironmentManagerDelegate?
 
     /// Provides the decoder to use for decoding environments from file.
-    public var fileImportDecoder: EnvironmentDataDecoder = JSONDecoder()
+    public var fileImportDecoder: EnvironmentDataDecoder
 
     /// Provides the list of environments.
     private var environments: [Environment] = []
@@ -35,8 +35,8 @@ public final class EnvironmentManager: NSObject {
     }
 
     /// Provides the currently selected envrionment
-    private var selectedEnvironment: Environment! {
-        didSet {  lastSelectedEnvironmentId = selectedEnvironment.identifier }
+    private var selectedEnvironment: Environment? {
+        didSet {  lastSelectedEnvironmentId = selectedEnvironment?.identifier }
     }
 
     /// Provides the internal index of the environment, that is currently
@@ -52,27 +52,52 @@ public final class EnvironmentManager: NSObject {
         return selectedEnvironment.identifier
     }
 
-    /// Provides the list of setup tasks of the currently selected environment
-    private var environmentSetupTasks: [EnvironmentSetupTask] = []
+    /// Provides the index of the currently executed setup task
+    private var environmentSetupTasksIndex: Int = 0
 
     /// Provides a promise that resolves, when the selected environment is
     /// completely setup.
-    private var setupPromise: Promise<Void>!
+    private var setupPromise: Promise<Void>?
+
+
+    // MARK: Decoding and Encoding Properties
+
+    /// Provides the object to use for encoding environment objects in order to
+    /// persist to the user defaults.
+    private var userDefaultEncoder: JSONEncoder = JSONEncoder()
+
+    /// Provides the object to use for decoding environment objects loaded from
+    /// user defaults.
+    private var userDefaultDecoder: JSONDecoder = JSONDecoder()
 
 
     // MARK: Initialization
 
-    private override init () {}
+    private override init () {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+
+        let fileImportDecoder = PropertyListDecoder()
+        self.fileImportDecoder = fileImportDecoder
+
+        let userDefaultEncoder = JSONEncoder()
+        userDefaultEncoder.dateEncodingStrategy = .formatted(dateFormatter)
+        self.userDefaultEncoder = userDefaultEncoder
+
+        let userDefaultDecoder = JSONDecoder()
+        userDefaultDecoder.dateDecodingStrategy = .formatted(dateFormatter)
+        self.userDefaultDecoder = userDefaultDecoder
+    }
 
 
     // MARK: Managing Environments
 
     /// Loads the environment configurations from disk and imports into the
     /// application storage (UserDefaults) and loads into the internal storage.
-    public func loadEnvrionments<E: Environment> (type: E.Type, filename: String = "environments", bundle: Bundle = .main) throws {
+    public func loadEnvironments<E: Environment> (ofType type: E.Type, fromFile filename: String = "environments", in bundle: Bundle = .main) throws {
         do {
             if #available(iOS 8, *) {
-                let environments = try environmentsFromFile(type: type)
+                let environments = try self.environments(ofType: type, fromFile: filename, in: bundle)
                 try storeEnvironments(environments)
             }
 
@@ -80,33 +105,45 @@ public final class EnvironmentManager: NSObject {
                 throw EnvironmentError(code: .noUserDefaultsEntryFound)
             }
 
-            environments = try PropertyListDecoder().decode([E].self, from: data)
+            environments = try userDefaultDecoder.decode([E].self, from: data)
+        } catch (let error as EnvironmentError) {
+            throw error
         } catch {
             throw EnvironmentError(code: .loadingEnvironmentsFailed, previous: error)
         }
     }
 
+    /// For Unit Test only
+    internal func removeSelection () {
+        selectedEnvironment = nil
+    }
+
     /// Reads and decode the environment configurations from a file and stores
     /// them to the user defaults.
     @available(iOS 8, *)
-    public func environmentsFromFile<E: Environment> (type: E.Type, filename: String = "environments", bundle: Bundle = .main) throws -> [E] {
-        guard let url = bundle.url(forResource: filename, withExtension: fileImportDecoder.fileExtension) else {
+    private func environments<E: Environment> (ofType type: E.Type, fromFile filename: String = "environments", in bundle: Bundle = .main) throws -> [E] {
+        guard let path = bundle.path(forResource: filename, ofType: fileImportDecoder.fileExtension),
+              let data = (try FileManager.default.contents(atPath: path)) else {
             throw EnvironmentError(code: .environmentsFileNotFound)
         }
-
-        let data = try Data(contentsOf: url)
         return try fileImportDecoder.decode([E].self, from: data)
     }
 
     /// Stores the list of environments in the user defaults.
     private func storeEnvironments<E: Environment> (_ environments: [E]) throws {
-        let data = try PropertyListEncoder().encode(environments)
+        let data = try userDefaultEncoder.encode(environments)
         UserDefaults.environmentManager.setValue(data, forKey: kEnvironmentsUserDefaults)
     }
 
 
     // MARK: Environment Selection and Setup
 
+    /// Attempts to select an environment automatically.
+    ///
+    /// This succeeds either when only one environment is provided or a stored
+    /// environment id is found in the persistence and an environment can be found
+    /// in the imported list matching this id. Finally the determined environment
+    /// must set up successfully.
     public func autoSelect (forceSetup: Bool = false) -> Promise<Void> {
         if let selectedEnvironment = selectedEnvironment {
             return select(identifier: selectedEnvironment.identifier, forceSetup: forceSetup)
@@ -124,7 +161,7 @@ public final class EnvironmentManager: NSObject {
         return Promise(error: EnvironmentError(code: .autoSelectFailed))
     }
 
-
+    /// Selects and sets up the environment at given index.
     public func select (at index: Int, forceSetup: Bool = false) -> Promise<Void> {
         guard (0..<environments.count).contains(index) else {
             return Promise<Void>(error: EnvironmentError(code: .invalidEnvironmentIndex))
@@ -132,6 +169,14 @@ public final class EnvironmentManager: NSObject {
         return select(identifier: environments[index].identifier)
     }
 
+    /// Sets the internal selection to the environment, that matches the given
+    /// identifier.
+    ///
+    /// If the currently selected environment matches the id and has been
+    /// successfully set up, the exact same promise of this set up is returned.
+    /// This avoids to repeat the setup unless `forceSetup` is set to true. When
+    /// the setup fails the setup promise will be deleted, so on retry the setup
+    /// will run again.
     public func select (identifier: String, forceSetup: Bool = false) -> Promise<Void> {
         if let selectedEnvironment = selectedEnvironment,
            selectedEnvironment.identifier == identifier,
@@ -140,7 +185,6 @@ public final class EnvironmentManager: NSObject {
         }
 
         setupPromise?.cancel()
-        environmentSetupTasks = []
 
         guard let environment = environments.first(where: { $0.identifier == identifier }) else {
             return Promise(error: EnvironmentError(code: .invalidEnvironmentIdentifier))
@@ -148,37 +192,56 @@ public final class EnvironmentManager: NSObject {
 
         selectedEnvironment = environment
         delegate?.environmentManager(self, didSelectEnvironment: environment)
-        
-        for index in 0..<environment.numberOfEnvironmentSetupTasks() {
-            environmentSetupTasks.append(environment.environmentSetupTask(at: index))
-        }
 
-        setupPromise = executeNextSetupTask()
-            .catch({ throw EnvironmentError(code: .setupFailed, previous: $0) })
-            .then({ self.delegate?.environmentManager(self, didSetupEnvironment: environment, withError: nil) })
-            .catch({ self.delegate?.environmentManager(self, didSetupEnvironment: environment, withError: $0) })
-
-        return setupPromise
+        setupPromise = executeTasks(of: environment)
+            .then({
+                self.delegate?.environmentManager(self, didSetupEnvironment: environment, withError: nil)
+            })
+            .catch({
+                self.delegate?.environmentManager(self, didSetupEnvironment: environment, withError: $0)
+                self.setupPromise = nil
+            })
+        return setupPromise!
     }
 
-    private func executeNextSetupTask () -> Promise<Void> {
-        if environmentSetupTasks.count > 0 {
-            let nextTask = environmentSetupTasks.removeFirst()
-            delegate?.environmentmanager(self, willRunSetupTask: nextTask)
-            return nextTask.run()
-                .then({ self.delegate?.environmentmanager(self, didFinishSetupTask: nextTask, withError: nil) })
-                .catch({ self.delegate?.environmentmanager(self, didFinishSetupTask: nextTask, withError: $0) })
-                .then(executeNextSetupTask)
-        }
+    /// Invokes the manager to execute all tasks provided by the given
+    /// environment.
+    ///
+    /// Resets the internal index monitor and calls the recursive function
+    /// `executeNextTask`.
+    private func executeTasks (of environment: Environment) -> Promise<Void> {
+        environmentSetupTasksIndex = 0
+        return executeNextTask(for: environment)
+    }
 
-        let void: Void
-        return Promise(value: void)
+    /// Invokes the manager to execute the next task of the currently selected
+    /// environment using an internal index property to monitor the index of the
+    /// current setup task.
+    private func executeNextTask (for environment: Environment) -> Promise<Void> {
+        let index = environmentSetupTasksIndex
+        guard index < environment.numberOfEnvironmentSetupTasks() else { return Promise() }
+
+        let task = environment.environmentSetupTask(at: index)
+        delegate?.environmentManager(self, willRunSetupTask: task, for: environment)
+        return task.run(for: environment)
+            .then({
+                self.delegate?.environmentManager(self, didFinishSetupTask: task, withError: nil, for: environment)
+                self.environmentSetupTasksIndex += 1
+                return self.executeNextTask(for: environment)
+            })
+            .catch({
+                let error = $0 is EnvironmentError ? $0 : EnvironmentError(code: .setupTaskFailed, previous: $0)
+                self.delegate?.environmentManager(self, didFinishSetupTask: task, withError: error, for: environment)
+
+                /* For converting the error for the promise child nodes */
+                throw error
+            })
     }
 
 
     public func configuration<T> (at path: String) -> T? {
         let sequence = path.split(separator: ".").map({ String($0) })
-        return selectedEnvironment.configuration(at: sequence)
+        return selectedEnvironment?.configuration(at: sequence)
     }
 }
 
@@ -202,7 +265,8 @@ public extension EnvironmentManager {
 
 public protocol EnvironmentManagerDelegate: class {
     func environmentManager(_ environmentManager: EnvironmentManager, didSelectEnvironment environment: Environment)
-    func environmentmanager(_ environmentManager: EnvironmentManager, willRunSetupTask task: EnvironmentSetupTask)
-    func environmentmanager(_ environmentManager: EnvironmentManager, didFinishSetupTask task: EnvironmentSetupTask, withError error: Error?)
     func environmentManager(_ environmentManager: EnvironmentManager, didSetupEnvironment environment: Environment, withError error: Error?)
+
+    func environmentManager(_ environmentManager: EnvironmentManager, willRunSetupTask task: EnvironmentSetupTask, for environment: Environment)
+    func environmentManager(_ environmentManager: EnvironmentManager, didFinishSetupTask task: EnvironmentSetupTask, withError error: Error?, for environment: Environment)
 }

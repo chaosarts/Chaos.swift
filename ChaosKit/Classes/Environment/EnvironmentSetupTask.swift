@@ -9,10 +9,12 @@ import ChaosCore
 
 public protocol EnvironmentSetupTask {
 
-    var environment: Environment { get }
-
+    /// Provides the title of the task. This can be used to display in a view.
     var title: String { get }
-    var description: String? { get }
 
-    func run () -> Promise<Void>
+    /// Provides the detail description of the task.
+    var detailText: String? { get }
+
+    /// Executes the task
+    func run (for environment: Environment) -> Promise<Void>
 }

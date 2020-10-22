@@ -40,6 +40,7 @@ public extension EnvironmentError {
         case invalidEnvironmentIdentifier
         case invalidEnvironmentIndex
         case setupFailed
+        case setupTaskFailed
 
         case `internal`
     }

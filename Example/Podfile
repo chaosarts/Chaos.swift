@@ -10,13 +10,4 @@ target 'Chaos_Example' do
   pod 'ChaosNet', :path => '../'
   pod 'ChaosUi', :path => '../'
   pod 'ChaosKit', :path => '../'
-
-  target 'Chaos_Tests' do
-    inherit! :search_paths
-
-    pod 'Quick', '~> 1.2.0'
-    pod 'Nimble', '~> 7.0'
-    pod 'FBSnapshotTestCase' , '~> 2.1.4'
-    pod 'Nimble-Snapshots' , '~> 6.3.0'
-  end
 end

@@ -13,10 +13,11 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		683C581C2541D94B004CEA07 /* single-environment.plist in Resources */ = {isa = PBXBuildFile; fileRef = 683C581B2541D94B004CEA07 /* single-environment.plist */; };
+		683C58312541DABF004CEA07 /* missing-fields.plist in Resources */ = {isa = PBXBuildFile; fileRef = 683C58302541DABF004CEA07 /* missing-fields.plist */; };
+		683C583F2541DB8E004CEA07 /* multiple-environments.plist in Resources */ = {isa = PBXBuildFile; fileRef = 683C583E2541DB8D004CEA07 /* multiple-environments.plist */; };
 		684ECDDA253E02CE00DA04D5 /* UITimelineViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684ECDD9253E02CE00DA04D5 /* UITimelineViewTest.swift */; };
 		684ECDE3253E031000DA04D5 /* EnvironmentManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684ECDE2253E031000DA04D5 /* EnvironmentManagerTest.swift */; };
-		684ECDEA253E044400DA04D5 /* environments.json in Resources */ = {isa = PBXBuildFile; fileRef = 684ECDE9253E044400DA04D5 /* environments.json */; };
 		8B3653E74AC9CAB6763D5788 /* Pods_Chaos_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5047144D23B39F8791F0EBB0 /* Pods_Chaos_Example.framework */; };
 /* End PBXBuildFile section */
 
@@ -43,12 +44,13 @@
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* Chaos_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Chaos_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		635FFEFC7FF3FAA4E9310293 /* Chaos.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Chaos.podspec; path = ../Chaos.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		6469A0E44D003F5F9E522938 /* Pods-Chaos_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chaos_Tests.release.xcconfig"; path = "Target Support Files/Pods-Chaos_Tests/Pods-Chaos_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		683C581B2541D94B004CEA07 /* single-environment.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "single-environment.plist"; sourceTree = "<group>"; };
+		683C58302541DABF004CEA07 /* missing-fields.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "missing-fields.plist"; sourceTree = "<group>"; };
+		683C583E2541DB8D004CEA07 /* multiple-environments.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "multiple-environments.plist"; sourceTree = "<group>"; };
 		684ECDD9253E02CE00DA04D5 /* UITimelineViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITimelineViewTest.swift; sourceTree = "<group>"; };
 		684ECDE2253E031000DA04D5 /* EnvironmentManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentManagerTest.swift; sourceTree = "<group>"; };
-		684ECDE9253E044400DA04D5 /* environments.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = environments.json; sourceTree = "<group>"; };
 		72A1FE5C36D2D8B561F68486 /* Pods_Chaos_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chaos_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E84B7DE021A147BC801FF97A /* Pods-Chaos_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chaos_Example.release.xcconfig"; path = "Target Support Files/Pods-Chaos_Example/Pods-Chaos_Example.release.xcconfig"; sourceTree = "<group>"; };
 		F4BBFE02143DA114020C760A /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
@@ -122,7 +124,6 @@
 			children = (
 				684ECDE0253E02E900DA04D5 /* ChaosKit */,
 				684ECDDF253E02DE00DA04D5 /* ChaosUi */,
-				607FACEB1AFB9204008FA782 /* Tests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
 			path = Tests;
@@ -182,7 +183,6 @@
 			isa = PBXGroup;
 			children = (
 				684ECE29253ED6BD00DA04D5 /* Environment */,
-				684ECDE9253E044400DA04D5 /* environments.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -190,6 +190,9 @@
 		684ECE29253ED6BD00DA04D5 /* Environment */ = {
 			isa = PBXGroup;
 			children = (
+				683C58302541DABF004CEA07 /* missing-fields.plist */,
+				683C583E2541DB8D004CEA07 /* multiple-environments.plist */,
+				683C581B2541D94B004CEA07 /* single-environment.plist */,
 			);
 			path = Environment;
 			sourceTree = "<group>";
@@ -312,7 +315,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				684ECDEA253E044400DA04D5 /* environments.json in Resources */,
+				683C583F2541DB8E004CEA07 /* multiple-environments.plist in Resources */,
+				683C581C2541D94B004CEA07 /* single-environment.plist in Resources */,
+				683C58312541DABF004CEA07 /* missing-fields.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,7 +434,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
 				684ECDDA253E02CE00DA04D5 /* UITimelineViewTest.swift in Sources */,
 				684ECDE3253E031000DA04D5 /* EnvironmentManagerTest.swift in Sources */,
 			);
