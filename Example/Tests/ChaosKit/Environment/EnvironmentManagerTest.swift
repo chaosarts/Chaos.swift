@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import ChaosCore
+@testable import ChaosCore
 @testable import ChaosKit
 
 public class EnvironmentManagerTest: XCTestCase, EnvironmentManagerDelegate {
