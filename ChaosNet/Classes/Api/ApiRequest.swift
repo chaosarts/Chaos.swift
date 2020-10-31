@@ -30,6 +30,7 @@ open class ApiRequest {
     /// Provides the payload to send with the request.
     public internal(set) var payload: Payload? = nil
 
+    /// Provides the url request representation of this api request.
     public internal(set) var urlRequest: URLRequest?
 }
 
