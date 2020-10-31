@@ -240,7 +240,7 @@ open class Promise<Result>: Cancelable {
 
     @discardableResult
     public func recover(on queue: DispatchQueue = .promises,
-                        _ callback: @escaping (Error) throws -> Promise<Result>) -> Promise<Result> {
+                        _ callback: @escaping (Error) throws -> Promise) -> Promise<Result> {
         let promise = self.promise.recover(on: queue, {
             try callback($0).promise
         })
@@ -268,7 +268,7 @@ open class Promise<Result>: Cancelable {
 }
 
 public extension Promise where Result == Void {
-    public convenience init () {
+    convenience init () {
         let void: Void
         self.init(value: void)
     }

@@ -34,7 +34,12 @@ Framework network specific issues
   s.watchos.deployment_target = '6.0'
 
   s.source_files = 'ChaosUi/Classes/**/*'
+  s.public_header_files = "ChaosUi/Classes/**/*.h"
   s.swift_version = '5.1'
+
+  s.xcconfig = {
+    'HEADER_SEARCH_PATHS' => "\"${PODS_TARGET_SRCROOT}/ChaosUi/Classes/\""
+  }
   
   s.dependency 'ChaosCore', '~> 1.0.0'
 end

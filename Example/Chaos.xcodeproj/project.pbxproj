@@ -12,7 +12,9 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
+		6809FE61254AF12800ACD22C /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6809FE60254AF12800ACD22C /* main.swift */; };
 		683A0B782541EB0400705836 /* PlistTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683A0B702541EAB400705836 /* PlistTest.swift */; };
+		683A0C4925422A7A00705836 /* TaskRunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683A0C4825422A7A00705836 /* TaskRunnerTests.swift */; };
 		683C581C2541D94B004CEA07 /* single-environment.plist in Resources */ = {isa = PBXBuildFile; fileRef = 683C581B2541D94B004CEA07 /* single-environment.plist */; };
 		683C58312541DABF004CEA07 /* missing-fields.plist in Resources */ = {isa = PBXBuildFile; fileRef = 683C58302541DABF004CEA07 /* missing-fields.plist */; };
 		683C583F2541DB8E004CEA07 /* multiple-environments.plist in Resources */ = {isa = PBXBuildFile; fileRef = 683C583E2541DB8D004CEA07 /* multiple-environments.plist */; };
@@ -32,6 +34,18 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		6809FE5C254AF12800ACD22C /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		0C74F28DE98EFEDF25CF9831 /* Pods_Chaos_Example_Chaos_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chaos_Example_Chaos_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		12175E6805309BD4FA36768A /* Pods-Chaos_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chaos_Example.debug.xcconfig"; path = "Target Support Files/Pods-Chaos_Example/Pods-Chaos_Example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -47,7 +61,10 @@
 		607FACE51AFB9204008FA782 /* Chaos_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Chaos_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		635FFEFC7FF3FAA4E9310293 /* Chaos.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Chaos.podspec; path = ../Chaos.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		6809FE5E254AF12800ACD22C /* ChaosCliExample */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ChaosCliExample; sourceTree = BUILT_PRODUCTS_DIR; };
+		6809FE60254AF12800ACD22C /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		683A0B702541EAB400705836 /* PlistTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlistTest.swift; sourceTree = "<group>"; };
+		683A0C4825422A7A00705836 /* TaskRunnerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRunnerTests.swift; sourceTree = "<group>"; };
 		683C581B2541D94B004CEA07 /* single-environment.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "single-environment.plist"; sourceTree = "<group>"; };
 		683C58302541DABF004CEA07 /* missing-fields.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "missing-fields.plist"; sourceTree = "<group>"; };
 		683C583E2541DB8D004CEA07 /* multiple-environments.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "multiple-environments.plist"; sourceTree = "<group>"; };
@@ -75,6 +92,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6809FE5B254AF12800ACD22C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -84,6 +108,7 @@
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for Chaos */,
 				607FACE81AFB9204008FA782 /* Tests */,
+				6809FE5F254AF12800ACD22C /* ChaosCliExample */,
 				607FACD11AFB9204008FA782 /* Products */,
 				7A145E401A1E9585C691299C /* Pods */,
 				C018ED653E1CC98D0DC644FC /* Frameworks */,
@@ -95,6 +120,7 @@
 			children = (
 				607FACD01AFB9204008FA782 /* Chaos_Example.app */,
 				607FACE51AFB9204008FA782 /* Chaos_Tests.xctest */,
+				6809FE5E254AF12800ACD22C /* ChaosCliExample */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -124,6 +150,7 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				683A0C4625422A5600705836 /* ChaosCore */,
 				684ECDE0253E02E900DA04D5 /* ChaosKit */,
 				684ECDDF253E02DE00DA04D5 /* ChaosUi */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
@@ -148,12 +175,36 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
+		6809FE5F254AF12800ACD22C /* ChaosCliExample */ = {
+			isa = PBXGroup;
+			children = (
+				6809FE60254AF12800ACD22C /* main.swift */,
+			);
+			path = ChaosCliExample;
+			sourceTree = "<group>";
+		};
 		683A0B6F2541EAB400705836 /* PropertyWrappers */ = {
 			isa = PBXGroup;
 			children = (
 				683A0B702541EAB400705836 /* PlistTest.swift */,
 			);
 			path = PropertyWrappers;
+			sourceTree = "<group>";
+		};
+		683A0C4625422A5600705836 /* ChaosCore */ = {
+			isa = PBXGroup;
+			children = (
+				683A0C4725422A5F00705836 /* Task */,
+			);
+			path = ChaosCore;
+			sourceTree = "<group>";
+		};
+		683A0C4725422A5F00705836 /* Task */ = {
+			isa = PBXGroup;
+			children = (
+				683A0C4825422A7A00705836 /* TaskRunnerTests.swift */,
+			);
+			path = Task;
 			sourceTree = "<group>";
 		};
 		684ECDD8253E02B200DA04D5 /* Timeline */ = {
@@ -270,24 +321,48 @@
 			productReference = 607FACE51AFB9204008FA782 /* Chaos_Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		6809FE5D254AF12800ACD22C /* ChaosCliExample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6809FE62254AF12800ACD22C /* Build configuration list for PBXNativeTarget "ChaosCliExample" */;
+			buildPhases = (
+				6809FE5A254AF12800ACD22C /* Sources */,
+				6809FE5B254AF12800ACD22C /* Frameworks */,
+				6809FE5C254AF12800ACD22C /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ChaosCliExample;
+			productName = ChaosCliExample;
+			productReference = 6809FE5E254AF12800ACD22C /* ChaosCliExample */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		607FACC81AFB9204008FA782 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0830;
+				LastSwiftUpdateCheck = 1210;
 				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = UMGV2FGNL8;
 						LastSwiftMigration = 0900;
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = UMGV2FGNL8;
 						LastSwiftMigration = 0900;
 						TestTargetID = 607FACCF1AFB9204008FA782;
+					};
+					6809FE5D254AF12800ACD22C = {
+						CreatedOnToolsVersion = 12.1;
+						DevelopmentTeam = UMGV2FGNL8;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -307,6 +382,7 @@
 			targets = (
 				607FACCF1AFB9204008FA782 /* Chaos_Example */,
 				607FACE41AFB9204008FA782 /* Chaos_Tests */,
+				6809FE5D254AF12800ACD22C /* ChaosCliExample */,
 			);
 		};
 /* End PBXProject section */
@@ -344,6 +420,7 @@
 				"${PODS_ROOT}/Target Support Files/Pods-Chaos_Example/Pods-Chaos_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ChaosCore/ChaosCore.framework",
 				"${BUILT_PRODUCTS_DIR}/ChaosKit/ChaosKit.framework",
+				"${BUILT_PRODUCTS_DIR}/ChaosNet/ChaosNet.framework",
 				"${BUILT_PRODUCTS_DIR}/ChaosUi/ChaosUi.framework",
 				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
 				"${BUILT_PRODUCTS_DIR}/PromisesSwift/Promises.framework",
@@ -352,6 +429,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosNet.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosUi.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Promises.framework",
@@ -414,6 +492,7 @@
 				"${PODS_ROOT}/Target Support Files/Pods-Chaos_Example-Chaos_Tests/Pods-Chaos_Example-Chaos_Tests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ChaosCore/ChaosCore.framework",
 				"${BUILT_PRODUCTS_DIR}/ChaosKit/ChaosKit.framework",
+				"${BUILT_PRODUCTS_DIR}/ChaosNet/ChaosNet.framework",
 				"${BUILT_PRODUCTS_DIR}/ChaosUi/ChaosUi.framework",
 				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
 				"${BUILT_PRODUCTS_DIR}/PromisesSwift/Promises.framework",
@@ -422,6 +501,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosNet.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosUi.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Promises.framework",
@@ -447,9 +527,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				683A0C4925422A7A00705836 /* TaskRunnerTests.swift in Sources */,
 				684ECDDA253E02CE00DA04D5 /* UITimelineViewTest.swift in Sources */,
 				684ECDE3253E031000DA04D5 /* EnvironmentManagerTest.swift in Sources */,
 				683A0B782541EB0400705836 /* PlistTest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6809FE5A254AF12800ACD22C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6809FE61254AF12800ACD22C /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -595,6 +684,7 @@
 			baseConfigurationReference = 12175E6805309BD4FA36768A /* Pods-Chaos_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = UMGV2FGNL8;
 				INFOPLIST_FILE = Chaos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -610,6 +700,7 @@
 			baseConfigurationReference = E84B7DE021A147BC801FF97A /* Pods-Chaos_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = UMGV2FGNL8;
 				INFOPLIST_FILE = Chaos/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -624,6 +715,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1C460315E3D0C22CFAE7C975 /* Pods-Chaos_Example-Chaos_Tests.debug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = UMGV2FGNL8;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -646,6 +738,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EBD62E7CDFAD6219C1026CFE /* Pods-Chaos_Example-Chaos_Tests.release.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = UMGV2FGNL8;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -657,6 +750,51 @@
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Chaos_Example.app/Chaos_Example";
+			};
+			name = Release;
+		};
+		6809FE63254AF12800ACD22C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = UMGV2FGNL8;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		6809FE64254AF12800ACD22C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = UMGV2FGNL8;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -686,6 +824,15 @@
 			buildConfigurations = (
 				607FACF31AFB9204008FA782 /* Debug */,
 				607FACF41AFB9204008FA782 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6809FE62254AF12800ACD22C /* Build configuration list for PBXNativeTarget "ChaosCliExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6809FE63254AF12800ACD22C /* Debug */,
+				6809FE64254AF12800ACD22C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

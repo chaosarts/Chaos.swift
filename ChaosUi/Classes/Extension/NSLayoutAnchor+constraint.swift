@@ -7,6 +7,7 @@
 
 import UIKit
 
+@objc
 public extension NSLayoutAnchor {
 
     @objc func constraint(equalTo anchor: NSLayoutAnchor<AnchorType>, priority: UILayoutPriority) -> NSLayoutConstraint {
