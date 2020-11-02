@@ -1,51 +1,48 @@
 PODS:
-  - ChaosCore (1.0.0):
+  - Chaos (1.0.0):
+    - Chaos/Core (= 1.0.0)
+    - Chaos/Kit (= 1.0.0)
+    - Chaos/Net (= 1.0.0)
+    - Chaos/Ui (= 1.0.0)
+  - Chaos/Core (1.0.0):
     - PromisesSwift (~> 1.2.8)
-  - ChaosKit (1.0.0):
-    - ChaosCore (~> 1.0.0)
-    - ChaosNet (~> 1.0.0)
-    - ChaosUi (~> 1.0.0)
-  - ChaosNet (1.0.0):
-    - ChaosCore (~> 1.0.0)
-  - ChaosUi (1.0.0):
-    - ChaosCore (~> 1.0.0)
-  - PromisesObjC (1.2.10)
-  - PromisesSwift (1.2.10):
-    - PromisesObjC (= 1.2.10)
+  - Chaos/Kit (1.0.0):
+    - Chaos/Core
+    - Chaos/Net
+    - Chaos/Ui
+  - Chaos/Net (1.0.0):
+    - Chaos/Core
+  - Chaos/Ui (1.0.0):
+    - Chaos/Core
+  - Hippolyte (1.2.3)
+  - PromisesObjC (1.2.11)
+  - PromisesSwift (1.2.11):
+    - PromisesObjC (= 1.2.11)
   - SwiftLint (0.40.2)
 
 DEPENDENCIES:
-  - ChaosCore (from `../`)
-  - ChaosKit (from `../`)
-  - ChaosNet (from `../`)
-  - ChaosUi (from `../`)
+  - Chaos (from `../`)
+  - Hippolyte
   - SwiftLint
 
 SPEC REPOS:
   trunk:
+    - Hippolyte
     - PromisesObjC
     - PromisesSwift
     - SwiftLint
 
 EXTERNAL SOURCES:
-  ChaosCore:
-    :path: "../"
-  ChaosKit:
-    :path: "../"
-  ChaosNet:
-    :path: "../"
-  ChaosUi:
+  Chaos:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ChaosCore: fd0b69edb30521a377c55dc416062d46ca57fb3a
-  ChaosKit: 3da0bbadf202a41a8ddde7c329c7ce95be4a575c
-  ChaosNet: d281fb9090a7d517d0d5a9c42639ecd7108fb276
-  ChaosUi: ce2e4f6d0a428f5a281e468af1c81bb33ffe6458
-  PromisesObjC: b14b1c6b68e306650688599de8a45e49fae81151
-  PromisesSwift: ce4c7602f91a6bfc8732039f1bc1a3fcded1a302
+  Chaos: 12c8a32918ecbb9ad4913f38a94dbf5f315e97f6
+  Hippolyte: 0ee31559319c51c293c1fe47c9ea21f659be11cd
+  PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
+  PromisesSwift: fed4eb6f7a29846a22624d1b86b77e1dedb88724
   SwiftLint: 1216c910d27c2633ade33b4f071bb6b930982e62
 
-PODFILE CHECKSUM: fa22e4b34041e34e481ac7a7ddb435462a9d4881
+PODFILE CHECKSUM: c28540eeaccb089465780629c2b365db7f71c8ff
 
 COCOAPODS: 1.9.1

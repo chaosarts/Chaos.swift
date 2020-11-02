@@ -152,6 +152,7 @@
 			children = (
 				683A0C4625422A5600705836 /* ChaosCore */,
 				684ECDE0253E02E900DA04D5 /* ChaosKit */,
+				684CCBCE25505B0A00CD0355 /* ChaosNet */,
 				684ECDDF253E02DE00DA04D5 /* ChaosUi */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
@@ -205,6 +206,13 @@
 				683A0C4825422A7A00705836 /* TaskRunnerTests.swift */,
 			);
 			path = Task;
+			sourceTree = "<group>";
+		};
+		684CCBCE25505B0A00CD0355 /* ChaosNet */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ChaosNet;
 			sourceTree = "<group>";
 		};
 		684ECDD8253E02B200DA04D5 /* Timeline */ = {
@@ -418,19 +426,13 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Chaos_Example/Pods-Chaos_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/ChaosCore/ChaosCore.framework",
-				"${BUILT_PRODUCTS_DIR}/ChaosKit/ChaosKit.framework",
-				"${BUILT_PRODUCTS_DIR}/ChaosNet/ChaosNet.framework",
-				"${BUILT_PRODUCTS_DIR}/ChaosUi/ChaosUi.framework",
+				"${BUILT_PRODUCTS_DIR}/Chaos/Chaos.framework",
 				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
 				"${BUILT_PRODUCTS_DIR}/PromisesSwift/Promises.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosCore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosNet.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosUi.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Chaos.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Promises.framework",
 			);
@@ -490,21 +492,17 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Chaos_Example-Chaos_Tests/Pods-Chaos_Example-Chaos_Tests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/ChaosCore/ChaosCore.framework",
-				"${BUILT_PRODUCTS_DIR}/ChaosKit/ChaosKit.framework",
-				"${BUILT_PRODUCTS_DIR}/ChaosNet/ChaosNet.framework",
-				"${BUILT_PRODUCTS_DIR}/ChaosUi/ChaosUi.framework",
+				"${BUILT_PRODUCTS_DIR}/Chaos/Chaos.framework",
 				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
 				"${BUILT_PRODUCTS_DIR}/PromisesSwift/Promises.framework",
+				"${BUILT_PRODUCTS_DIR}/Hippolyte/Hippolyte.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosCore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosNet.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosUi.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Chaos.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Promises.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hippolyte.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

@@ -8,7 +8,7 @@
 import Foundation
 import ChaosCore
 
-public final struct MimeType {
+public struct MimeType {
 
     /// Provides the main type (e.g. application, text) as string.
     public let domain: String

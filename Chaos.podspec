@@ -7,6 +7,9 @@
 #
 
 Pod::Spec.new do |s|
+
+  ios_deployment_target = '12.0'
+
   s.name             = 'Chaos'
   s.version          = '1.0.0'
   s.summary          = 'Collection of all Chaos iOS Frameworks'
@@ -18,7 +21,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-  A collection of all pods by chaosarts
+  Collection of all Chaos iOS Frameworks. Blablbalba
                        DESC
 
   s.homepage         = 'https://github.com/chaosarts/Chaos'
@@ -29,33 +32,37 @@ Pod::Spec.new do |s|
       :tag => s.version.to_s
   }
 
-  s.ios.deployment_target = '11.0'
-  s.osx.deployment_target = '10.13'
+  s.ios.deployment_target     = ios_deployment_target
+  s.osx.deployment_target     = '10.13'
   s.watchos.deployment_target = '6.0'
-
-  s.default_subspec = 'Core'
 
   s.info_plist = {
     'CFBundleIdentifier' => 'de.chaosarts'
   }
 
   s.subspec 'Core' do |subspec|
-      subspec.dependency 'ChaosCore'
+    subspec.source_files  = 'ChaosCore/Classes/**/*'
+    subspec.frameworks    = 'Foundation'
+    subspec.dependency 'PromisesSwift', '~> 1.2.8'
   end
 
   s.subspec 'Net' do |subspec|
-    subspec.dependency 'ChaosNet'
-  end
-#
-#  s.subspec 'NetStub' do |subspec|
-#      subspec.dependency 'ChaosNetStub'
-#  end
-#
-  s.subspec 'Ui' do |subspec|
-    subspec.dependency 'ChaosUi'
+    subspec.source_files  = 'ChaosNet/Classes/**/*'
+    subspec.frameworks    = 'Foundation'
+    subspec.dependency 'Chaos/Core'
   end
 
+  s.subspec 'Ui' do |subspec|
+    subspec.source_files  = 'ChaosUi/Classes/**/*'
+    subspec.frameworks    = 'Foundation'
+    subspec.dependency 'Chaos/Core'
+  end
+  
   s.subspec 'Kit' do |subspec|
-    subspec.dependency 'ChaosKit'
+    subspec.source_files  = 'ChaosKit/Classes/**/*'
+    subspec.frameworks    = 'Foundation'
+    subspec.dependency 'Chaos/Core' 
+    subspec.dependency 'Chaos/Net'
+    subspec.dependency 'Chaos/Ui'
   end
 end

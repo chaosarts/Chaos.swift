@@ -100,4 +100,11 @@ open class UITaskPresenter: TaskRunnerSource, TaskRunnerDelegate {
         taskViewController?.progress = Float(index) / Float(tasks.count)
         taskViewController?.present(task: viewModel)
     }
+
+
+    public func taskRunner(_ taskRunner: TaskRunner, didFinishWithError error: Error?) {
+        if let error = error {
+            taskViewController?.present(error: error)
+        }
+    }
 }

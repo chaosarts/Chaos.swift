@@ -8,7 +8,7 @@
 import Foundation
 
 
-public struct HttpStatus: NSObject {
+public struct HttpStatus {
 
     // MARK: Properties
 
@@ -122,7 +122,7 @@ extension HttpStatus {
 // MARK: - CustomStringConvertible Implementation
 
 extension HttpStatus {
-    public override var description: String {
+    public var description: String {
         guard let text = text else { return "\(code)" }
         return "\(code) \(text)"
     }

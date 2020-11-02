@@ -57,9 +57,10 @@ open class UIEnvironmentSelectionViewController: UITableViewController {
     }
 
     public override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let tableViewCell = tableView.dequeueReusableCell(withIdentifier: "Default") else {
-            fatalError("Unable to dequeue table view cell from table view. Check your implementation!")
-        }
+        let environmentIdentifier = environmentManager.environmentIdentifier(at: indexPath.row)
+        let tableViewCell = tableView.dequeueReusableCell(withIdentifier: environmentIdentifier) ??
+            tableView.dequeueReusableCell(withIdentifier: "Default") ??
+            UITableViewCell(style: .subtitle, reuseIdentifier: "Default")
 
         let index = indexPath.row
         let identifier = environmentManager.environmentIdentifier(at: indexPath.row)
