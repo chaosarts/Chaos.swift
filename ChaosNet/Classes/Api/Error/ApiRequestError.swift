@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import ChaosCore
 
 open class ApiRequestError: ApiError<ApiRequestError.Code> {
 }

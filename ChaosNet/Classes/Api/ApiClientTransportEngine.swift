@@ -6,10 +6,8 @@
 //
 
 import Foundation
-import ChaosCore
 
 public typealias HttpResponse = (httpResponse: HTTPURLResponse, data: Data?)
-
 
 public protocol ApiClientTransportEngine: class {
 

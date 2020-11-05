@@ -39,13 +39,16 @@ open class ApiRequest {
 
 public extension ApiRequest {
 
-    /// Describes the type for an api request header
+    /// Describes the type for an api request header.
     public typealias Header = HttpHeader
 
+    /// Describes the type for path parameters.
     public typealias PathParameters = [String: String]
 
+    /// Describes the type for api request parameter.
     public typealias Parameter = (key: String, value: String?)
 
+    /// Describes the type for payloads of an api request.
     public typealias Payload = Data
 
     public enum Action {

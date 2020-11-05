@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import ChaosCore
 
 open class ApiClient: NSObject {
 
@@ -196,6 +195,7 @@ open class ApiClient: NSObject {
         }
     }
 
+    /// Returns the error code for the given http status.
     private func apiResponseErrorCode (for status: HttpStatus) -> ApiResponseError.Code? {
         switch status.category {
         case .serverError:
@@ -209,10 +209,10 @@ open class ApiClient: NSObject {
         }
     }
 
-    /// Will be invoked, when the
+    /// Will be invoked, when an api request fails before receiving a response.
     private func process (error: Error, for apiRequest: ApiRequest) -> Error {
-        if let apiClientError = error as? ApiRequestError {
-            return apiClientError
+        if let apiRequestError = error as? ApiRequestError {
+            return apiRequestError
         }
 
         var code: ApiRequestError.Code = .internal
@@ -232,9 +232,9 @@ open class ApiClient: NSObject {
             }
         }
 
-        let apiClientError = ApiRequestError(code: code, request: apiRequest, previous: error)
-        delegate?.apiClient(self, didReceiveError: apiClientError, for: apiRequest)
-        return apiClientError
+        let apiRequestError = ApiRequestError(code: code, request: apiRequest, previous: error)
+        delegate?.apiClient(self, didReceiveError: apiRequestError, for: apiRequest)
+        return apiRequestError
     }
 }
 
@@ -273,6 +273,13 @@ public protocol ApiClientDelegate: class {
     /// informations to the request, such as header or parameters.
     func apiClient (_ client: ApiClient, willSendApiRequest apiRequest: ApiRequest)
 
+    /// Asks the delegate, whether pre action needs to be performed before the
+    /// given api request or not.
+    func apiClient (_ client: ApiClient, needsToPreformActionBefore apiRequest: ApiRequest) -> Bool
+
+    /// Tells the delegate to perform an action before the given request.
+    func apiClient (_ client: ApiClient, performActionBefore apiRequest: ApiRequest) -> Promise<Void>
+
     /// Tells the delegate, that the api client has received and decoded the
     /// response to the given object.
     func apiClient<D: Decodable> (_ client: ApiClient, didReceiveApiResponse apiResponse: D)
@@ -303,6 +310,8 @@ public extension ApiClientDelegate {
     }
 
     func apiClient (_ client: ApiClient, willSendApiRequest apiRequest: ApiRequest) {}
+    func apiClient (_ client: ApiClient, needsToPreformActionBefore apiRequest: ApiRequest) -> Bool { false }
+    func apiClient (_ client: ApiClient, performActionBefore apiRequest: ApiRequest) -> Promise<Void> { Promise() }
     func apiClient<D: Decodable> (_ client: ApiClient, didReceiveApiResponse apiResponse: D) {}
     func apiClient (_ client: ApiClient, didReceiveError error: Error, for request: ApiRequest) {}
 }

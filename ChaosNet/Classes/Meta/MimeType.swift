@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import ChaosCore
 
 public struct MimeType {
 
