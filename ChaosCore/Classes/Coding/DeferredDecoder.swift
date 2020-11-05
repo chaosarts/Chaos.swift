@@ -7,9 +7,6 @@
 
 import Foundation
 
-@available(*, renamed: "DeferredDecoder")
-public typealias DecoderProxy = DeferredDecoder
-
 /// A decodable class, that defers the autmotated recursive decoding.
 ///
 /// In a decoding process any decodable type will be initialized with the decoder

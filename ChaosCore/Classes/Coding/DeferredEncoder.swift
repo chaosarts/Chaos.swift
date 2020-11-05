@@ -7,9 +7,6 @@
 
 import Foundation
 
-@available(*, renamed: "DeferredEncoder")
-public typealias EncoderProxy = DeferredEncoder
-
 /// A class to defer the encoding process of objects.
 ///
 /// Instead of defining a new class to encode to a certain format (e.g. json)
