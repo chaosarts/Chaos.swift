@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import ChaosCore
 
 open class UIDefaultTaskViewController: UIViewController, UITaskViewControllerProtocol {
 

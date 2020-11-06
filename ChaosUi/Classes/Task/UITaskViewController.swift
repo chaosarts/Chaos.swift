@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import ChaosCore
 
 public protocol UITaskViewControllerProtocol {
     var progress: Float { get set }

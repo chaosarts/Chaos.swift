@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import ChaosCore
 
 @objc
 public class UITaskViewModel: NSObject {
