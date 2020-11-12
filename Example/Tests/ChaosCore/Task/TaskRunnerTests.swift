@@ -17,7 +17,7 @@ public class TaskRunnerTests: XCTestCase {
 
     public func testNoTaskSource () {
         let expectation = self.expectation(description: "Task Runner")
-        TaskRunner().executeTasks().catch({ _ throws -> Void in expectation.fulfill() })
+        TaskRunner().start().catch({ _ throws -> Void in expectation.fulfill() })
         waitForExpectations(timeout: 2)
     }
 }

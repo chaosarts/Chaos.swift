@@ -48,6 +48,7 @@ public class TaskRunner: NSObject {
     // MARK: Controlling Task Execution
 
     /// Invokes the task runner to run all tasks beginning at first index.
+    @discardableResult
     public func start () -> Promise<Void> {
         reloadTasks()
         currentTaskIndex = 0
@@ -67,8 +68,9 @@ public class TaskRunner: NSObject {
 
     /// Invokes the runner to continue executing the tasks at the index, where it
     /// failed last.
+    @discardableResult
     public func resume () -> Promise<Void> {
-        if promise != nil { return start() }
+        if promise == nil { return start() }
         delegate?.taskRunnerWillResume?(self)
         return run()
     }

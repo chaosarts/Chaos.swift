@@ -73,18 +73,15 @@ public final class EnvironmentManager: NSObject {
     // MARK: Initialization
 
     private override init () {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-
         let fileImportDecoder = PropertyListDecoder()
         self.fileImportDecoder = fileImportDecoder
 
         let userDefaultEncoder = JSONEncoder()
-        userDefaultEncoder.dateEncodingStrategy = .formatted(dateFormatter)
+        userDefaultEncoder.dateEncodingStrategy = .iso8601
         self.userDefaultEncoder = userDefaultEncoder
 
         let userDefaultDecoder = JSONDecoder()
-        userDefaultDecoder.dateDecodingStrategy = .formatted(dateFormatter)
+        userDefaultDecoder.dateDecodingStrategy = .iso8601
         self.userDefaultDecoder = userDefaultDecoder
     }
 
@@ -165,7 +162,7 @@ public final class EnvironmentManager: NSObject {
         guard (0..<environments.count).contains(index) else {
             return Promise<Void>(error: EnvironmentError(code: .invalidEnvironmentIndex))
         }
-        return select(identifier: environments[index].identifier)
+        return select(identifier: environments[index].identifier, forceSetup: forceSetup)
     }
 
     /// Sets the internal selection to the environment, that matches the given

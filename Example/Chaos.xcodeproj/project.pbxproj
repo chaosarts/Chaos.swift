@@ -8,11 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
-		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		6809FE61254AF12800ACD22C /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6809FE60254AF12800ACD22C /* main.swift */; };
+		68214781255D577C00501FD3 /* UIAppSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68214780255D577C00501FD3 /* UIAppSetupViewController.swift */; };
 		683A0B782541EB0400705836 /* PlistTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683A0B702541EAB400705836 /* PlistTest.swift */; };
 		683A0C4925422A7A00705836 /* TaskRunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683A0C4825422A7A00705836 /* TaskRunnerTests.swift */; };
 		683C581C2541D94B004CEA07 /* single-environment.plist in Resources */ = {isa = PBXBuildFile; fileRef = 683C581B2541D94B004CEA07 /* single-environment.plist */; };
@@ -54,7 +54,6 @@
 		607FACD01AFB9204008FA782 /* Chaos_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chaos_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		607FACD71AFB9204008FA782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -63,6 +62,7 @@
 		635FFEFC7FF3FAA4E9310293 /* Chaos.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Chaos.podspec; path = ../Chaos.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		6809FE5E254AF12800ACD22C /* ChaosCliExample */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ChaosCliExample; sourceTree = BUILT_PRODUCTS_DIR; };
 		6809FE60254AF12800ACD22C /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		68214780255D577C00501FD3 /* UIAppSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAppSetupViewController.swift; sourceTree = "<group>"; };
 		683A0B702541EAB400705836 /* PlistTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlistTest.swift; sourceTree = "<group>"; };
 		683A0C4825422A7A00705836 /* TaskRunnerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRunnerTests.swift; sourceTree = "<group>"; };
 		683C581B2541D94B004CEA07 /* single-environment.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "single-environment.plist"; sourceTree = "<group>"; };
@@ -128,8 +128,8 @@
 		607FACD21AFB9204008FA782 /* Example for Chaos */ = {
 			isa = PBXGroup;
 			children = (
+				6821477C255D574F00501FD3 /* UI */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
-				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -182,6 +182,14 @@
 				6809FE60254AF12800ACD22C /* main.swift */,
 			);
 			path = ChaosCliExample;
+			sourceTree = "<group>";
+		};
+		6821477C255D574F00501FD3 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				68214780255D577C00501FD3 /* UIAppSetupViewController.swift */,
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 		683A0B6F2541EAB400705836 /* PropertyWrappers */ = {
@@ -516,7 +524,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				68214781255D577C00501FD3 /* UIAppSetupViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

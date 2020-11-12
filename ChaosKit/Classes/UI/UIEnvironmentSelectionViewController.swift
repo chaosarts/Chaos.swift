@@ -18,6 +18,10 @@ public protocol UIEnvironmentSelectionViewControllerDelegate: class, NSObjectPro
     /// gives you the freedom to first dismiss the selection view controller,
     /// before you start setting up the environment.
     func environmentSelection (_ environmentSelection: UIEnvironmentSelectionViewController, didSelectEnvironmentAt index: Int)
+
+    /// Asks the delegate for an image to display in the table view cell of the
+    /// task corresponding to the given index.
+    func environmentSelection (_ environmentSelection: UIEnvironmentSelectionViewController, imageForEnvironmentAt index: Int) -> UIImage?
 }
 
 open class UIEnvironmentSelectionViewController: UITableViewController {
@@ -28,24 +32,8 @@ open class UIEnvironmentSelectionViewController: UITableViewController {
     /// source.
     public let environmentManager: EnvironmentManager = .instance
 
-    /// Provides the prefix string to prepend to the id to build the icon
-    /// image name.
-    public var environmentImagePrefix: String = "envlogo-"
-
-    /// Provides the suffix string to append to the id to build the icon
-    /// image name.
-    public var environmentImageSuffix: String = ""
-
     /// Provides the delegate object to tell about selection made.
     public weak var delegate: UIEnvironmentSelectionViewControllerDelegate?
-
-
-    // MARK: UIViewController Lifecycle
-
-    open override func viewDidLoad() {
-        super.viewDidLoad()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Default")
-    }
 
 
     // MARK: UITableViewDataSource Implementation
@@ -66,7 +54,7 @@ open class UIEnvironmentSelectionViewController: UITableViewController {
         let identifier = environmentManager.environmentIdentifier(at: indexPath.row)
         let title = environmentManager.environmentTitle(at: indexPath.row)
         let description = environmentManager.environmentDescription(at: indexPath.row)
-        let image = UIImage(named: "\(environmentImagePrefix)\(identifier)\(environmentImageSuffix)")
+        let image = delegate?.environmentSelection(self, imageForEnvironmentAt: index)
 
         tableViewCell.textLabel?.text = title ?? identifier
         tableViewCell.detailTextLabel?.text = description

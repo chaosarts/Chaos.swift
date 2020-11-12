@@ -15,6 +15,19 @@ open class UITaskRunnerViewController: UIViewController {
     /// view controller.
     public weak var delegate: UITaskRunnerViewControllerDelegate?
 
+    /// Provides the object that serves the tasks to the internal task runner.
+    public weak var taskSource: TaskRunnerSource? {
+        get { taskRunner.taskSource }
+        set { taskRunner.taskSource = newValue }
+    }
+
+    /// Provides the task runner to use to execute tasks.
+    public private(set) lazy var taskRunner: TaskRunner = {
+        let runner = TaskRunner()
+        runner.delegate = self
+        return runner
+    } ()
+
 
     // MARK: Presentation Properties
 
@@ -43,11 +56,6 @@ open class UITaskRunnerViewController: UIViewController {
         set { progressView?.setProgress(newValue ?? 0, animated: true) }
     }
 
-    /// Provides the task view model to display.
-    public var taskViewModel: UITaskViewModel? {
-        didSet { updateViews() }
-    }
-
 
     // MARK: View Properties
 
@@ -62,16 +70,6 @@ open class UITaskRunnerViewController: UIViewController {
 
     /// Provides the progress view to display the progress of the task runner.
     @IBOutlet private weak var progressView: UIProgressView?
-
-
-    // MARK: Updating View
-
-    /// Updates the views corresponding to the set task view model.
-    private func updateViews () {
-        taskTitleText = taskViewModel?.title
-        taskDetailText = taskViewModel?.detailText
-        taskImage = taskViewModel?.image
-    }
 }
 
 
@@ -80,7 +78,11 @@ open class UITaskRunnerViewController: UIViewController {
 extension UITaskRunnerViewController: TaskRunnerDelegate {
     public func taskRunner(_ taskRunner: TaskRunner, willRunTaskAt index: Int) {
         let task = taskRunner.task(at: index)
-        taskViewModel = delegate?.taskRunnerViewController(self, taskViewModelFor: task)
+
+        taskTitleText = delegate?.taskRunnerViewController?(self, titleForTaskAt: index)
+        taskDetailText = delegate?.taskRunnerViewController?(self, detailForTaskAt: index)
+        taskImage = delegate?.taskRunnerViewController?(self, imageForTaskAt: index)
+
         if taskRunner.numberOfTasks > 0 {
             progress = Float(taskRunner.currentTaskIndex) / Float(taskRunner.numberOfTasks)
         } else {
@@ -89,27 +91,36 @@ extension UITaskRunnerViewController: TaskRunnerDelegate {
     }
 
     public func taskRunner(_ taskRunner: TaskRunner, taskAt index: Int, didFailWithError error: Error) {
-        delegate?.taskRunnerViewController(self, presentError: error, for: taskRunner.task(at: index))
+        delegate?.taskRunnerViewController?(self, present: error, forTaskAt: index)
     }
 
     public func taskRunnerDidFinish(_ taskRunner: TaskRunner) {
         progress = 1.0
-        delegate?.taskRunnerViewControllerDidFinish(self)
+        delegate?.taskRunnerViewControllerDidFinish?(self)
     }
 }
 
 
 // MARK: -
 
-public protocol UITaskRunnerViewControllerDelegate: class {
+@objc public protocol UITaskRunnerViewControllerDelegate: class {
 
-    /// Asks the delegate for the view model corresponding to the given task
-    func taskRunnerViewController (_ controller: UITaskRunnerViewController, taskViewModelFor task: Task) -> UITaskViewModel
+    /// Asks the delegate for the title to display for the task corresponding to
+    /// given id.
+    @objc optional func taskRunnerViewController (_ controller: UITaskRunnerViewController, titleForTaskAt index: Int) -> String?
+
+    /// Asks the delegate for the detail text to display for the task
+    /// corresponding to given id.
+    @objc optional func taskRunnerViewController (_ controller: UITaskRunnerViewController, detailForTaskAt index: Int) -> String?
+
+    /// Asks the delegate for the image to display for the task corresponding to
+    /// given id.
+    @objc optional func taskRunnerViewController (_ controller: UITaskRunnerViewController, imageForTaskAt index: Int) -> UIImage?
 
     /// Asks the delegate to present the given error, that is caused by the given
     /// task.
-    func taskRunnerViewController (_ controller: UITaskRunnerViewController, presentError error: Error, for task: Task)
+    @objc optional func taskRunnerViewController (_ controller: UITaskRunnerViewController, present error: Error, forTaskAt index: Int)
 
     /// Tells the delegate, that the controller has finished presenting tasks.
-    func taskRunnerViewControllerDidFinish (_ controller: UITaskRunnerViewController)
+    @objc optional func taskRunnerViewControllerDidFinish (_ controller: UITaskRunnerViewController)
 }
