@@ -7,17 +7,33 @@
 
 import Foundation
 
-internal protocol UITimelineViewMilestoneCellProtocol {
+/// Defines a protocol that requires to have a milestone property.
+internal protocol UITimelineViewMilestoneCellProtocol: class, NSObjectProtocol {
     var milestone: UITimelineViewMilestone { get }
 }
 
+/// Defines a collection view that requires to implement the
+/// `UITimlineViewMilestoneCellProtocoll`.
 internal typealias UITimelineViewMilestoneCell = UITimelineViewMilestoneCellProtocol & UICollectionViewCell
 
 
-internal class UITimelineViewMilestoneCellImpl<M: UITimelineViewMilestone>: UITimelineViewMilestoneCell {
+// MARK: -
 
-    let milestone: UITimelineViewMilestone = M.init()
+/// A collection view cell class that implements the
+/// `UITimelineViewMilestoneCellProtocol` and used for the internal collection
+/// view of the timeline.
+///
+/// In order to register different milestone classes as reusable in the timeline
+/// view, this implementation uses generics.
+internal class UITimelineViewMilestoneCellImpl<Milestone: UITimelineViewMilestone>: UITimelineViewMilestoneCell {
 
+    // MARK: Properties
+
+    /// Provides the milestone, that is contained within the collection view cell.
+    let milestone: UITimelineViewMilestone = Milestone.init()
+
+
+    // MARK: Initialization
 
     convenience init() {
         self.init(frame: .zero)
@@ -39,6 +55,8 @@ internal class UITimelineViewMilestoneCellImpl<M: UITimelineViewMilestone>: UITi
         addConstraints(milestone.constraintsToSuperviewEdges()!)
     }
 
+    // MARK: Layout Methods
+    
     open override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
         var targetSize = targetSize
         let calculated = super.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: horizontalFittingPriority, verticalFittingPriority: verticalFittingPriority)
