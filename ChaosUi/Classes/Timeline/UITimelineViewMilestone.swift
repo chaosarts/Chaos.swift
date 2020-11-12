@@ -170,6 +170,7 @@ open class UITimelineViewMilestone: UIView {
 
     open override func layoutSubviews() {
         stackView.axis = axis
+        stackView.alignment = stackViewAlignment(for: alignment)
         updateSizes()
         updateOrthogonalAlignment()
         super.layoutSubviews()

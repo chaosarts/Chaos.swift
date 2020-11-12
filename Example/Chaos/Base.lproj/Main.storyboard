@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -15,21 +16,44 @@
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
+                    <view key="view" contentMode="scaleToFill" id="gR7-Sf-VpU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h3y-13-zkz" customClass="UITimelineView" customModule="Chaos">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C2m-6I-en6">
+                                <rect key="frame" x="164.5" y="637" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="didTapButtonWithSender:" destination="vXZ-lx-hvc" eventType="touchDown" id="OmE-Ku-ie0"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="C2m-6I-en6" firstAttribute="centerX" secondItem="gR7-Sf-VpU" secondAttribute="centerX" id="1R0-U8-UrS"/>
+                            <constraint firstItem="h3y-13-zkz" firstAttribute="leading" secondItem="gR7-Sf-VpU" secondAttribute="leading" id="BTY-Qu-oU7"/>
+                            <constraint firstAttribute="trailing" secondItem="h3y-13-zkz" secondAttribute="trailing" id="Cr1-X4-UBI"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="h3y-13-zkz" secondAttribute="bottom" id="aHS-Th-yBm"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="C2m-6I-en6" secondAttribute="bottom" id="ebU-Op-aav"/>
+                            <constraint firstItem="h3y-13-zkz" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="nIm-Rd-cFs"/>
+                        </constraints>
                     </view>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="image" keyPath="defaultTaskImage" value="square.and.arrow.up" catalog="system"/>
-                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <outlet property="timelineView" destination="h3y-13-zkz" id="d8T-3S-5mC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="138" y="57"/>
+            <point key="canvasLocation" x="136.80000000000001" y="56.221889055472268"/>
         </scene>
     </scenes>
     <resources>
-        <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

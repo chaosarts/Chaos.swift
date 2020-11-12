@@ -20,12 +20,6 @@ public protocol TaskRunnerSource: class {
     /// index.
     func taskRunner (_ taskRunner: TaskRunner, taskAtIndex index: Int) -> Task
 
-    /// Asks the source if it can rescue the the task at given index.
-    func taskRunner (_ taskRunner: TaskRunner, canRescueTaskAtIndex index: Int, withError error: Error) -> Bool
-
-    /// Asks the source to rescue the task at given index.
-    func taskRunner (_ taskRunner: TaskRunner, rescueTaskAtIndex index: Int, completion: @escaping (Error?) -> Void)
-
     /// Asks the data source, whether the task at given index is required to
     /// finish successfully or not.
     func taskRunner (_ taskRunner: TaskRunner, isTaskRequiredAtIndex index: Int) -> Bool
@@ -33,7 +27,5 @@ public protocol TaskRunnerSource: class {
 
 
 public extension TaskRunnerSource {
-    func taskRunner (_ taskRunner: TaskRunner, canRescueTaskAtIndex index: Int, withError error: Error) -> Bool { false }
-    func taskRunner (_ taskRunner: TaskRunner, rescueTaskAtIndex index: Int, completion: @escaping (Error?) -> Void) { completion(nil) }
     func taskRunner (_ taskRunner: TaskRunner, isTaskRequiredAtIndex index: Int) -> Bool { true }
 }

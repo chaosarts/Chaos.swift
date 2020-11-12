@@ -45,10 +45,12 @@ open class UITimelineView: UIView {
     ///
     /// When the collection view ask the timeline view for a cell, the timeline
     /// view ask its data source for a timeline milestone, where
-    /// `dequeueReusableMilestone` may have been called. Therefor we preserve the
-    /// collection view cell in `dequeueReusableMilestone` in this dictionary, so
-    /// when returning from the data source, we can fetch this dequeued cell from
-    /// this dictionary.
+    /// `dequeueReusableMilestone` should have been called. Therefore we preserve
+    /// the collection view cell in `dequeueReusableMilestone` in this dictionary
+    /// , so when returning from the data source, we can fetch this dequeued cell
+    /// from this dictionary. Otherwise an error will occur, telling us, that the
+    /// returned collection view cell has not been dequeued from the collection
+    /// view.
     private var dequeuedMilestoneCells: [IndexPath: UITimelineViewMilestoneCell] = [:]
 
 
@@ -168,6 +170,7 @@ open class UITimelineView: UIView {
             milestone.leadingViewSpacing = self.leadingViewSpacing
             milestone.trailingViewSpacing = self.trailingViewSpacing
         })
+
     }
 
 
@@ -215,16 +218,22 @@ open class UITimelineView: UIView {
         collectionView.performBatchUpdates(update, completion: completion)
     }
 
-    // MARK: Handlers
+    // MARK: Control Appearance
 
-    public func didSetAxis () {
+    open func setAxis (_ axis: NSLayoutConstraint.Axis, animated: Bool = false) {
         switch axis {
         case .vertical:
-            collectionView.setCollectionViewLayout(verticalCollectionViewLayout, animated: true)
+            collectionView.setCollectionViewLayout(verticalCollectionViewLayout, animated: animated)
         case .horizontal:
-            collectionView.setCollectionViewLayout(horizontalCollectionViewLayout, animated: true)
+            collectionView.setCollectionViewLayout(horizontalCollectionViewLayout, animated: animated)
         }
         setNeedsLayout()
+    }
+
+    // MARK: Handlers
+
+    private func didSetAxis () {
+        setAxis(axis, animated: true)
     }
 }
 
@@ -234,6 +243,10 @@ open class UITimelineView: UIView {
 public extension UITimelineView {
     @objc enum Alignment: Int {
         case leading, center, trailing
+    }
+
+    @objc enum ConnectorStyle: Int {
+        case solid, dashed
     }
 }
 
@@ -281,24 +294,4 @@ extension UITimelineView: UICollectionViewDelegateFlowLayout {
     public final func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         milestoneSpacing
     }
-
-    public final func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        .zero
-    }
-}
-
-
-// MARK: -
-
-@objc public protocol UITimelineViewDataSource: class, NSObjectProtocol {
-    @objc func numberOfMilestones (_ timelineView: UITimelineView) -> Int
-    @objc func timelineView (_ timelineView: UITimelineView, milestoneForItemAt index: Int) -> UITimelineViewMilestone
-}
-
-
-// MARK: -
-
-@objc public protocol UITimelineViewDelegate: class, NSObjectProtocol {
-    @objc optional func timelineView (_ timelineView: UITimelineView, widthForMilestoneAt index: Int) -> CGFloat
-    @objc optional func timelineView (_ timelineView: UITimelineView, heightForMilestoneAt index: Int) -> CGFloat
 }

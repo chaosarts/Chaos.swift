@@ -21,6 +21,9 @@ open class ApiResponseError: ApiError<ApiResponseError.Code> {
 
 @objc public extension ApiResponseError {
     @objc enum Code: Int {
+
+        /// Indicates, that there was no data to decode in the http response body.
+        /// 
         case noResponseData
         case decodingError
         case clientError

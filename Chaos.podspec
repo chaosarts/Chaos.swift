@@ -7,9 +7,6 @@
 #
 
 Pod::Spec.new do |s|
-
-  ios_deployment_target = '12.0'
-
   s.name             = 'Chaos'
   s.version          = '1.0.0'
   s.summary          = 'Collection of all Chaos iOS Frameworks'
@@ -32,13 +29,13 @@ Pod::Spec.new do |s|
       :tag => s.version.to_s
   }
 
-  s.ios.deployment_target     = ios_deployment_target
+  s.ios.deployment_target     = '12.0'
   s.osx.deployment_target     = '10.13'
   s.watchos.deployment_target = '6.0'
 
-  s.info_plist = {
-    'CFBundleIdentifier' => 'de.chaosarts'
-  }
+#  s.info_plist  = {
+#    'CFBundleIdentifier' => '${PRODUCT_BUNDLE_IDENTIFIER}'
+#  }
 
   s.subspec 'Core' do |subspec|
     subspec.source_files  = 'ChaosCore/Classes/**/*'

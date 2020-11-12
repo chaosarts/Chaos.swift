@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import ChaosCore
+@testable import Chaos
 
 public class TaskRunnerTests: XCTestCase {
     

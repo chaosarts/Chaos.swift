@@ -11,29 +11,28 @@ import Foundation
 ///
 /// A task runner informs the delegate abount several events during processing the
 /// list of tasks of a task runner source.
-public protocol TaskRunnerDelegate: class {
+@objc public protocol TaskRunnerDelegate: class {
+
+    /// Tells the delegate, that the task runner will start executing the task
+    /// from the task source.
+    @objc optional func taskRunnerWillStart (_ taskRunner: TaskRunner)
+
+    /// Tells the delegate that the task runner has resumed on executing tasks.
+    @objc optional func taskRunnerWillResume (_ taskRunner: TaskRunner)
 
     /// Tells the delegate, that the task runner is about to run the task at given
     /// index.
-    func taskRunner (_ taskRunner: TaskRunner, willRunTaskAtIndex index: Int)
+    @objc optional func taskRunner (_ taskRunner: TaskRunner, willRunTaskAt index: Int)
 
     /// Tells the delegate, that the task runner has finished executing task at
-    /// given index.
-    func taskRunner (_ taskRunner: TaskRunner, didFinishTaskAtIndex index: Int, withError error: Error?)
+    /// given index successfully.
+    @objc optional func taskRunner (_ taskRunner: TaskRunner, didFinishTaskAt index: Int)
 
-    /// Tells the delegate that the task runner did stop running with task at
-    /// given index, due to an error.
-    func taskRunner (_ taskRunner: TaskRunner, didStopRunningAtIndex index: Int, withError error: Error)
+    /// Tellse the delegate that the task at given index has failed with given
+    /// error. At this point the runner also stops running.
+    @objc optional func taskRunner (_ taskRunner: TaskRunner, taskAt index: Int, didFailWithError error: Error)
 
-    /// Tells the delegate, that the task runner has completed the list of it task
-    /// source successfully.
-    func taskRunner (_ taskRunner: TaskRunner, didFinishWithError error: Error?)
-}
-
-
-public extension TaskRunnerDelegate {
-    func taskRunner (_ taskRunner: TaskRunner, willRunTaskAtIndex index: Int) {}
-    func taskRunner (_ taskRunner: TaskRunner, didFinishTaskAtIndex index: Int, withError error: Error?) {}
-    func taskRunner (_ taskRunner: TaskRunner, didStopRunningAtIndex index: Int, withError error: Error) {}
-    func taskRunner (_ taskRunner: TaskRunner, didFinishWithError error: Error?) {}
+    /// Tells the delegate, that the taskrunner has finished the tasks
+    /// successfully.
+    @objc optional func taskRunnerDidFinish (_ taskRunner: TaskRunner)
 }

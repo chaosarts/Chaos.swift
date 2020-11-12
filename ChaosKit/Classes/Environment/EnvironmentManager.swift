@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import ChaosCore
 
 private let kEnvironmentsUserDefaults = "Environments"
 private let kSelectedEnvironmentUserDefaults = "SelectedEnvironment"

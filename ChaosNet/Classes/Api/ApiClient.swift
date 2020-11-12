@@ -51,18 +51,21 @@ open class ApiClient: NSObject {
     public func send<D: Decodable> (apiRequest: ApiRequest, to baseUrl: URL) -> Promise<D> {
         do {
             delegate?.apiClient(self, willSendApiRequest: apiRequest)
+
             var urlRequest = try self.urlRequest(for: apiRequest, at: baseUrl)
 
             if let headers = urlRequest.allHTTPHeaderFields,
-               headers.contains(where: { $0.key.lowercased() == "accepts" }),
-               requiresContentTypeFromResponse {
+               !headers.contains(where: { $0.key.lowercased() == "accepts" }) &&
+                requiresContentTypeFromResponse {
                 urlRequest.addValue(dataDecoder.mimeType.description, forHTTPHeaderField: "Accepts")
             }
 
             apiRequest.urlRequest = urlRequest
+
             return transportEngine.send(urlRequest: urlRequest)
-                .then({
-                    try self.process(D.self, httpResponse: $0.httpResponse, data: $0.data, for: apiRequest)
+                .then({ data -> D in
+                    try self.throwOnHttpErrorStatus(data.httpResponse, with: data.data, for: apiRequest)
+                    return try self.process(D.self, httpResponse: data.httpResponse, data: data.data, for: apiRequest)
                 })
                 .catch({ error in
                     throw self.process(error: error, for: apiRequest)
@@ -72,6 +75,27 @@ open class ApiClient: NSObject {
             return Promise(error: error)
         }
     }
+
+    /// Sends the request to the api at given url. Use this method, if no data
+    /// object is expected to be returned in the response bod.
+    public func send (apiRequest: ApiRequest, to baseUrl: URL) -> Promise<Void> {
+        do {
+            delegate?.apiClient(self, willSendApiRequest: apiRequest)
+            let urlRequest = try self.urlRequest(for: apiRequest, at: baseUrl)
+
+            return transportEngine.send(urlRequest: urlRequest)
+                .then({
+                    try self.throwOnHttpErrorStatus($0.httpResponse, with: $0.data, for: apiRequest)
+                })
+                .catch({ error in
+                    throw self.process(error: error, for: apiRequest)
+                })
+        } catch {
+            delegate?.apiClient(self, didReceiveError: error, for: apiRequest)
+            return Promise(error: error)
+        }
+    }
+    
 
     // MARK: Api Request Mapping
 
@@ -138,6 +162,14 @@ open class ApiClient: NSObject {
             request.httpBody = apiRequest.payload
         }
 
+
+        // Contribute header data if needed
+        if let headers = request.allHTTPHeaderFields,
+           !headers.contains(where: { $0.key.lowercased() == "content-type" }) &&
+            requiresContentTypeForRequest {
+            request.addValue(dataDecoder.mimeType.description, forHTTPHeaderField: "Content-Type")
+        }
+
         return request
     }
 
@@ -162,10 +194,7 @@ open class ApiClient: NSObject {
     
     // MARK: Response and Request Handling
 
-    /// Processes the http response the api client received from the transport
-    /// engine and maps it to an ApiResponse object.
-    private func process<D: Decodable> (_ type: D.Type = D.self, httpResponse: HTTPURLResponse, data: Data?, for apiRequest: ApiRequest) throws -> D {
-
+    private func throwOnHttpErrorStatus (_ httpResponse: HTTPURLResponse, with data: Data?, for apiRequest: ApiRequest) throws {
         let status = HttpStatus(httpResponse.statusCode)
 
         if let errorCode = apiResponseErrorCode(for: status) {
@@ -174,7 +203,11 @@ open class ApiClient: NSObject {
                                    response: httpResponse,
                                    data: data)
         }
+    }
 
+    /// Processes the http response the api client received from the transport
+    /// engine and maps it to an ApiResponse object.
+    private func process<D: Decodable> (_ type: D.Type = D.self, httpResponse: HTTPURLResponse, data: Data?, for apiRequest: ApiRequest) throws -> D {
         guard let data = data else {
             throw ApiResponseError(code: .noResponseData,
                                    request: apiRequest,

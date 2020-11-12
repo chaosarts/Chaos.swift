@@ -7,8 +7,7 @@
 
 import Foundation
 
-@objc
-public class UITaskViewModel: NSObject {
+@objc public class UITaskViewModel: NSObject {
 
     internal let task: Task
 

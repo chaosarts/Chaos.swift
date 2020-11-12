@@ -15,8 +15,6 @@ public class TaskRunnerError: CustomNSError {
 
     public let previous: Error?
 
-    public static var errorDomain: String { NSStringFromClass(Self.self) }
-
     public var errorCode: Int { code.rawValue }
 
     public init (code: Code, message: String? = nil, previous: Error? = nil) {
