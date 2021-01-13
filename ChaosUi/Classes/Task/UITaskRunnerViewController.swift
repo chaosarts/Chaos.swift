@@ -91,6 +91,8 @@ extension UITaskRunnerViewController: TaskRunnerDelegate {
     }
 
     public func taskRunner(_ taskRunner: TaskRunner, taskAt index: Int, didFailWithError error: Error) {
+        let task = taskRunner.task(at: index)
+        let targetMethod = task.id.snakecased()
         delegate?.taskRunnerViewController?(self, present: error, forTaskAt: index)
     }
 
@@ -103,7 +105,7 @@ extension UITaskRunnerViewController: TaskRunnerDelegate {
 
 // MARK: -
 
-@objc public protocol UITaskRunnerViewControllerDelegate: class {
+@objc public protocol UITaskRunnerViewControllerDelegate: class, NSObjectProtocol {
 
     /// Asks the delegate for the title to display for the task corresponding to
     /// given id.

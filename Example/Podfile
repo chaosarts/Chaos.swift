@@ -3,10 +3,13 @@ inhibit_all_warnings!
 
 platform :ios, '13.0'
 
+pod 'ChaosCore', :path => '../'
+pod 'ChaosGraphics', :path => '../'
+pod 'ChaosKit', :path => '../'
+pod 'ChaosNet', :path => '../'
+pod 'ChaosUi', :path => '../'
 
 target 'Chaos_Example' do
-  pod 'Chaos', :path => '../'
-
   target 'Chaos_Tests' do
     pod 'SwiftLint'
     pod 'Hippolyte'

@@ -19,11 +19,5 @@ import Foundation
     /// configure it. Otherwise the timeline view invokes an fatal error.
     @objc func timelineView (_ timelineView: UITimelineView, milestoneForItemAt index: Int) -> UITimelineViewMilestone
 
-    /// Asks the data source if an outgoing connector needs to be drawn from the
-    /// milestone at given index.
-    @objc optional func timelineView (_ timelineView: UITimelineView, hasConnectorForMilestoneAt index: Int) -> Bool
-
-    /// Asks the data source for the index of the milestone, at which the
-    /// connector ends with origin from the milestone of given index.
-    @objc optional func timelineView (_ timelineView: UITimelineView, connectorEndIndexForMilestonAt index: Int) -> Int
+    @objc optional func timelineView (_ timelineView: UITimelineView, connectorForItemAt index: Int) -> UITimelineViewConnector?
 }

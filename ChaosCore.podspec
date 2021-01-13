@@ -7,7 +7,7 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = 'Chaos'
+  s.name             = 'ChaosCore'
   s.version          = '1.0.0'
   s.summary          = 'Collection of all Chaos iOS Frameworks'
 
@@ -33,33 +33,8 @@ Pod::Spec.new do |s|
   s.osx.deployment_target     = '10.13'
   s.watchos.deployment_target = '6.0'
 
-#  s.info_plist  = {
-#    'CFBundleIdentifier' => '${PRODUCT_BUNDLE_IDENTIFIER}'
-#  }
+  s.source_files  = 'ChaosCore/Classes/**/*'
+  s.frameworks    = 'Foundation'
+  s.dependency 'PromisesSwift', '~> 1.2.8'
 
-  s.subspec 'Core' do |subspec|
-    subspec.source_files  = 'ChaosCore/Classes/**/*'
-    subspec.frameworks    = 'Foundation'
-    subspec.dependency 'PromisesSwift', '~> 1.2.8'
-  end
-
-  s.subspec 'Net' do |subspec|
-    subspec.source_files  = 'ChaosNet/Classes/**/*'
-    subspec.frameworks    = 'Foundation'
-    subspec.dependency 'Chaos/Core'
-  end
-
-  s.subspec 'Ui' do |subspec|
-    subspec.source_files  = 'ChaosUi/Classes/**/*'
-    subspec.frameworks    = 'Foundation'
-    subspec.dependency 'Chaos/Core'
-  end
-  
-  s.subspec 'Kit' do |subspec|
-    subspec.source_files  = 'ChaosKit/Classes/**/*'
-    subspec.frameworks    = 'Foundation'
-    subspec.dependency 'Chaos/Core' 
-    subspec.dependency 'Chaos/Net'
-    subspec.dependency 'Chaos/Ui'
-  end
 end

@@ -78,7 +78,7 @@ public class TaskRunner: NSObject {
     /// Invokes the task runner to run the tasks one by one. This will execute the
     /// code that `resume` and `start` have in common.
     private func run () -> Promise<Void> {
-        guard let taskSource = taskSource else {
+        guard taskSource != nil else {
             let error = TaskRunnerError(code: .noTaskSource)
             return Promise(error: error)
         }

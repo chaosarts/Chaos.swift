@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ChaosCore
 
 /// Base class for api related errors.
 open class ApiError<Code: RawRepresentable>: ChaosError where Code.RawValue == Int  {

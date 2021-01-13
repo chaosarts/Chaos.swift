@@ -119,6 +119,17 @@ open class UITimelineView: UIView {
         didSet { setNeedsLayout() }
     }
 
+    private var totalSize: CGFloat {
+        switch axis {
+        case .vertical:
+            return bounds.width
+        case .horizontal:
+            return bounds.height
+        }
+    }
+
+    private let connectorsLayer: CALayer = CALayer()
+
 
     // MARK:  Initialization
 
@@ -171,6 +182,21 @@ open class UITimelineView: UIView {
             milestone.trailingViewSpacing = self.trailingViewSpacing
         })
 
+        if let firstVisibleCell = collectionView.visibleCells.first,
+           let firstVisibleCellIndexPath = collectionView.indexPath(for: firstVisibleCell) {
+            let startIndex = firstVisibleCellIndexPath.row > 0 ? IndexPath(row: firstVisibleCellIndexPath.row - 1, section: 0) : firstVisibleCellIndexPath
+
+        }
+
+        drawConnectors()
+    }
+
+
+    private func drawConnectors () {
+        connectorsLayer.sublayers?.forEach({ $0.removeFromSuperlayer() })
+        layer.insertSublayer(connectorsLayer, at: 0)
+
+        
     }
 
 

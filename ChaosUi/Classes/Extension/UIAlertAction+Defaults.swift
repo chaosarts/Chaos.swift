@@ -5,7 +5,7 @@
 //  Created by Fu Lam Diep on 26.10.20.
 //
 
-import Foundation
+import UIKit
 
 public extension UIAlertAction {
     static func ok (style: UIAlertAction.Style = .default, handler: ((UIAlertAction) -> Void)? = nil) -> UIAlertAction {

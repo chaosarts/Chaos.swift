@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ChaosCore
 
 open class ApiClient: NSObject {
 
