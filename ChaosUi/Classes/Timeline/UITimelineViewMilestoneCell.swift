@@ -63,8 +63,10 @@ internal class UITimelineViewMilestoneCellImpl<Milestone: UITimelineViewMileston
         switch milestone.axis {
         case .horizontal:
             targetSize.height = calculated.height
-        @unknown default:
+        case .vertical:
             targetSize.width = calculated.width
+        @unknown default:
+            fatalError("Unknown NSLayoutConstraint.Axis")
         }
         return targetSize
     }

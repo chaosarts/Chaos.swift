@@ -116,7 +116,7 @@ open class UITicketView: UIView {
         container.subviews.forEach({ $0.removeFromSuperview() })
         if let view = view {
             container.addSubview(view)
-            view.constraintToSuperviewSize()
+            container.addConstraints(view.constraintToSuperviewSize())
         }
     }
 }

@@ -26,6 +26,7 @@ let package = Package(
         ),
         .testTarget(
             name: "ChaosCoreTest",
+            dependencies: ["ChaosCore"],
             path: "Example/Tests/ChaosCore"
         ),
         .target(

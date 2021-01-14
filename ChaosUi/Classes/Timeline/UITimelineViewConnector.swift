@@ -49,8 +49,10 @@ public class UITimelineViewSolidConnector: NSObject, UITimelineViewConnector {
         switch axis {
         case .horizontal:
             radius = frame.height / 2.0
-        @unknown default:
+        case.vertical:
             radius = frame.width / 2.0
+        @unknown default:
+            fatalError("Unknown NSLayoutConstraint.Axis")
         }
         return UIBezierPath(roundedRect: frame, cornerRadius: radius).cgPath
     }

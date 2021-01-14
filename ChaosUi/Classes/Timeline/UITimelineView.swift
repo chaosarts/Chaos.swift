@@ -123,8 +123,10 @@ open class UITimelineView: UIView {
         switch axis {
         case .horizontal:
             return bounds.height
-        @unknown default:
+        case .vertical:
             return bounds.width
+        @unknown default:
+            fatalError("Unknwon NSLayoutConstraint.Axis")
         }
     }
 
@@ -250,8 +252,10 @@ open class UITimelineView: UIView {
         switch axis {
         case .horizontal:
             collectionView.setCollectionViewLayout(horizontalCollectionViewLayout, animated: animated)
-        @unknown default:
+        case .vertical:
             collectionView.setCollectionViewLayout(verticalCollectionViewLayout, animated: animated)
+        @unknown default:
+            fatalError("Unknown NSLayoutConstraint.Axis")
         }
         setNeedsLayout()
     }
