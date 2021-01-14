@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "Chaos",
-    platforms: [.iOS(.v10)],
+    platforms: [.iOS(.v11)],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(name: "ChaosCore", targets: ["ChaosCore"]),
@@ -23,6 +23,10 @@ let package = Package(
             name: "ChaosCore",
             dependencies: [.product(name: "Promises", package: "Promises")],
             path: "ChaosCore"
+        ),
+        .testTarget(
+            name: "ChaosCoreTest",
+            path: "Example/Tests/ChaosCore"
         ),
         .target(
             name: "ChaosNet",

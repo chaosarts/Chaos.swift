@@ -338,8 +338,6 @@ public extension ApiClientDelegate {
             return .PUT
         case .delete:
             return .DELETE
-        @unknown default:
-            fatalError()
         }
     }
 

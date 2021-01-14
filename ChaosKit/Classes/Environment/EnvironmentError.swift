@@ -29,8 +29,7 @@ public class EnvironmentError: Error {
 
 
 public extension EnvironmentError {
-    @objc
-    public enum Code: Int {
+    @objc enum Code: Int {
         case environmentsFileNotFound
         case importFailed
         case loadingEnvironmentsFailed

@@ -5,12 +5,11 @@
 //  Created by Fu Lam Diep on 26.10.20.
 //
 
-import Foundation
+import UIKit
 
 public extension UIViewController {
 
-    @objc
-    open func presentAlert (message: String,
+    @objc func presentAlert (message: String,
                             title: String? = nil,
                             actions: [UIAlertAction] = [],
                             style: UIAlertController.Style = .alert,
@@ -21,8 +20,7 @@ public extension UIViewController {
         present(controller, animated: animated, completion: completion)
     }
 
-    @objc
-    open func alertController (message: String,
+    @objc func alertController (message: String,
                                title: String? = nil,
                                actions: [UIAlertAction] = [],
                                style: UIAlertController.Style = .alert) -> UIAlertController {

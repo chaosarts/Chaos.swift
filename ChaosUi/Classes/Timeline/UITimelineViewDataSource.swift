@@ -5,7 +5,7 @@
 //  Created by Fu Lam Diep on 06.11.20.
 //
 
-import Foundation
+import UIKit
 
 /// Protocol to describe a data source for a timeline view.
 @objc public protocol UITimelineViewDataSource: class, NSObjectProtocol {

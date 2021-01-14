@@ -14,6 +14,8 @@ public extension NSLayoutConstraint.Axis {
             return .vertical
         case .vertical:
             return .horizontal
+        @unknown default:
+            fatalError("Unknown NSLayoutConstraint.Axis")
         }
     }
 }

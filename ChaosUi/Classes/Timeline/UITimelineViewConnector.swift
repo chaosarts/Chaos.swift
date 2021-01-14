@@ -5,7 +5,7 @@
 //  Created by Fu Lam Diep on 13.11.20.
 //
 
-import Foundation
+import UIKit
 
 @objc public protocol UITimelineViewConnector: class, NSObjectProtocol {
     @objc optional var weight: CGFloat { get }
@@ -49,7 +49,7 @@ public class UITimelineViewSolidConnector: NSObject, UITimelineViewConnector {
         switch axis {
         case .horizontal:
             radius = frame.height / 2.0
-        case .vertical:
+        @unknown default:
             radius = frame.width / 2.0
         }
         return UIBezierPath(roundedRect: frame, cornerRadius: radius).cgPath

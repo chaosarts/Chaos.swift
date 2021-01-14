@@ -5,7 +5,8 @@
 //  Created by Fu Lam Diep on 26.10.20.
 //
 
-import Foundation
+import UIKit
+import ChaosCore
 
 @objc public class UITaskViewModel: NSObject {
 

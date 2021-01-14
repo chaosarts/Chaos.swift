@@ -5,7 +5,7 @@
 //  Created by Fu Lam Diep on 06.11.20.
 //
 
-import Foundation
+import UIKit
 
 @objc public protocol UITimelineViewDelegate: class, NSObjectProtocol {
 }

@@ -5,7 +5,7 @@
 //  Created by Fu Lam Diep on 19.10.20.
 //
 
-import Foundation
+import ChaosCore
 
 public protocol EnvironmentSetupTask {
 

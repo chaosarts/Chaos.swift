@@ -5,7 +5,7 @@
 //  Created by Fu Lam Diep on 17.10.20.
 //
 
-import Foundation
+import UIKit
 
 extension UILayoutPriority: ExpressibleByIntegerLiteral {
     public init(integerLiteral value: Int) {

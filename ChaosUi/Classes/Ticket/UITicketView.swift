@@ -5,7 +5,7 @@
 //  Created by Fu Lam Diep on 02.12.20.
 //
 
-import Foundation
+import UIKit
 
 private let kTicketViewInsetTopConstraint = "kTicketViewInsetTopConstraint"
 private let kTicketViewInsetRightConstraint = "kTicketViewInsetRightConstraint"

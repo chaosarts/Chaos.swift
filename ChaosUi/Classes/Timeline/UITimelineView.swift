@@ -121,10 +121,10 @@ open class UITimelineView: UIView {
 
     private var totalSize: CGFloat {
         switch axis {
-        case .vertical:
-            return bounds.width
         case .horizontal:
             return bounds.height
+        @unknown default:
+            return bounds.width
         }
     }
 
@@ -184,7 +184,7 @@ open class UITimelineView: UIView {
 
         if let firstVisibleCell = collectionView.visibleCells.first,
            let firstVisibleCellIndexPath = collectionView.indexPath(for: firstVisibleCell) {
-            let startIndex = firstVisibleCellIndexPath.row > 0 ? IndexPath(row: firstVisibleCellIndexPath.row - 1, section: 0) : firstVisibleCellIndexPath
+            _ = firstVisibleCellIndexPath.row > 0 ? IndexPath(row: firstVisibleCellIndexPath.row - 1, section: 0) : firstVisibleCellIndexPath
 
         }
 
@@ -248,10 +248,10 @@ open class UITimelineView: UIView {
 
     open func setAxis (_ axis: NSLayoutConstraint.Axis, animated: Bool = false) {
         switch axis {
-        case .vertical:
-            collectionView.setCollectionViewLayout(verticalCollectionViewLayout, animated: animated)
         case .horizontal:
             collectionView.setCollectionViewLayout(horizontalCollectionViewLayout, animated: animated)
+        @unknown default:
+            collectionView.setCollectionViewLayout(verticalCollectionViewLayout, animated: animated)
         }
         setNeedsLayout()
     }

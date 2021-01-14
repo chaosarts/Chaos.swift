@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ChaosGraphics
 
 public extension UIBezierPath {
     static func ticketShape (frame: CGRect, axis: NSLayoutConstraint.Axis = .vertical, cornerRadius: CGFloat = 14.0, tearOffOffset: CGFloat = 18.0, tearOffRadius: CGFloat = 4.0) -> UIBezierPath {

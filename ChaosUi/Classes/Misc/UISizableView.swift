@@ -5,7 +5,7 @@
 //  Created by Fu Lam Diep on 03.11.20.
 //
 
-import Foundation
+import UIKit
 
 open class UISizableView: UIView {
 

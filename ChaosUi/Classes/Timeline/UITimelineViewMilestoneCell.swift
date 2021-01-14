@@ -5,7 +5,7 @@
 //  Created by Fu Lam Diep on 04.11.20.
 //
 
-import Foundation
+import UIKit
 
 /// Defines a protocol that requires to have a milestone property.
 internal protocol UITimelineViewMilestoneCellProtocol: class, NSObjectProtocol {
@@ -63,7 +63,7 @@ internal class UITimelineViewMilestoneCellImpl<Milestone: UITimelineViewMileston
         switch milestone.axis {
         case .horizontal:
             targetSize.height = calculated.height
-        case .vertical:
+        @unknown default:
             targetSize.width = calculated.width
         }
         return targetSize

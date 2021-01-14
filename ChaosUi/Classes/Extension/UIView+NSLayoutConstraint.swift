@@ -5,7 +5,7 @@
 //  Created by Fu Lam Diep on 02.11.20.
 //
 
-import Foundation
+import UIKit
 
 public extension UIView {
     func constraintToSuperviewTopEdge (constant: CGFloat = .zero) -> NSLayoutConstraint? {

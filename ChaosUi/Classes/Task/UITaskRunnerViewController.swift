@@ -5,7 +5,8 @@
 //  Created by Fu Lam Diep on 26.10.20.
 //
 
-import Foundation
+import UIKit
+import ChaosCore
 
 open class UITaskRunnerViewController: UIViewController {
 
@@ -53,7 +54,7 @@ open class UITaskRunnerViewController: UIViewController {
     /// of finished tasks in relation to the total number of tasks.
     open var progress: Float {
         get { progressView?.progress ?? 0.0 }
-        set { progressView?.setProgress(newValue ?? 0, animated: true) }
+        set { progressView?.setProgress(newValue, animated: true) }
     }
 
 
