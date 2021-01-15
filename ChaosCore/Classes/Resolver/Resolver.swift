@@ -54,17 +54,19 @@ public final class Resolver {
 
     // MARK: Managing Profiles
 
-    /// Sets the profiles to activate, this list will indicate which injectables
+    /// Sets the list of profiles to indicate which implementation to use when
+    /// resolving classes. This will also invoke `scan()`.
     public func setProfiles (_ profiles: [String]) {
         self.profiles = Set(profiles)
         needsUpdate = true
+        scan()
     }
 
 
     // MARK: Scanning for Injectables
 
     /// Scans the project for injectable classes according to the list of active
-    /// profiles and stores the list in a temporary list. This method needs to be
+    /// profiles and stores them in a temporary list. This method needs to be
     /// called before using the resolver or after setting the profiles.
     @discardableResult
     public func scan () -> Int {
@@ -93,7 +95,12 @@ public final class Resolver {
     /// a common function used by resolver methods `one`, `many`, `some`, to
     /// have a unified filter method.
     internal func candidates (_ protocol: Protocol) -> [Resolvable.Type] {
-        activeInjectableTypes.filter({
+        if needsUpdate {
+            fatalError("Fetching candidates failed: scan() needs to be " +
+                        "invoked before use or after calling setProfiles()")
+        }
+
+        return activeInjectableTypes.filter({
             ChaosCore.class_conformsToProtocol($0, `protocol`)
         })
     }
@@ -118,7 +125,7 @@ public final class Resolver {
     /// classes are found, this method wil fail in an `fatalError`.
     public func some<T> (_ protocol: Protocol) -> T? {
         let candidates = self.candidates(`protocol`)
-        if candidates.count > 0 {
+        if candidates.count > 1 {
             fatalError("Resolving dependency failed: Candidate is ambigous (\(candidates.count)).")
         }
         return candidates.first?.init() as? T
@@ -135,3 +142,5 @@ public extension Resolver {
     static func many<T> (_ proto: Protocol) -> [T] { main.many(proto) }
     static func some<T> (_ proto: Protocol) -> T? { main.some(proto) }
 }
+
+

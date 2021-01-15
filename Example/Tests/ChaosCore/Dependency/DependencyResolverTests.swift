@@ -20,7 +20,7 @@ public class YourClass: BaseClass, Resolvable {
     required public override init () {}
 }
 public class HisClass: OptionalService, Resolvable {
-    public static var profile: String = "tmpDB"
+    public static let profile: String = "tmpDB"
     required public init () {}
 }
 
@@ -54,7 +54,12 @@ public class DependencyResolverTests: XCTestCase {
         XCTAssertTrue(services.contains(where: { $0 is HerClass }))
         XCTAssertFalse(services.contains(where: { $0 is YourClass }))
 
-        let nilService: OptionalService? = resolver.some(OptionalService.self)
+        var nilService: OptionalService? = resolver.some(OptionalService.self)
         XCTAssertNil(nilService)
+
+        resolver.setProfiles([HisClass.profile])
+        resolver.scan()
+        nilService = resolver.some(OptionalService.self)
+        XCTAssertNotNil(nilService)
     }
 }
