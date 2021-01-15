@@ -21,32 +21,48 @@ let package = Package(
     targets: [
         .target(
             name: "ChaosCore",
-            dependencies: [.product(name: "Promises", package: "Promises")],
-            path: "ChaosCore"
+            dependencies: [
+                .product(name: "Promises", package: "Promises")
+            ],
+            path: "ChaosCore/Classes"
         ),
         .testTarget(
             name: "ChaosCoreTest",
-            dependencies: ["ChaosCore"],
+            dependencies: [
+                "ChaosCore"
+            ],
             path: "Example/Tests/ChaosCore"
         ),
         .target(
             name: "ChaosNet",
-            dependencies: ["ChaosCore", "Alamofire"],
+            dependencies: [
+                "ChaosCore",
+                .product(name: "Alamofire", package: "Alamofire")
+            ],
             path: "ChaosNet"
         ),
         .target(
             name: "ChaosGraphics",
-            dependencies: ["ChaosCore"],
+            dependencies: [
+                "ChaosCore"
+            ],
             path: "ChaosGraphics"
         ),
         .target(
             name: "ChaosUi",
-            dependencies: ["ChaosCore", "ChaosGraphics"],
+            dependencies: [
+                "ChaosCore",
+                "ChaosGraphics"
+            ],
             path: "ChaosUi"
         ),
         .target(
             name: "ChaosKit",
-            dependencies: ["ChaosCore", "ChaosNet", "ChaosUi"],
+            dependencies: [
+                "ChaosCore",
+                "ChaosNet",
+                "ChaosUi"
+            ],
             path: "ChaosKit"
         )
     ]
