@@ -14,10 +14,28 @@ import Foundation
 /// assign the initial value.
 ///
 /// Requirements: The protocol to be resolved must be visible to the Objective-C
-/// environment (`@objc`). To resolve such a protocol, ther must be at least one
+/// environment (`@objc`). To resolve such a protocol, there must be at least one
 /// class in the project that conforms to this protocol on the one hand, but also
 /// conforms to the protocol `Injectable` to be detected by the resolvers scan
 /// method.
+///
+/// When trying to use the resolver method `one`, `many` or `optional`, the
+/// type specified by the generic parameter should be the same as the `Protocol`
+/// type passed to the method. E.g.:
+///
+/// ```
+/// var service: Service = Resolver.one(Service.self)
+/// var services: [Service] = Resolver.many(Service.self)
+/// var service: Service? = Resolver.optional(Service.self)
+/// ```
+/// - Note: It is recommended to use the same protocol type for both, the generic
+/// type and the type passed to the method. Unfortunatley generic and meta types
+/// cannot be put into relation with type `Protocol`. But `Protocol` is needed to
+/// limit the type to pass to the methods and to check for protocol conformance.
+/// Hence the relation between the generic type and the type passed to the method
+/// cannot be checked at compile time.
+///
+/// - TODO: Implement mechanism for singletons/cache and named instances
 public final class Resolver {
 
     // MARK: Properties
@@ -109,24 +127,45 @@ public final class Resolver {
     /// to require a type. The method fails with an `fatalError`, if either more
     /// than one or no candidate has been found.
     public func one<T> (_ protocol: Protocol) -> T {
-        guard let instance: T = some(`protocol`) else {
+        guard let instance: T = optional(`protocol`) else {
             fatalError("Resolving dependency failed: No candidate found.")
         }
         return instance
     }
 
-    /// Attempts to resolve the given protocol as a list of instances.
-    public func many<T> (_ protocol: Protocol) -> [T] {
+    /// Returns a list of instances of each class conforming the given protocol.
+    public func many<T> (_ protocol: Protocol = T.self) -> [T] {
         return self.candidates(`protocol`)
-            .map({ $0.init() as! T })
+            .map({
+                guard let instance = $0.init() as? T else {
+                    fatalError("Resolving dependency failed: unable to " +
+                                "downcast resolvable '\($0.self)' to type \(T.self)")
+                }
+                return instance
+            })
     }
 
-    /// Attepmts to resolve the given protocol to an instance. If more than one
-    /// classes are found, this method wil fail in an `fatalError`.
-    public func some<T> (_ protocol: Protocol) -> T? {
+    /// Attempts to resolve the given protocol to the implicit type T. This method
+    /// fails with `fatalError()`, if either the type to resolve is ambigous or
+    /// the given protocol is unrelated to the implicit type T.
+    public func optional<T> (_ protocol: Protocol) -> T? {
         let candidates = self.candidates(`protocol`)
+
+        // Ambigous type
         if candidates.count > 1 {
-            fatalError("Resolving dependency failed: Candidate is ambigous (\(candidates.count)).")
+            fatalError("Resolving dependency failed: Candidate is ambigous " +
+                        "(\(candidates.count)).")
+        }
+
+        // No class found, but thats okay, since this is optional
+        guard let first = candidates.first else {
+            return nil
+        }
+
+        // Types are unrelated
+        guard let instance = first.init() as? T else {
+            fatalError("Resolving dependency failed: given protocol and type " +
+                        "'\(T.self)' are unrelated.")
         }
         return candidates.first?.init() as? T
     }
@@ -140,7 +179,7 @@ public extension Resolver {
     static func scan () -> Int { main.scan() }
     static func one<T> (_ proto: Protocol) -> T { main.one(proto) }
     static func many<T> (_ proto: Protocol) -> [T] { main.many(proto) }
-    static func some<T> (_ proto: Protocol) -> T? { main.some(proto) }
+    static func some<T> (_ proto: Protocol) -> T? { main.optional(proto) }
 }
 
 

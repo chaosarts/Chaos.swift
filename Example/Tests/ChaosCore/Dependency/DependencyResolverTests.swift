@@ -54,12 +54,12 @@ public class DependencyResolverTests: XCTestCase {
         XCTAssertTrue(services.contains(where: { $0 is HerClass }))
         XCTAssertFalse(services.contains(where: { $0 is YourClass }))
 
-        var nilService: OptionalService? = resolver.some(OptionalService.self)
+        var nilService: OptionalService? = resolver.optional(OptionalService.self)
         XCTAssertNil(nilService)
 
         resolver.setProfiles([HisClass.profile])
         resolver.scan()
-        nilService = resolver.some(OptionalService.self)
+        nilService = resolver.optional(OptionalService.self)
         XCTAssertNotNil(nilService)
     }
 }
