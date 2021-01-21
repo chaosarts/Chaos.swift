@@ -1,6 +1,6 @@
 //
 //  String+CodingKey.swift
-//  INITCore
+//  ChaosCore
 //
 //  Created by Fu Lam Diep on 15.11.19.
 //
