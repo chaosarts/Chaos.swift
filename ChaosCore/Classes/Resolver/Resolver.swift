@@ -61,6 +61,8 @@ public final class Resolver {
     /// after `setProfiles(_:)` has been called.
     private var needsUpdate: Bool = true
 
+    private var injectablesByKey: [String: Resolvable] = [:]
+
 
     // MARK: Initialization
 
@@ -112,30 +114,30 @@ public final class Resolver {
     /// Returns the list of candidates for the given protocol to resolve. This is
     /// a common function used by resolver methods `one`, `many`, `some`, to
     /// have a unified filter method.
-    internal func candidates (_ protocol: Protocol) -> [Resolvable.Type] {
+    internal func candidates (_ proto: Protocol) -> [Resolvable.Type] {
         if needsUpdate {
             fatalError("Fetching candidates failed: scan() needs to be " +
                         "invoked before use or after calling setProfiles()")
         }
 
         return activeInjectableTypes.filter({
-            ChaosCore.class_conformsToProtocol($0, `protocol`)
+            ChaosCore.class_conformsToProtocol($0, proto)
         })
     }
 
     /// Attempts to resolve the given protocol to an instance. This method is used
     /// to require a type. The method fails with an `fatalError`, if either more
     /// than one or no candidate has been found.
-    public func one<T> (_ protocol: Protocol) -> T {
-        guard let instance: T = optional(`protocol`) else {
+    public func one<T> (_ proto: Protocol) -> T {
+        guard let instance: T = optional(proto) else {
             fatalError("Resolving dependency failed: No candidate found.")
         }
         return instance
     }
 
     /// Returns a list of instances of each class conforming the given protocol.
-    public func many<T> (_ protocol: Protocol = T.self) -> [T] {
-        return self.candidates(`protocol`)
+    public func many<T> (_ proto: Protocol) -> [T] {
+        return self.candidates(proto)
             .map({
                 guard let instance = $0.init() as? T else {
                     fatalError("Resolving dependency failed: unable to " +
@@ -148,8 +150,8 @@ public final class Resolver {
     /// Attempts to resolve the given protocol to the implicit type T. This method
     /// fails with `fatalError()`, if either the type to resolve is ambigous or
     /// the given protocol is unrelated to the implicit type T.
-    public func optional<T> (_ protocol: Protocol) -> T? {
-        let candidates = self.candidates(`protocol`)
+    public func optional<T> (_ proto: Protocol) -> T? {
+        let candidates = self.candidates(proto)
 
         // Ambigous type
         if candidates.count > 1 {
@@ -168,6 +170,15 @@ public final class Resolver {
                         "'\(T.self)' are unrelated.")
         }
         return candidates.first?.init() as? T
+    }
+
+    /// Builds the according instance to the given class passed. If the type
+    /// responds to `singleton` with true, the method tries to get the instance
+    /// from cache and if it fails it creates a new instance at put it into cache.
+    private func build (_ type: Resolvable.Type) -> Resolvable {
+        guard type.singleton == true else { return type.init() }
+        let key = NSStringFromClass(type)
+        return injectablesByKey.insertIfNotExists(type.init(), forKey: key)
     }
 }
 

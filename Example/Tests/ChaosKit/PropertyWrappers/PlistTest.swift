@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import Chaos
+@testable import ChaosKit
 
 public class PlistTest: XCTestCase {
 

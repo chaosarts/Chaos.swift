@@ -7,7 +7,8 @@
 //
 
 import UIKit
-import Chaos
+import ChaosCore
+import ChaosUi
 
 public class UIAppSetupViewController: UIViewController, UITaskRunnerViewControllerDelegate,
                                        TaskRunnerSource {

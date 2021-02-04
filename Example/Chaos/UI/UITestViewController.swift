@@ -7,47 +7,29 @@
 //
 
 import UIKit
-import Chaos
+import ChaosCore
 
-public protocol NonObjcProtocol {}
-
-@objc public protocol Injectable: NSObjectProtocol {
-    @objc optional static var profile: String { get }
+public class A: Resolvable {
+    public required init () {}
 }
 
-@objc public class Api: NSObject, Injectable {
-    public static var profile: String = "KVV"
+public class B: Resolvable {
+    public required init () {}
 }
 
 public class UITestViewController: UIViewController {
 
+    private var resolvableTypes: [Resolvable.Type] = [A.self, B.self]
+
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-//        let cls: AnyClass = Api.self
-//        print((cls as! NSObject.Type).perform(Selector("profile"))!.takeRetainedValue())
 
-        var count: UInt32 = 0
-        guard let pointer = objc_copyClassList(&count) else {
-            fatalError("Unabled to copy class list.")
+        for resolvableType in resolvableTypes {
+            candidate(resolvableType)
         }
+    }
 
-        let classes = UnsafePointer(pointer)
-        var injectables: [NSObject.Type] = []
-        for i in 0..<Int(count) {
-            let cls: AnyClass = classes[i]
-            guard class_conformsToProtocol(cls, Injectable.self) else { continue }
-
-            let profileSelector = Selector("profile")
-            if (cls as! NSObject.Type).responds(to: profileSelector) {
-                let unmanagedObject = (cls as! NSObject.Type).perform(profileSelector)
-                let profile: String = unmanagedObject!.takeRetainedValue() as! String
-                if (profile != "KVV") { continue }
-            }
-
-            injectables.append(cls as! NSObject.Type)
-        }
-
-        let type = Api.self as! NSObject.Type
-        print(type)
+    public func candidate (_ type: Resolvable.Type) {
+        print(NSStringFromClass(type))
     }
 }

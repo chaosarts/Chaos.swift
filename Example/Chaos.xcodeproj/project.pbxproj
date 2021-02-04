@@ -11,7 +11,6 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		681774F8258A3A30003F2C00 /* Test.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 681774F7258A3A30003F2C00 /* Test.storyboard */; };
 		68214781255D577C00501FD3 /* UIAppSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68214780255D577C00501FD3 /* UIAppSetupViewController.swift */; };
 		6821481A255D8DE500501FD3 /* MimeTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68214819255D8DE500501FD3 /* MimeTypeTests.swift */; };
 		683A0B782541EB0400705836 /* PlistTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683A0B702541EAB400705836 /* PlistTest.swift */; };
@@ -50,7 +49,6 @@
 		607FACE51AFB9204008FA782 /* Chaos_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Chaos_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		635FFEFC7FF3FAA4E9310293 /* Chaos.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Chaos.podspec; path = ../Chaos.podspec; sourceTree = "<group>"; };
-		681774F7258A3A30003F2C00 /* Test.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Test.storyboard; sourceTree = "<group>"; };
 		68214780255D577C00501FD3 /* UIAppSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAppSetupViewController.swift; sourceTree = "<group>"; };
 		68214819255D8DE500501FD3 /* MimeTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MimeTypeTests.swift; sourceTree = "<group>"; };
 		683A0B702541EAB400705836 /* PlistTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlistTest.swift; sourceTree = "<group>"; };
@@ -117,7 +115,6 @@
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 				6821477C255D574F00501FD3 /* UI */,
-				681774F7258A3A30003F2C00 /* Test.storyboard */,
 			);
 			name = "Example for Chaos";
 			path = Chaos;
@@ -373,7 +370,6 @@
 			files = (
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
-				681774F8258A3A30003F2C00 /* Test.storyboard in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

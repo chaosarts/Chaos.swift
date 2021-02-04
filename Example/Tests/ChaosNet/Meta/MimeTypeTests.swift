@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import Chaos
+@testable import ChaosNet
 
 public class MimeTypeTests: XCTestCase {
 

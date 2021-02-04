@@ -124,7 +124,8 @@ open class Promise<Result>: Cancelable {
     /// Provides the status of the promise
     public private(set) var status: Status = .pending
 
-    /// Indicates, whether the promise is pending or resolved (fulfilled or rejected)
+    /// Indicates, whether the promise is pending or resolved (fulfilled or
+    /// rejected)
     public var resolved: Bool { return status != .pending }
 
 
