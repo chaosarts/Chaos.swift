@@ -11,11 +11,8 @@ import XCTest
 class StringTests: XCTestCase {
 
     func testExtract () throws {
-        let comExtraction = try "https://www.google.com".extract(withPattern: "^((https?:)?//)?([^/\\?#]+)(/[^\\?#]*)?(\\?([^#]*))?(#(.*))?");
+        let comExtraction = try "https://www.google.com#main".extract(withPattern: "^((https?:)?//)?([^/\\?#]+)(/[^\\?#]*)?(\\?([^#]*))?(#(.*))?");
         XCTAssertEqual(comExtraction.count, 1)
-        for extraction in comExtraction {
-            print(extraction)
-            XCTAssertEqual(extraction.count, 1)
-        }
+        XCTAssertEqual(comExtraction[0].count, 6)
     }
 }

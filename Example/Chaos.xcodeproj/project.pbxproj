@@ -14,12 +14,14 @@
 		68214781255D577C00501FD3 /* UIAppSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68214780255D577C00501FD3 /* UIAppSetupViewController.swift */; };
 		6821481A255D8DE500501FD3 /* MimeTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68214819255D8DE500501FD3 /* MimeTypeTests.swift */; };
 		683A0B782541EB0400705836 /* PlistTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683A0B702541EAB400705836 /* PlistTest.swift */; };
-		683A0C4925422A7A00705836 /* TaskRunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683A0C4825422A7A00705836 /* TaskRunnerTests.swift */; };
 		683C581C2541D94B004CEA07 /* single-environment.plist in Resources */ = {isa = PBXBuildFile; fileRef = 683C581B2541D94B004CEA07 /* single-environment.plist */; };
 		683C58312541DABF004CEA07 /* missing-fields.plist in Resources */ = {isa = PBXBuildFile; fileRef = 683C58302541DABF004CEA07 /* missing-fields.plist */; };
 		683C583F2541DB8E004CEA07 /* multiple-environments.plist in Resources */ = {isa = PBXBuildFile; fileRef = 683C583E2541DB8D004CEA07 /* multiple-environments.plist */; };
 		684ECDDA253E02CE00DA04D5 /* UITimelineViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684ECDD9253E02CE00DA04D5 /* UITimelineViewTest.swift */; };
 		684ECDE3253E031000DA04D5 /* EnvironmentManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684ECDE2253E031000DA04D5 /* EnvironmentManagerTest.swift */; };
+		68B1672F25CBFBB000F9AF02 /* DependencyResolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B1671825CBFB4700F9AF02 /* DependencyResolverTests.swift */; };
+		68B1673225CBFBB800F9AF02 /* TaskRunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B1671425CBFB4700F9AF02 /* TaskRunnerTests.swift */; };
+		68B1673725CBFBBB00F9AF02 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B1671625CBFB4700F9AF02 /* String.swift */; };
 		68C6735B2574E8670040FCFF /* UITestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C6735A2574E8670040FCFF /* UITestViewController.swift */; };
 		8B3653E74AC9CAB6763D5788 /* Pods_Chaos_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5047144D23B39F8791F0EBB0 /* Pods_Chaos_Example.framework */; };
 		9A423F17E1D4A545F939D13B /* Pods_Chaos_Example_Chaos_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C74F28DE98EFEDF25CF9831 /* Pods_Chaos_Example_Chaos_Tests.framework */; };
@@ -51,13 +53,18 @@
 		635FFEFC7FF3FAA4E9310293 /* Chaos.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Chaos.podspec; path = ../Chaos.podspec; sourceTree = "<group>"; };
 		68214780255D577C00501FD3 /* UIAppSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAppSetupViewController.swift; sourceTree = "<group>"; };
 		68214819255D8DE500501FD3 /* MimeTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MimeTypeTests.swift; sourceTree = "<group>"; };
+		6826962D25CD97E700334E62 /* ChaosCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaosCoreTests.swift; sourceTree = "<group>"; };
+		6826962F25CD97E700334E62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6826964225CD9A8900334E62 /* ChaosCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ChaosCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		683A0B702541EAB400705836 /* PlistTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlistTest.swift; sourceTree = "<group>"; };
-		683A0C4825422A7A00705836 /* TaskRunnerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRunnerTests.swift; sourceTree = "<group>"; };
 		683C581B2541D94B004CEA07 /* single-environment.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "single-environment.plist"; sourceTree = "<group>"; };
 		683C58302541DABF004CEA07 /* missing-fields.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "missing-fields.plist"; sourceTree = "<group>"; };
 		683C583E2541DB8D004CEA07 /* multiple-environments.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "multiple-environments.plist"; sourceTree = "<group>"; };
 		684ECDD9253E02CE00DA04D5 /* UITimelineViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITimelineViewTest.swift; sourceTree = "<group>"; };
 		684ECDE2253E031000DA04D5 /* EnvironmentManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentManagerTest.swift; sourceTree = "<group>"; };
+		68B1671425CBFB4700F9AF02 /* TaskRunnerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskRunnerTests.swift; sourceTree = "<group>"; };
+		68B1671625CBFB4700F9AF02 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		68B1671825CBFB4700F9AF02 /* DependencyResolverTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependencyResolverTests.swift; sourceTree = "<group>"; };
 		68B982EB258BD1F700C583E2 /* Chaos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Chaos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		68C6735A2574E8670040FCFF /* UITestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestViewController.swift; sourceTree = "<group>"; };
 		E84B7DE021A147BC801FF97A /* Pods-Chaos_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chaos_Example.release.xcconfig"; path = "Target Support Files/Pods-Chaos_Example/Pods-Chaos_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -91,6 +98,7 @@
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for Chaos */,
 				607FACE81AFB9204008FA782 /* Tests */,
+				6826962C25CD97E700334E62 /* ChaosCoreTests */,
 				607FACD11AFB9204008FA782 /* Products */,
 				7A145E401A1E9585C691299C /* Pods */,
 				C018ED653E1CC98D0DC644FC /* Frameworks */,
@@ -174,6 +182,15 @@
 			path = Meta;
 			sourceTree = "<group>";
 		};
+		6826962C25CD97E700334E62 /* ChaosCoreTests */ = {
+			isa = PBXGroup;
+			children = (
+				6826962D25CD97E700334E62 /* ChaosCoreTests.swift */,
+				6826962F25CD97E700334E62 /* Info.plist */,
+			);
+			path = ChaosCoreTests;
+			sourceTree = "<group>";
+		};
 		683A0B6F2541EAB400705836 /* PropertyWrappers */ = {
 			isa = PBXGroup;
 			children = (
@@ -185,17 +202,11 @@
 		683A0C4625422A5600705836 /* ChaosCore */ = {
 			isa = PBXGroup;
 			children = (
-				683A0C4725422A5F00705836 /* Task */,
+				68B1671725CBFB4700F9AF02 /* Dependency */,
+				68B1671525CBFB4700F9AF02 /* Extensions */,
+				68B1671325CBFB4700F9AF02 /* Task */,
 			);
 			path = ChaosCore;
-			sourceTree = "<group>";
-		};
-		683A0C4725422A5F00705836 /* Task */ = {
-			isa = PBXGroup;
-			children = (
-				683A0C4825422A7A00705836 /* TaskRunnerTests.swift */,
-			);
-			path = Task;
 			sourceTree = "<group>";
 		};
 		684CCBCE25505B0A00CD0355 /* ChaosNet */ = {
@@ -258,6 +269,30 @@
 			path = Environment;
 			sourceTree = "<group>";
 		};
+		68B1671325CBFB4700F9AF02 /* Task */ = {
+			isa = PBXGroup;
+			children = (
+				68B1671425CBFB4700F9AF02 /* TaskRunnerTests.swift */,
+			);
+			path = Task;
+			sourceTree = "<group>";
+		};
+		68B1671525CBFB4700F9AF02 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				68B1671625CBFB4700F9AF02 /* String.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		68B1671725CBFB4700F9AF02 /* Dependency */ = {
+			isa = PBXGroup;
+			children = (
+				68B1671825CBFB4700F9AF02 /* DependencyResolverTests.swift */,
+			);
+			path = Dependency;
+			sourceTree = "<group>";
+		};
 		7A145E401A1E9585C691299C /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -272,6 +307,7 @@
 		C018ED653E1CC98D0DC644FC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6826964225CD9A8900334E62 /* ChaosCore.framework */,
 				68B982EB258BD1F700C583E2 /* Chaos.framework */,
 				5047144D23B39F8791F0EBB0 /* Pods_Chaos_Example.framework */,
 				0C74F28DE98EFEDF25CF9831 /* Pods_Chaos_Example_Chaos_Tests.framework */,
@@ -327,7 +363,7 @@
 		607FACC81AFB9204008FA782 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1210;
+				LastSwiftUpdateCheck = 1240;
 				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
@@ -512,10 +548,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				683A0C4925422A7A00705836 /* TaskRunnerTests.swift in Sources */,
 				684ECDDA253E02CE00DA04D5 /* UITimelineViewTest.swift in Sources */,
 				6821481A255D8DE500501FD3 /* MimeTypeTests.swift in Sources */,
+				68B1672F25CBFBB000F9AF02 /* DependencyResolverTests.swift in Sources */,
 				684ECDE3253E031000DA04D5 /* EnvironmentManagerTest.swift in Sources */,
+				68B1673725CBFBBB00F9AF02 /* String.swift in Sources */,
+				68B1673225CBFBB800F9AF02 /* TaskRunnerTests.swift in Sources */,
 				683A0B782541EB0400705836 /* PlistTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

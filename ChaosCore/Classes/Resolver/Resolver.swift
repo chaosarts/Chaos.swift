@@ -47,28 +47,28 @@ public final class Resolver {
     public private(set) var profiles: Set<String> = Set()
 
     /// Provides the count of injectable types found by the scan method.
-    public var count: Int { injectableTypes.count }
+    public var count: Int { resolvableTypes.count }
 
     /// Provides the list of all types that conforms to the `Injectable` protocol.
-    private let injectableTypes: [Resolvable.Type]
+    private let resolvableTypes: [Resolvable.Type]
 
     /// Provides a filtered list of injectable types according to the list of
     /// active profiles.
-    private var activeInjectableTypes: [Resolvable.Type] = []
+    private var activeResolvableTypes: [Resolvable.Type] = []
 
     /// Indicates, whether the resolver needs an update or not. This may be true
     /// before the very first call of scan within an application lifecycle or
     /// after `setProfiles(_:)` has been called.
     private var needsUpdate: Bool = true
 
-    private var injectablesByKey: [String: Resolvable] = [:]
+    private var resolvablesByKey: [String: Resolvable] = [:]
 
 
     // MARK: Initialization
 
     /// Initalizes the resolver.
     private init () {
-        injectableTypes = class_getInjectables()
+        resolvableTypes = class_getInjectables()
     }
 
 
@@ -90,8 +90,8 @@ public final class Resolver {
     /// called before using the resolver or after setting the profiles.
     @discardableResult
     public func scan () -> Int {
-        guard needsUpdate else { return injectableTypes.count }
-        activeInjectableTypes = injectableTypes.filter({
+        guard needsUpdate else { return resolvableTypes.count }
+        activeResolvableTypes = resolvableTypes.filter({
             if let profile = $0.profile {
                 return profiles.contains(profile) || profile.isEmpty
             }
@@ -103,9 +103,9 @@ public final class Resolver {
             }
             return true
         })
-
+        resolvablesByKey = [:]
         needsUpdate = false
-        return injectableTypes.count
+        return resolvableTypes.count
     }
 
 
@@ -120,7 +120,7 @@ public final class Resolver {
                         "invoked before use or after calling setProfiles()")
         }
 
-        return activeInjectableTypes.filter({
+        return activeResolvableTypes.filter({
             ChaosCore.class_conformsToProtocol($0, proto)
         })
     }
@@ -139,7 +139,7 @@ public final class Resolver {
     public func many<T> (_ proto: Protocol) -> [T] {
         return self.candidates(proto)
             .map({
-                guard let instance = $0.init() as? T else {
+                guard let instance = build($0) as? T else {
                     fatalError("Resolving dependency failed: unable to " +
                                 "downcast resolvable '\($0.self)' to type \(T.self)")
                 }
@@ -165,11 +165,11 @@ public final class Resolver {
         }
 
         // Types are unrelated
-        guard let instance = first.init() as? T else {
+        guard let instance = build(first) as? T else {
             fatalError("Resolving dependency failed: given protocol and type " +
                         "'\(T.self)' are unrelated.")
         }
-        return candidates.first?.init() as? T
+        return instance
     }
 
     /// Builds the according instance to the given class passed. If the type
@@ -178,7 +178,7 @@ public final class Resolver {
     private func build (_ type: Resolvable.Type) -> Resolvable {
         guard type.singleton == true else { return type.init() }
         let key = NSStringFromClass(type)
-        return injectablesByKey.insertIfNotExists(type.init(), forKey: key)
+        return resolvablesByKey.insertIfNotExists(type.init(), forKey: key)
     }
 }
 

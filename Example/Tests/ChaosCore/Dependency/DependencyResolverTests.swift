@@ -11,6 +11,8 @@ import XCTest
 @objc public protocol Service {}
 @objc public protocol OptionalService {}
 @objc public protocol Injectable2: Resolvable {}
+@objc public protocol A {}
+@objc public protocol B {}
 
 @objc public class BaseClass: NSObject {}
 public class MyClass: Resolvable, Service {
@@ -28,6 +30,17 @@ public class HerClass: Injectable2, Service {
     public required init() {
 
     }
+}
+
+public class SingletonClass: A, Resolvable {
+    public static var singleton: Bool { true }
+    public required init () {}
+}
+
+
+public class Singleton: B, Resolvable {
+    public static var singleton: Bool { return true }
+    public required init () {}
 }
 
 
@@ -61,5 +74,21 @@ public class DependencyResolverTests: XCTestCase {
         resolver.scan()
         nilService = resolver.optional(OptionalService.self)
         XCTAssertNotNil(nilService)
+    }
+
+
+    public func testSingleton () {
+        let a: A = resolver.one(A.self)
+        let b: A = resolver.one(A.self)
+        XCTAssertEqual(NSStringFromClass(type(of: a)), NSStringFromClass(type(of: b)))
+        XCTAssertTrue(a === b)
+
+        let c: OptionalService = resolver.one(OptionalService.self)
+        let d: OptionalService = resolver.one(OptionalService.self)
+        XCTAssertEqual(NSStringFromClass(type(of: c)), NSStringFromClass(type(of: d)))
+        XCTAssertTrue(c !== d)
+
+        let e: B = resolver.one(B.self)
+        XCTAssertTrue(a !== e)
     }
 }
