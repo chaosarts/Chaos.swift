@@ -61,6 +61,9 @@ public final class Resolver {
     /// after `setProfiles(_:)` has been called.
     private var needsUpdate: Bool = true
 
+    /// Provides a dictionary of resolvable instances where key is the fully
+    /// qualified class name of the instance itself. This dictionary is used to
+    /// store resolvables that are marked as singleton.
     private var resolvablesByKey: [String: Resolvable] = [:]
 
 
@@ -89,8 +92,11 @@ public final class Resolver {
     /// profiles and stores them in a temporary list. This method needs to be
     /// called before using the resolver or after setting the profiles.
     @discardableResult
-    public func scan () -> Int {
-        guard needsUpdate else { return resolvableTypes.count }
+    public func scan (flushCache: Bool = false) -> Int {
+        guard needsUpdate else {
+            return resolvableTypes.count
+        }
+
         activeResolvableTypes = resolvableTypes.filter({
             if let profile = $0.profile {
                 return profiles.contains(profile) || profile.isEmpty
@@ -103,9 +109,18 @@ public final class Resolver {
             }
             return true
         })
-        resolvablesByKey = [:]
+
+        if flushCache {
+            self.flushCache()
+        }
+
         needsUpdate = false
         return resolvableTypes.count
+    }
+
+    /// Flushes the cache of singletons
+    public func flushCache () {
+        resolvablesByKey = [:]
     }
 
 
