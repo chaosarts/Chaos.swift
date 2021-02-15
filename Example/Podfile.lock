@@ -1,4 +1,5 @@
 PODS:
+  - ChaosAnimation (1.0.0)
   - ChaosCore (1.0.0):
     - PromisesSwift (~> 1.2.8)
   - ChaosGraphics (1.0.0)
@@ -10,6 +11,7 @@ PODS:
     - ChaosCore
     - Hippolyte (~> 1.2.0)
   - ChaosUi (1.0.0):
+    - ChaosAnimation
     - ChaosCore
     - ChaosGraphics
   - Hippolyte (1.2.3)
@@ -19,6 +21,7 @@ PODS:
   - SwiftLint (0.41.0)
 
 DEPENDENCIES:
+  - ChaosAnimation (from `../`)
   - ChaosCore (from `../`)
   - ChaosGraphics (from `../`)
   - ChaosKit (from `../`)
@@ -35,6 +38,8 @@ SPEC REPOS:
     - SwiftLint
 
 EXTERNAL SOURCES:
+  ChaosAnimation:
+    :path: "../"
   ChaosCore:
     :path: "../"
   ChaosGraphics:
@@ -47,16 +52,17 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
+  ChaosAnimation: 5d90d098732f25b1e205169759433153fb2fc367
   ChaosCore: a65521871b362e539a95d22416e10740955e8d0f
   ChaosGraphics: aaaa5b393d11f8ac30b54991fbc4db80a6373be9
   ChaosKit: c41a0f4653596934e90f5a42cc3b03532c584741
   ChaosNet: 6147fad9ef0c1e88901637a3b83346dc0d227c48
-  ChaosUi: 8afa1411718bf6319f82ee3d679c5e276067bfda
+  ChaosUi: 5d985b3c9be74cef3a0ceb64a3193d98ec331fec
   Hippolyte: 0ee31559319c51c293c1fe47c9ea21f659be11cd
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   PromisesSwift: fed4eb6f7a29846a22624d1b86b77e1dedb88724
   SwiftLint: c585ebd615d9520d7fbdbe151f527977b0534f1e
 
-PODFILE CHECKSUM: 7e2ce829901ccdee4f86842ba55c1cc4d8a0f64f
+PODFILE CHECKSUM: a697cdf465f4346bb9202a809862c7414d330d21
 
 COCOAPODS: 1.10.1

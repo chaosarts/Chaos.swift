@@ -8,28 +8,37 @@
 
 import UIKit
 import ChaosCore
+import ChaosAnimation
+import ChaosUi
+import QuartzCore
 
-public class A: Resolvable {
-    public required init () {}
-}
+public class UITestViewController: UIViewController, UIPieChartDataSource {
 
-public class B: Resolvable {
-    public required init () {}
-}
+    private var pieChart: UIPieChart = UIPieChart()
 
-public class UITestViewController: UIViewController {
 
-    private var resolvableTypes: [Resolvable.Type] = [A.self, B.self]
-
-    public override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        for resolvableType in resolvableTypes {
-            candidate(resolvableType)
-        }
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        pieChart.dataSource = self
+        pieChart.frame = CGRect(x: 50, y: 400, width: 100, height: 100)
+        pieChart.innerRadius = 45
+        pieChart.spacing = .radian(10)
+        view.addSubview(pieChart)
+        pieChart.reloadData()
     }
 
-    public func candidate (_ type: Resolvable.Type) {
-        print(NSStringFromClass(type))
+    @IBAction private func didTouchDownButton () {
+        pieChart.reloadData()
+    }
+
+    public func numberOfSegments(_ piaChart: UIPieChart) -> Int { 5 }
+
+    public func pieChart(_ pieChart: UIPieChart, valueForSegmentAt index: Int) -> Double {
+        return 1
+    }
+
+    public func pieChart(_ pieChart: UIPieChart, colorForSegmentAt index: Int) -> UIColor {
+        let gray = CGFloat(index) / 5.0
+        return UIColor(red: gray, green: gray, blue: gray, alpha: 1.0)
     }
 }

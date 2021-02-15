@@ -1,9 +1,9 @@
 Pod::Spec.new do |s|
-  s.name             = 'ChaosUi'
+  s.name             = 'ChaosAnimation'
   s.version          = '1.0.0'
-  s.summary          = 'Collection of all Chaos iOS Frameworks'
+  s.summary          = 'Extension of the Core Animation Framework'
   s.description      = <<-DESC
-  Collection of all Chaos iOS Frameworks. Blablbalba
+  Extension of the Core Animation Framework
                        DESC
 
   s.homepage         = 'https://github.com/chaosarts/Chaos'
@@ -18,9 +18,6 @@ Pod::Spec.new do |s|
   s.osx.deployment_target     = '10.13'
   s.watchos.deployment_target = '6.0'
 
-  s.source_files  = 'ChaosUi/Classes/**/*'
+  s.source_files  = 'ChaosAnimation/Classes/**/*'
   s.frameworks    = 'Foundation'
-  s.dependency 'ChaosCore'
-  s.dependency 'ChaosGraphics'
-  s.dependency 'ChaosAnimation'
 end

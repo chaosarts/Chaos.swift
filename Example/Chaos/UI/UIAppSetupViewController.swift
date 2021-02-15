@@ -41,7 +41,7 @@ public class UIAppSetupViewController: UIViewController, UITaskRunnerViewControl
     public func taskRunner(_ taskRunner: TaskRunner, taskAtIndex index: Int) -> Task {
         BlockTask(id: UUID().uuidString, preserveResult: true) { () -> Promise<Void> in
             return Promise { fulfill, reject -> Void in
-                Timer.scheduledTimer(withTimeInterval: TimeInterval.random(in: 1..<2), repeats: false, block: { _ in
+                Timer.scheduledTimer(withTimeInterval: TimeInterval.random(in: 0.2..<0.5), repeats: false, block: { _ in
                     let void: Void
                     fulfill(void)
                 })

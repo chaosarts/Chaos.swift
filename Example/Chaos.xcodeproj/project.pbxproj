@@ -430,6 +430,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Chaos_Example/Pods-Chaos_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ChaosAnimation/ChaosAnimation.framework",
 				"${BUILT_PRODUCTS_DIR}/ChaosCore/ChaosCore.framework",
 				"${BUILT_PRODUCTS_DIR}/ChaosGraphics/ChaosGraphics.framework",
 				"${BUILT_PRODUCTS_DIR}/ChaosKit/ChaosKit.framework",
@@ -441,6 +442,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosAnimation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosGraphics.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosKit.framework",
@@ -506,6 +508,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Chaos_Example-Chaos_Tests/Pods-Chaos_Example-Chaos_Tests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ChaosAnimation/ChaosAnimation.framework",
 				"${BUILT_PRODUCTS_DIR}/ChaosCore/ChaosCore.framework",
 				"${BUILT_PRODUCTS_DIR}/ChaosGraphics/ChaosGraphics.framework",
 				"${BUILT_PRODUCTS_DIR}/ChaosKit/ChaosKit.framework",
@@ -517,6 +520,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosAnimation.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosGraphics.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosKit.framework",

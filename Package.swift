@@ -49,6 +49,14 @@ let package = Package(
             path: "ChaosGraphics"
         ),
         .target(
+            name: "ChaosAnimation",
+            dependencies: [
+                "ChaosCore",
+                "ChaosGraphics"
+            ],
+            path: "ChaosAnimation"
+        ),
+        .target(
             name: "ChaosUi",
             dependencies: [
                 "ChaosCore",

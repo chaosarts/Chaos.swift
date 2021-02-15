@@ -62,4 +62,25 @@ public extension UIBezierPath {
                                       clockwise: clockwise)
         return bezierPath
     }
+
+
+    static func circleSegment (startAngle: CGFloat, endAngle: CGFloat, radius: CGFloat = 1.0, center: CGPoint = .zero, clockwise: Bool = true) -> UIBezierPath {
+        let bezierPath = UIBezierPath()
+        bezierPath.move(to: center)
+        bezierPath.addArc(withCenter: center,
+                          radius: radius,
+                          startAngle: startAngle,
+                          endAngle: endAngle,
+                          clockwise: clockwise)
+        bezierPath.close()
+        return bezierPath
+    }
+
+    static func donutSegment (startAngle: CGFloat, endAngle: CGFloat, innerRadius: CGFloat = 1.0, outerRadius: CGFloat = 2.0, center: CGPoint = .zero, clockwise: Bool = true) -> UIBezierPath {
+        let bezierPath = UIBezierPath()
+        bezierPath.addArc(withCenter: center, radius: outerRadius, startAngle: startAngle, endAngle: endAngle, clockwise: true)
+        bezierPath.addArc(withCenter: center, radius: innerRadius, startAngle: endAngle, endAngle: startAngle, clockwise: false)
+        bezierPath.close()
+        return bezierPath
+    }
 }

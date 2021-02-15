@@ -33,6 +33,18 @@ open class UITicketView: UIView {
         didSet { setNeedsUpdateConstraints() }
     }
 
+    @objc dynamic var cornerRadius: CGFloat = 14 {
+        didSet { setNeedsLayout() }
+    }
+
+    @objc dynamic var tearOffCapSize: CGFloat = 8 {
+        didSet { setNeedsLayout() }
+    }
+
+    // MARK: Layer Properties
+
+    private var shapeLayer: CAShapeLayer = CAShapeLayer()
+
 
     // MARK: View Hierarchy
 
@@ -88,8 +100,6 @@ open class UITicketView: UIView {
 
         stackView.addArrangedSubview(leadingViewContainer)
         stackView.addArrangedSubview(trailingViewContainer)
-
-        
     }
 
 
@@ -97,7 +107,6 @@ open class UITicketView: UIView {
 
 
     open override func layoutSubviews() {
-
         super.layoutSubviews()
     }
 
@@ -109,6 +118,24 @@ open class UITicketView: UIView {
         constraints.first(where: { $0.identifier == kTicketViewInsetLeftConstraint })?.constant = contentInsets.left
     }
 
+    private func layoutShapeLayer () {
+
+        let offset: CGFloat
+
+        switch axis {
+        case .horizontal:
+            offset = (trailingViewContainer.frame.minX + leadingViewContainer.frame.maxX) / 2
+        default:
+            offset = (trailingViewContainer.frame.minY + leadingViewContainer.frame.maxY) / 2
+        }
+
+        let ticketShape = UIBezierPath.ticketShape(frame: frame,
+                                                   axis: axis,
+                                                   tearOffOffset: offset,
+                                                   tearOffRadius: tearOffCapSize)
+
+        shapeLayer.path = ticketShape.cgPath
+    }
 
     // MARK: Handler Methods
 

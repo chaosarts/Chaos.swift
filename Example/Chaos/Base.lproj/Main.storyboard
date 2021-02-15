@@ -124,7 +124,20 @@
                     <view key="view" contentMode="scaleToFill" id="58c-hG-Yi2">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zgw-vs-Rtw">
+                                <rect key="frame" x="172" y="723" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="didTouchDownButton" destination="SK1-Ae-e14" eventType="touchUpInside" id="nI2-S8-eVA"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="mFA-45-Iku" firstAttribute="top" secondItem="Zgw-vs-Rtw" secondAttribute="bottom" constant="8" symbolic="YES" id="i9W-Z7-TVJ"/>
+                            <constraint firstItem="Zgw-vs-Rtw" firstAttribute="centerX" secondItem="58c-hG-Yi2" secondAttribute="centerX" id="yRH-Z0-eqT"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 1" id="fmj-Fq-ca1"/>
                 </viewController>
