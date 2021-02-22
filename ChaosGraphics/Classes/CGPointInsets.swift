@@ -6,6 +6,7 @@
 //
 
 import CoreGraphics
+import CoreData
 
 public struct CGPointInsets {
     public var leading: CGFloat

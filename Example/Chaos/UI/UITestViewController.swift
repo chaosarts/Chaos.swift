@@ -16,29 +16,31 @@ public class UITestViewController: UIViewController, UIPieChartDataSource {
 
     private var pieChart: UIPieChart = UIPieChart()
 
+    private var values: [Double] = [1, 2, 3, 4, 5]
+    private var colors: [UIColor] = [.systemBlue, .systemRed, .systemGray, .systemTeal, .systemGreen]
 
     public override func viewDidLoad() {
         super.viewDidLoad()
         pieChart.dataSource = self
         pieChart.frame = CGRect(x: 50, y: 400, width: 100, height: 100)
-        pieChart.innerRadius = 45
-        pieChart.spacing = .radian(10)
+        pieChart.innerRadius = 40
         view.addSubview(pieChart)
         pieChart.reloadData()
     }
 
     @IBAction private func didTouchDownButton () {
-        pieChart.reloadData()
+        let index = Int.random(in: 0..<values.count)
+        values[index] = 1 * pieChart.totalValue
+        pieChart.reloadSegments(at: [index], animated: true)
     }
 
     public func numberOfSegments(_ piaChart: UIPieChart) -> Int { 5 }
 
     public func pieChart(_ pieChart: UIPieChart, valueForSegmentAt index: Int) -> Double {
-        return 1
+        values[index]
     }
 
     public func pieChart(_ pieChart: UIPieChart, colorForSegmentAt index: Int) -> UIColor {
-        let gray = CGFloat(index) / 5.0
-        return UIColor(red: gray, green: gray, blue: gray, alpha: 1.0)
+        colors[index]
     }
 }

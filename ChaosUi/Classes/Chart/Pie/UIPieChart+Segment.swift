@@ -10,13 +10,9 @@ import ChaosAnimation
 
 
 internal extension UIPieChart {
-    internal class Segment {
+    internal class SegmentData {
         var title: String?
-        var absoluteValue: Double = 0.0
-        var relativeValue: Double = 0.0
-        var startAngle: CGFloat = 0.0
-        var endAngle: CGFloat { startAngle + .pi * 2 * CGFloat(relativeValue) }
-        var color: UIColor = UIView.appearance().tintColor
-        var isHidden: Bool = true
+        var value: Double = 0.0
+        var color: UIColor = .systemBlue
     }
 }

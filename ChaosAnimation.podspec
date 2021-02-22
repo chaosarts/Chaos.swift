@@ -20,4 +20,5 @@ Pod::Spec.new do |s|
 
   s.source_files  = 'ChaosAnimation/Classes/**/*'
   s.frameworks    = 'Foundation'
+  s.dependency 'ChaosGraphics'
 end

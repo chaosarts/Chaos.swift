@@ -7,12 +7,12 @@
 
 import QuartzCore
 
-open class CACircleSegmentLayer: CAShapeLayer {
+open class CAPieChartSegmentLayer: CAShapeLayer {
 
     // MARK: Static Methods
 
     open override class func needsDisplay(forKey key: String) -> Bool {
-        if ["center", "startAngle", "endAngle", "radius", "innerRadius"].contains(key) {
+        if ["center", "minAngle", "maxAngle", "midAngle", "radius", "innerRadius"].contains(key) {
             return true
         }
         return super.needsDisplay(forKey: key)
@@ -22,13 +22,13 @@ open class CACircleSegmentLayer: CAShapeLayer {
     // MARK: Appearance Properties
 
     /// Provides the center of the slice.
-    @NSManaged open dynamic var center: CGPoint
+    @NSManaged open dynamic var center: CGPoint 
 
     /// Provides the angle at which to start the slice.
-    @NSManaged open dynamic var startAngle: CGFloat
+    @NSManaged open dynamic var minAngle: CGFloat
 
     /// Provides the angle at which to end the slice.
-    @NSManaged open dynamic var endAngle: CGFloat
+    @NSManaged open dynamic var maxAngle: CGFloat
 
     /// Provides the radius of the slice.
     @NSManaged open dynamic var radius: CGFloat
@@ -39,29 +39,35 @@ open class CACircleSegmentLayer: CAShapeLayer {
     /// Indicates whether the segment is clockwise or counter-clockwise oriented.
     @NSManaged open dynamic var clockwise: Bool
 
+    /// Provides the center angle of the segment
+    @objc open dynamic var midAngle: CGFloat {
+        get { (minAngle + maxAngle) / 2.0 }
+        set { offset(by: newValue - (minAngle + maxAngle) / 2.0) }
+    }
+
 
     // MARK: Layer Lifecycle
 
     open override func draw(in ctx: CGContext) {
         let segment = CGMutablePath()
 
-        if endAngle - startAngle >= 2 * .pi {
+        if maxAngle - minAngle >= 2 * .pi {
             var path = CGMutablePath()
-            path.addArc(center: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: !clockwise)
+            path.addArc(center: center, radius: radius, startAngle: minAngle, endAngle: maxAngle, clockwise: !clockwise)
             ctx.addPath(path)
 
             path = CGMutablePath()
-            path.addArc(center: center, radius: innerRadius, startAngle: startAngle, endAngle: endAngle, clockwise: !clockwise)
+            path.addArc(center: center, radius: innerRadius, startAngle: minAngle, endAngle: maxAngle, clockwise: !clockwise)
             ctx.addPath(path)
         } else {
             var path = CGMutablePath()
 
             if innerRadius <= 0 {
                 path.move(to: center)
-                path.addArc(center: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: !clockwise)
+                path.addArc(center: center, radius: radius, startAngle: minAngle, endAngle: maxAngle, clockwise: !clockwise)
             } else {
-                path.addArc(center: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: !clockwise)
-                path.addArc(center: center, radius: innerRadius, startAngle: endAngle, endAngle: startAngle, clockwise: clockwise)
+                path.addArc(center: center, radius: radius, startAngle: minAngle, endAngle: maxAngle, clockwise: !clockwise)
+                path.addArc(center: center, radius: innerRadius, startAngle: maxAngle, endAngle: minAngle, clockwise: clockwise)
             }
             
             path.closeSubpath()
@@ -89,5 +95,13 @@ open class CACircleSegmentLayer: CAShapeLayer {
         default:
             break
         }
+    }
+
+    // MARK: Convenient Methods
+
+    /// Offsets the segment by the given angle.
+    public func offset(by angle: CGFloat) {
+        minAngle += angle
+        maxAngle += angle
     }
 }

@@ -1,5 +1,6 @@
 PODS:
-  - ChaosAnimation (1.0.0)
+  - ChaosAnimation (1.0.0):
+    - ChaosGraphics
   - ChaosCore (1.0.0):
     - PromisesSwift (~> 1.2.8)
   - ChaosGraphics (1.0.0)
@@ -52,7 +53,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ChaosAnimation: 5d90d098732f25b1e205169759433153fb2fc367
+  ChaosAnimation: d63d96391c3676ed9afc9f721ae537732ec62d47
   ChaosCore: a65521871b362e539a95d22416e10740955e8d0f
   ChaosGraphics: aaaa5b393d11f8ac30b54991fbc4db80a6373be9
   ChaosKit: c41a0f4653596934e90f5a42cc3b03532c584741
