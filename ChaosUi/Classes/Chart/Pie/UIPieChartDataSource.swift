@@ -14,7 +14,7 @@ import UIKit
     /// chart.
     /// - parameter pieChart: The pie chart view asking for the value.
     /// - returns: The number of segments to draw.
-    func numberOfSegments (_ piaChart: UIPieChart) -> Int
+    func numberOfSegments (_ pieChart: UIPieChart) -> Int
 
     /// Asks the data source for the value of the segment at the given index.
     /// - parameter pieChart: The pie chart view asking for the value.

@@ -6,8 +6,9 @@
 //
 
 import QuartzCore
+import ChaosGraphics
 
-open class CAPieChartSegmentLayer: CAShapeLayer {
+open class CACircleSegmentLayer: CAShapeLayer {
 
     // MARK: Static Methods
 
@@ -42,7 +43,7 @@ open class CAPieChartSegmentLayer: CAShapeLayer {
     /// Provides the center angle of the segment
     @objc open dynamic var midAngle: CGFloat {
         get { (minAngle + maxAngle) / 2.0 }
-        set { offset(by: newValue - (minAngle + maxAngle) / 2.0) }
+        set { offset(by: newValue - midAngle) }
     }
 
 
@@ -51,7 +52,10 @@ open class CAPieChartSegmentLayer: CAShapeLayer {
     open override func draw(in ctx: CGContext) {
         let segment = CGMutablePath()
 
-        if maxAngle - minAngle >= 2 * .pi {
+        let minAngle = clockwise ? self.minAngle : -self.minAngle
+        let maxAngle = clockwise ? self.maxAngle : -self.maxAngle
+        
+        if abs(maxAngle - minAngle) >= 2 * .pi {
             var path = CGMutablePath()
             path.addArc(center: center, radius: radius, startAngle: minAngle, endAngle: maxAngle, clockwise: !clockwise)
             ctx.addPath(path)
@@ -67,7 +71,16 @@ open class CAPieChartSegmentLayer: CAShapeLayer {
                 path.addArc(center: center, radius: radius, startAngle: minAngle, endAngle: maxAngle, clockwise: !clockwise)
             } else {
                 path.addArc(center: center, radius: radius, startAngle: minAngle, endAngle: maxAngle, clockwise: !clockwise)
+                if lineCap == kCALineCapRound {
+                    let vector = CGVector(radius: (radius + innerRadius) / 2, angle: maxAngle)
+                    path.addArc(center: center + vector, radius: (radius - innerRadius) / 2, startAngle: maxAngle, endAngle: maxAngle + .pi, clockwise: !clockwise)
+                }
+
                 path.addArc(center: center, radius: innerRadius, startAngle: maxAngle, endAngle: minAngle, clockwise: clockwise)
+                if lineCap == kCALineCapRound {
+                    let vector = CGVector(radius: (radius + innerRadius) / 2, angle: minAngle)
+                    path.addArc(center: center + vector, radius: (radius - innerRadius) / 2, startAngle: minAngle + .pi, endAngle: minAngle, clockwise: !clockwise)
+                }
             }
             
             path.closeSubpath()

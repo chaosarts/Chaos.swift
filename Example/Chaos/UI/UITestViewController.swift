@@ -23,18 +23,21 @@ public class UITestViewController: UIViewController, UIPieChartDataSource {
         super.viewDidLoad()
         pieChart.dataSource = self
         pieChart.frame = CGRect(x: 50, y: 400, width: 100, height: 100)
-        pieChart.innerRadius = 40
+        pieChart.innerRadius = 30
         view.addSubview(pieChart)
-        pieChart.reloadData()
+    }
+
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        pieChart.reloadData(animated: true)
     }
 
     @IBAction private func didTouchDownButton () {
-        let index = Int.random(in: 0..<values.count)
-        values[index] = 1 * pieChart.totalValue
-        pieChart.reloadSegments(at: [index], animated: true)
+        pieChart.clockwise.toggle()
+        pieChart.reloadData(animated: true)
     }
 
-    public func numberOfSegments(_ piaChart: UIPieChart) -> Int { 5 }
+    public func numberOfSegments(_ piaChart: UIPieChart) -> Int { values.count }
 
     public func pieChart(_ pieChart: UIPieChart, valueForSegmentAt index: Int) -> Double {
         values[index]

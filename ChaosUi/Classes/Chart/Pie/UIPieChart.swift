@@ -9,11 +9,7 @@ import UIKit
 import ChaosAnimation
 
 @IBDesignable
-open class UIPieChart: UIView {
-
-    @objc public enum ValueDisplayType: Int {
-        case relative, absolute, both
-    }
+open class UIPieChart: UIView, CAAnimationDelegate {
 
     // MARK: Data and Delegate
 
@@ -39,24 +35,29 @@ open class UIPieChart: UIView {
         return segments.map({ $0.value / totalValue })
     }
 
+    /// Provides the start angle of each
     private var startAngles: [CGFloat] {
-        var startAngle = self.startAngle
         let fullCircle: CGFloat = .pi * 2.0
-
-        return relativeValues.map({
-            let angle = startAngle
-            startAngle += CGFloat($0) * fullCircle
-            return angle
-        })
+        var lastValue: CGFloat = 0
+        var angles: [CGFloat] = []
+        for value in relativeValues {
+            let angle = lastValue * fullCircle
+            lastValue += CGFloat(value)
+            angles.append(angle)
+        }
+        return angles
     }
 
     private var endAngles: [CGFloat] {
-        var startAngle = self.startAngle
         let fullCircle: CGFloat = .pi * 2.0
-        return relativeValues.map({
-            startAngle += CGFloat($0) * fullCircle
-            return startAngle
-        })
+        var lastValue: CGFloat = 0
+        var angles: [CGFloat] = []
+        for value in relativeValues {
+            let angle = lastValue + CGFloat(value) * fullCircle
+            lastValue = angle
+            angles.append(angle)
+        }
+        return angles
     }
 
     private var colors: [UIColor] {
@@ -86,13 +87,14 @@ open class UIPieChart: UIView {
     /// Provides the outer radius of the pie chart.
     public var radius: CGFloat { min(bounds.width, bounds.height) / 2 }
 
+    /// Provides the center of the chart within the bounds of this view
     public var chartCenter: CGPoint { CGPoint(x: bounds.midX, y: bounds.midY) }
 
 
     // MARK: Internal Properties
 
     /// Provides the layer added to the root layer displaying the segments
-    private var segmentLayers: [CAPieChartSegmentLayer] = []
+    private var segmentLayers: [CACircleSegmentLayer] = []
 
 
     // MARK: Initialisation
@@ -127,57 +129,47 @@ open class UIPieChart: UIView {
             $0.frame = frame
             $0.center = center
             $0.radius = radius
+            $0.clockwise = self.clockwise
+            $0.innerRadius = self.innerRadius
         })
     }
 
 
     // MARK: Data Control
 
-    /// Sets up the objects for the data at given index from the data source.
-    /// - Parameter index: The index of the corresponding segment
-    /// - Parameter dataSource: The data source from which to fetch data
-    private func setupSegment (for index: Int, in dataSource: UIPieChartDataSource) {
-        let absoluteValue = dataSource.pieChart(self, valueForSegmentAt: index)
-
-        if absoluteValue < 0.0 {
-            fatalError("Value for segment at index \(index) may not be negative.")
-        }
-
-        let segment = SegmentData()
-        segment.title = dataSource.pieChart?(self, titleForSegmentAt: index)
-        segment.value = absoluteValue
-        segment.color = dataSource.pieChart(self, colorForSegmentAt: index)
-        segments.insert(segment, at: index)
-
-        let layer = CAPieChartSegmentLayer()
-        layer.center = self.chartCenter
-        layer.clockwise = self.clockwise
-        layer.innerRadius = self.innerRadius
-        layer.radius = self.radius
-        self.layer.insertSublayer(layer, at: UInt32(index))
-        self.segmentLayers.insert(layer, at: index)
-    }
-
     /// Reloads the data from data source and invokes the view to draw the
     /// segments. Call this function after setting the data source or when the
     /// data source has changed.
-    public func reloadData () {
-        segmentLayers.forEach({ $0.removeFromSuperlayer() })
-        segments = []
-        segmentLayers = []
+    public func reloadData (animated: Bool = false) {
+        let numberOfSegments = dataSource?.numberOfSegments(self) ?? 0
+        while numberOfSegments > segments.count {
+            segments.append(SegmentData())
 
-        guard let dataSource = dataSource else {
-            setNeedsLayout()
-            return
+            let sublayer = CACircleSegmentLayer()
+            segmentLayers.append(sublayer)
+            layer.addSublayer(sublayer)
         }
 
-        (0..<dataSource.numberOfSegments(self)).forEach({ self.setupSegment(for: $0, in: dataSource) })
-
-        if totalValue == 0.0 {
-            fatalError("The total value of all segments must be greater than 0.")
+        while numberOfSegments < segments.count {
+            segments.removeFirst()
+            segmentLayers.removeFirst().removeFromSuperlayer()
         }
 
-        reloadSegmentLayers(animated: false)
+        if let dataSource = dataSource {
+            for index in 0..<numberOfSegments {
+                reloadSegmentData(at: index, from: dataSource)
+                segmentLayers[index].minAngle = 0.0
+                segmentLayers[index].maxAngle = 0.0
+            }
+
+            if totalValue == 0.0 {
+                fatalError("The total value of all segments must be greater than 0.")
+            }
+
+            reloadSegmentLayers(animated: animated)
+        }
+
+        layer.setNeedsDisplay()
     }
 
     /// Reloads the segment data for the given index from given data source.
@@ -185,27 +177,19 @@ open class UIPieChart: UIView {
     /// - Parameter dataSource: The data source from which to fetch the data
     private func reloadSegmentData (at index: Int, from dataSource: UIPieChartDataSource) {
         let segment = segments[index]
+
+        let value = dataSource.pieChart(self, valueForSegmentAt: index)
+        guard value >= 0.0 else { fatalError("Value for segment (\(index)) nust not be negative.") }
+
+        segment.value = value
         segment.title = dataSource.pieChart?(self, titleForSegmentAt: index)
-        segment.value = dataSource.pieChart(self, valueForSegmentAt: index)
         segment.color = dataSource.pieChart(self, colorForSegmentAt: index)
     }
 
 
     // MARK: View Control
 
-    open func reloadSegments (at indices: [Int], animated: Bool) {
-        guard let dataSource = dataSource else {
-            fatalError("No data source set for pie chart.")
-        }
-
-        for index in indices {
-            reloadSegmentData(at: index, from: dataSource)
-        }
-
-        reloadSegmentLayers(animated: animated)
-    }
-
-
+    /// Inserts a new segment from the data source at given indices.
     open func insertSegment (at indices: [Int], animated: Bool) {
         guard let dataSource = dataSource else {
             fatalError("No data source set for pie chart.")
@@ -219,13 +203,21 @@ open class UIPieChart: UIView {
                         "values in the data source (\(numberOfSegments)).")
         }
 
+        let startAngles = self.startAngles
+
         indices.sorted().forEach({
-            self.setupSegment(for: $0, in: dataSource)
+            segments.insert(SegmentData(), at: $0)
+            reloadSegmentData(at: $0, from: dataSource)
+
+            segmentLayers.insert(CACircleSegmentLayer(), at: $0)
+            segmentLayers[$0].minAngle = startAngles[$0]
+            segmentLayers[$0].maxAngle = startAngles[$0]
         })
 
         reloadSegmentLayers(animated: animated)
     }
 
+    /// Removes the segment from the chart at given index.
     open func deleteSegment (at indices: [Int]) {
         guard let dataSource = dataSource else {
             fatalError("No data source set for pie chart.")
@@ -238,47 +230,39 @@ open class UIPieChart: UIView {
                         "(\(indices.count)) must be equal to the number of " +
                         "values in the data source (\(numberOfSegments)).")
         }
+
+
     }
 
+    /// Iterates through the segment layers and updates their appearance
+    /// corresponding to the segment data in this pie chart.
     private func reloadSegmentLayers (animated: Bool) {
         let startAngles = self.startAngles
         let endAngles = self.endAngles
-        let sourceValuesByKeyPathList = segments.enumerated()
-            .map({ index, segment -> [String: Any] in
-                let layer = self.segmentLayers[index]
-
-                let dict: [String: Any] = [
-                    "minAngle": layer.minAngle,
-                    "maxAngle": layer.maxAngle,
-                    "fillColor": layer.fillColor
-                ]
-
-                layer.minAngle = startAngles[index]
-                layer.maxAngle = endAngles[index]
-                layer.fillColor = segment.color.cgColor
-
-                return dict
+        segmentLayers.enumerated()
+            .forEach({
+                self.transform(layer: $0.element,
+                               toMinAngle: startAngles[$0.offset],
+                               maxAngle: endAngles[$0.offset],
+                               animated: animated)
             })
-
-        if animated {
-            for index in 0..<segmentLayers.count {
-                let layer = segmentLayers[index]
-                let sourceValuesByKeyPath = sourceValuesByKeyPathList[index]
-                let animation = layer.action(forKey: "animation") as? CAAnimationGroup ?? CAAnimationGroup()
-                animation.animations = sourceValuesByKeyPath.map({ (key, value) in
-                    let animation = CABasicAnimation(keyPath: key)
-                    animation.fromValue = value
-                    animation.toValue = layer.value(forKey: key)
-                    return animation
-                })
-                animation.duration = 0.25
-                animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-                animation.fillMode = kCAFillModeForwards
-                animation.isRemovedOnCompletion = false
-                layer.add(animation, forKey: "animation")
-            }
-        }
     }
+
+    private func transform (layer: CACircleSegmentLayer, toMinAngle minAngle: CGFloat, maxAngle: CGFloat, animated: Bool) {
+        if animated {
+            let animation = CAAnimationGroup()
+            animation.animations = CABasicAnimation.animations(for: layer, toValues: ["minAngle": minAngle, "maxAngle": maxAngle])
+            animation.timingFunction = CAMediaTimingFunction(controlPoints: 0.8, 0, 0.2, 1)
+            animation.duration = 0.5
+            animation.isRemovedOnCompletion = true
+            layer.add(animation, forKey: "animation")
+        }
+
+        layer.minAngle = minAngle
+        layer.maxAngle = maxAngle
+    }
+
+
 
     // MARK: State Methods
 
@@ -302,12 +286,34 @@ open class UIPieChart: UIView {
         return segments[index].color
     }
 
+    /// Returns the start angle of the segment at given index
     public func startAngle (at index: Int) -> CGFloat {
         CGFloat((0..<index).reduce(0.0, { $0 + self.relativeValue(at: $1) })) * .pi * 2.0
     }
 
+    /// Returns the end angle of the segment at given index
     public func endAngle (at index: Int) -> CGFloat {
         startAngle(at: index) + CGFloat(relativeValue(at: index)) * .pi * 2.0
+    }
+
+    /// Returns the index of the segment for which the angle is greater or equal
+    /// the start angle and less than the end angle.
+    public func index (ofAngle angle: CGFloat) -> Int {
+        let rad360 = CGFloat.pi * 2
+        let angle = angle - floor(angle / rad360) * rad360
+
+        let startAngles = self.startAngles
+        let endAngles = self.endAngles
+
+        var output: Int = -1
+        for index in 0..<numberOfSegments {
+            guard startAngles[index] <= angle, endAngles[index] > angle else {
+                continue
+            }
+            output = index
+            break
+        }
+        return output
     }
 
 
@@ -315,7 +321,20 @@ open class UIPieChart: UIView {
 
     @objc private func didTap (_ tapGesutreRecognizer: UITapGestureRecognizer) {
         let point = tapGesutreRecognizer.location(in: self)
-        guard point.distance(to: chartCenter) <= radius else { return }
+        let distance = point.distance(to: chartCenter)
+        guard distance <= radius && distance >= innerRadius else { return }
+
+        let v1 = CGVector(from: chartCenter, to: point)
+        guard v1.length > 0 else { return }
+
+        let v2 = CGVector(dx: 1, dy: 0)
+
+        var angle = v2.angle(other: v1)
+        if point.y < chartCenter.y {
+            angle = 2 * .pi - angle
+        }
+
+        delegate?.pieChart?(self, didSelectSegmentAt: index(ofAngle: angle))
     }
 }
 
