@@ -6,10 +6,11 @@ platform :ios, '13.0'
 pod 'ChaosCore', :path => '../'
 pod 'ChaosGraphics', :path => '../'
 pod 'ChaosAnimation', :path => '../'
+pod 'ChaosMath', :path => '../'
 pod 'ChaosKit', :path => '../'
 pod 'ChaosNet', :path => '../'
 pod 'ChaosUi', :path => '../'
-
+pod 'ChaosThree', :path => '../'
 target 'Chaos_Example' do
   target 'Chaos_Tests' do
     pod 'SwiftLint'

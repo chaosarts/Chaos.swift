@@ -24,6 +24,6 @@ open class UIClockProgress: UIView {
 
     open override var intrinsicContentSize: CGSize {
         let diameter = 2 * radius
-        CGSize(width: diameter, height: diameter)
+        return CGSize(width: diameter, height: diameter)
     }
 }
