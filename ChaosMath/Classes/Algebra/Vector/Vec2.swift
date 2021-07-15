@@ -13,9 +13,15 @@ public struct t_vec2<Component: SignedNumeric>: StaticVector {
 
     public private(set) var components: [Component]
 
-    public var x: Component { components[0] }
+    public var x: Component {
+        get { components[0] }
+        set { components[0] = newValue }
+    }
 
-    public var y: Component { components[1] }
+    public var y: Component {
+        get { components[1] }
+        set { components[1] = newValue }
+    }
 
     public init (components: [Component]) {
         self.init()
