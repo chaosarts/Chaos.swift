@@ -83,6 +83,10 @@ extension t_vec2: StaticFloatingPointVector where Component: FloatingPoint {
 
 }
 
+public extension t_vec2 {
+    static var zero: Self { t_vec2() }
+}
+
 public typealias Vec2f = t_vec2<Float>
 public typealias Vec2d = t_vec2<Double>
 public typealias Vec2 = Vec2f

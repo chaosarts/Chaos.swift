@@ -16,9 +16,9 @@ public class Shape {
 
     public private(set) var indices: [Int] = []
 
-    public var components: [Vec3.Component] {
-        indices.reduce([], { carry, index in carry + vertices[index].components })
-    }
+    public var vertexSequence: [Vec3] { indices.map({ vertices[$0] }) }
+
+    public var components: [Vec3.Component] { vertexSequence.reduce([], { $0 + $1.components }) }
 
     public func reloadData (for primitiveType: Primitive) {
         vertices = []

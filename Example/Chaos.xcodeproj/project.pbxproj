@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0DD4939426C18CA1001B56E2 /* ShapeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD4939326C18CA1001B56E2 /* ShapeTests.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
@@ -47,6 +48,7 @@
 
 /* Begin PBXFileReference section */
 		0C74F28DE98EFEDF25CF9831 /* Pods_Chaos_Example_Chaos_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chaos_Example_Chaos_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0DD4939326C18CA1001B56E2 /* ShapeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeTests.swift; sourceTree = "<group>"; };
 		12175E6805309BD4FA36768A /* Pods-Chaos_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chaos_Example.debug.xcconfig"; path = "Target Support Files/Pods-Chaos_Example/Pods-Chaos_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		1C460315E3D0C22CFAE7C975 /* Pods-Chaos_Example-Chaos_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chaos_Example-Chaos_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Chaos_Example-Chaos_Tests/Pods-Chaos_Example-Chaos_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		5047144D23B39F8791F0EBB0 /* Pods_Chaos_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chaos_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,6 +110,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0DD4939226C18C80001B56E2 /* ChaosThree */ = {
+			isa = PBXGroup;
+			children = (
+				0DD4939326C18CA1001B56E2 /* ShapeTests.swift */,
+			);
+			path = ChaosThree;
+			sourceTree = "<group>";
+		};
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
@@ -155,10 +165,11 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				68C41DE326242C7F0054CDC4 /* ChaosMath */,
 				683A0C4625422A5600705836 /* ChaosCore */,
 				684ECDE0253E02E900DA04D5 /* ChaosKit */,
+				68C41DE326242C7F0054CDC4 /* ChaosMath */,
 				684CCBCE25505B0A00CD0355 /* ChaosNet */,
+				0DD4939226C18C80001B56E2 /* ChaosThree */,
 				684ECDDF253E02DE00DA04D5 /* ChaosUi */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
@@ -632,6 +643,7 @@
 				68FBBEC9262890C700032A5E /* Point2Tests.swift in Sources */,
 				683A0B782541EB0400705836 /* PlistTest.swift in Sources */,
 				68C41DF826242DC20054CDC4 /* Vec4Tests.swift in Sources */,
+				0DD4939426C18CA1001B56E2 /* ShapeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

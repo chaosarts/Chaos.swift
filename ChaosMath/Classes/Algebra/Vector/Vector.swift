@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - Vector
 
-public protocol Vector: Equatable {
+public protocol Vector: Equatable, CustomStringConvertible {
 
     /// Describes the data type of the components of this vector
     associatedtype Component: SignedNumeric
@@ -62,6 +62,10 @@ public protocol Vector: Equatable {
 // MARK: Default Implementation
 
 public extension Vector {
+
+    var description: String {
+        components.description
+    }
 
     var dimension: Int { components.count }
 
