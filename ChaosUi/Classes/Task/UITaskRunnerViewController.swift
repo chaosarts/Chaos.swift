@@ -106,7 +106,7 @@ extension UITaskRunnerViewController: TaskRunnerDelegate {
 
 // MARK: -
 
-@objc public protocol UITaskRunnerViewControllerDelegate: class, NSObjectProtocol {
+@objc public protocol UITaskRunnerViewControllerDelegate: AnyObject, NSObjectProtocol {
 
     /// Asks the delegate for the title to display for the task corresponding to
     /// given id.

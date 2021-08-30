@@ -7,7 +7,7 @@
 
 import Foundation
 
-@objc public protocol Resolvable: class {
+@objc public protocol Resolvable: AnyObject {
     @objc static optional var profile: String { get }
     @objc static optional var profiles: [String] { get }
     @objc static optional var singleton: Bool { get }

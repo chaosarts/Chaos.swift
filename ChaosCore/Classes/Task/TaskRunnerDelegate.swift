@@ -11,7 +11,7 @@ import Foundation
 ///
 /// A task runner informs the delegate abount several events during processing the
 /// list of tasks of a task runner source.
-@objc public protocol TaskRunnerDelegate: class {
+@objc public protocol TaskRunnerDelegate: AnyObject {
 
     /// Tells the delegate, that the task runner will start executing the task
     /// from the task source.

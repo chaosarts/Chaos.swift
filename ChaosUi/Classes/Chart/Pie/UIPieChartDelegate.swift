@@ -7,6 +7,6 @@
 
 import Foundation
 
-@objc public protocol UIPieChartDelegate: class {
+@objc public protocol UIPieChartDelegate: AnyObject {
     @objc optional func pieChart (_ pieChart: UIPieChart, didSelectSegmentAt index: Int)
 }

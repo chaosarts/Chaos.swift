@@ -7,5 +7,5 @@
 
 import UIKit
 
-@objc public protocol UITimelineViewDelegate: class, NSObjectProtocol {
+@objc public protocol UITimelineViewDelegate: AnyObject, NSObjectProtocol {
 }

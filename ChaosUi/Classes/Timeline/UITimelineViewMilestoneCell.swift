@@ -8,7 +8,7 @@
 import UIKit
 
 /// Defines a protocol that requires to have a milestone property.
-internal protocol UITimelineViewMilestoneCellProtocol: class, NSObjectProtocol {
+internal protocol UITimelineViewMilestoneCellProtocol: AnyObject, NSObjectProtocol {
     var milestone: UITimelineViewMilestone { get }
 }
 

@@ -8,7 +8,7 @@
 import UIKit
 
 /// A protocol describing the data source for a pie chart view.
-@objc public protocol UIPieChartDataSource: class {
+@objc public protocol UIPieChartDataSource: AnyObject {
 
     /// Asks the the data source for the number of segments to draw in the pie
     /// chart.

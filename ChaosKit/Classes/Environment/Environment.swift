@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol Environment: class, Codable {
+public protocol Environment: AnyObject, Codable {
 
     /// Provides the string that identifies this environment
     var identifier: String { get }

@@ -8,7 +8,7 @@
 import Foundation
 
 /// Protocol that describes a task.
-public protocol Task: class {
+public protocol Task: AnyObject {
 
     /// Provides the id of the task.
     var id: String { get }

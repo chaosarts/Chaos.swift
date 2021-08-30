@@ -13,10 +13,10 @@ import ChaosMath
 
 public class ShapeTest: XCTestCase {
 
-    var sphereDataSource: SphereShapeDataSource = SphereShapeDataSource()
+    var sphereDataSource: SphereMeshDataSource = SphereMeshDataSource()
 
     public func testShapeDataSource () {
-        let shape = Shape()
+        let shape = Mesh()
         shape.dataSource = self
         shape.reloadData(for: .point)
         XCTAssertEqual(3, shape.vertices.count)
@@ -25,7 +25,7 @@ public class ShapeTest: XCTestCase {
     }
 
     public func testSphereDataSource () {
-        let shape = Shape()
+        let shape = Mesh()
         sphereDataSource.latitudeCount = 10
         shape.dataSource = sphereDataSource
         shape.reloadData(for: .point)
@@ -34,15 +34,15 @@ public class ShapeTest: XCTestCase {
 }
 
 
-extension ShapeTest: ShapeDataSource {
+extension ShapeTest: MeshDataSource {
 
     public var center: Vec3 { .zero }
 
-    public func numberOfPrimitives(_ shape: Shape, forType primitiveType: Shape.Primitive) -> Int {
+    public func numberOfPrimitives(_ shape: Mesh, forType primitiveType: Mesh.Primitive) -> Int {
         10
     }
 
-    public func shape(_ shape: Shape, verticesForPrimitiveAt index: Int, ofType primitiveType: Shape.Primitive) -> [Vec3] {
+    public func shape(_ shape: Mesh, verticesForPrimitiveAt index: Int, ofType primitiveType: Mesh.Primitive) -> [Vec3] {
         let vertices = [.zero, Vec3(1, 1, 1), Vec3(0, 0, 1)]
         var output: [Vec3] = []
 

@@ -13,6 +13,6 @@ open class UIStoryView: UIView {
 }
 
 
-@objc public protocol UIStoryViewDataSource: class {
+@objc public protocol UIStoryViewDataSource: AnyObject {
 
 }

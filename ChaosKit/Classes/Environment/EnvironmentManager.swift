@@ -260,7 +260,7 @@ public extension EnvironmentManager {
 }
 
 
-public protocol EnvironmentManagerDelegate: class {
+public protocol EnvironmentManagerDelegate: AnyObject {
     func environmentManager(_ environmentManager: EnvironmentManager, didSelectEnvironment environment: Environment)
     func environmentManager(_ environmentManager: EnvironmentManager, didSetupEnvironment environment: Environment, withError error: Error?)
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol EnvironmentDataEncoder: class {
+public protocol EnvironmentDataEncoder: AnyObject {
     var fileExtension: String { get }
     func encode<E: Encodable>(_ encodable: E) throws -> Data
 }

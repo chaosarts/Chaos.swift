@@ -7,10 +7,13 @@
 
 import Foundation
 import ChaosMath
+import ChaosCore
 
-public class Shape {
+public class Mesh {
 
-    public weak var dataSource: ShapeDataSource?
+    private var log: Log = Log(Mesh.self, levels: [.warn, .error])
+
+    public weak var dataSource: MeshDataSource?
 
     public private(set) var vertices: [Vec3] = []
 
@@ -20,20 +23,19 @@ public class Shape {
 
     public var components: [Vec3.Component] { vertexSequence.reduce([], { $0 + $1.components }) }
 
-    public func reloadData (for primitiveType: Primitive) {
+    public func reloadData (for primitive: PrimitiveType) {
         vertices = []
         indices = []
+
         guard let dataSource = dataSource else { return }
 
-        var tmpVertices: [Vec3] = []
-        for index in 0..<dataSource.numberOfPrimitives(self, forType: primitiveType) {
-            let vertices = dataSource.shape(self, verticesForPrimitiveAt: index, ofType: primitiveType)
-            if vertices.count != primitiveType.rawValue {
-                fatalError("Invalid count of vertices (\(vertices.count)) for primitive type. Expected \(primitiveType.rawValue) vertices.")
-            }
-            tmpVertices.append(contentsOf: vertices)
+        let vertices = dataSource.mesh(self, verticesFor: primitive)
+        guard vertices.count % primitive.rawValue == 0 else {
+            log.warn(format: "Vertex count inconcistency. Number of vertices (\(vertices.count)) must be devidable by the number of " + "vertices per primitive \(primitive.rawValue).")
+            return
         }
-        tmpVertices.forEach({ self.appendVertex($0) })
+
+        vertices.forEach({ self.appendVertex($0) })
     }
 
     private func appendVertex (_ vertex: Vec3) {
@@ -46,9 +48,9 @@ public class Shape {
     }
 }
 
-public extension Shape {
+public extension Mesh {
 
-    @objc enum Primitive: Int {
+    @objc enum PrimitiveType: Int {
         case point = 1
         case line = 2
         case triangle = 3

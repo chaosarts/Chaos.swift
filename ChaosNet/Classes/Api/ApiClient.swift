@@ -276,7 +276,7 @@ open class ApiClient: NSObject {
 
 /// Delegate class for the api client to get informed about certain events during
 /// a api request.
-public protocol ApiClientDelegate: class {
+public protocol ApiClientDelegate: AnyObject {
 
     /// Asks the delegate, whether the api request parameters should be
     /// translated as query items in the body.

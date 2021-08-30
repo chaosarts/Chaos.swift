@@ -11,7 +11,7 @@ import Foundation
 ///
 /// An implmentation of this protocol provides several informations for the task
 /// runner to execute a set of task it provides.
-public protocol TaskRunnerSource: class {
+public protocol TaskRunnerSource: AnyObject {
 
     /// Asks the source for the number of tasks to execute.
     func numberOfTasks (_ taskRunner: TaskRunner) -> Int

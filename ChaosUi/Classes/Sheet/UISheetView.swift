@@ -35,6 +35,6 @@ open class UISheetView: UIView {
 }
 
 @objc
-public protocol UISheetDelegate: class {
+public protocol UISheetDelegate: AnyObject {
 
 }

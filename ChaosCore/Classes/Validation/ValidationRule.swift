@@ -8,7 +8,7 @@
 import Foundation
 
 /// Protocol for a validation rule used by a validator.
-public protocol ValidationRule: class {
+public protocol ValidationRule: AnyObject {
     func validate (key: String, in decoder: Decoder) -> Bool
 }
 

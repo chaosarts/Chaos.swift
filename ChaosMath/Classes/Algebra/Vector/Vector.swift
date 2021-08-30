@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - Vector
 
-public protocol Vector: Equatable, CustomStringConvertible {
+public protocol Vector: Equatable, CustomStringConvertible, Hashable {
 
     /// Describes the data type of the components of this vector
     associatedtype Component: SignedNumeric
@@ -68,6 +68,10 @@ public extension Vector {
     }
 
     var dimension: Int { components.count }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(components.map({ "\($0)" }).joined(separator: ","))
+    }
 
     @inlinable static func - (_ lhs: Self, rhs: Self) -> Self {
         lhs + -rhs
