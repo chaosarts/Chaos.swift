@@ -9,11 +9,6 @@ import Foundation
 
 public protocol RestClientDelegate: AnyObject {
 
-    /// Tells the delegate to return http method corresponding to the given request.
-    /// - Parameter restClient: The client calling this method.
-    /// - Parameter request: The request that is about to be sent by the given rest client.
-    func restClient (_ restClient: RestClient, httpMethodFor request: RestRequest) -> HttpMethod
-
     /// Asks the delegate if the rest client should use cookies for the given request.
     /// - Parameter restClient: The client calling this method.
     /// - Parameter request: The request that is about to be sent by the given rest client.
@@ -50,19 +45,6 @@ public protocol RestClientDelegate: AnyObject {
 }
 
 public extension RestClientDelegate {
-    func restClient (_ restClient: RestClient, httpMethodFor request: RestRequest) -> HttpMethod {
-        switch request.action {
-        case .create:
-            return .POST
-        case .retrieve:
-            return .GET
-        case .update:
-            return .PUT
-        case .delete:
-            return .DELETE
-        }
-    }
-
     func restClient (_ restClient: RestClient, shouldUseHttpCookiesFor request: RestRequest) -> Bool { true }
     func restClient (_ restClient: RestClient, willSend request: RestRequest) {}
     func restClient (_ restClient: RestClient, didSend request: RestRequest) {}

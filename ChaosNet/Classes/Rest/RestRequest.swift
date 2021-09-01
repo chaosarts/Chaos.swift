@@ -9,7 +9,10 @@ import Foundation
 
 public class RestRequest {
 
-    public let action: Action
+    public typealias CachePolicy = URLRequest.CachePolicy
+    public typealias Action = HttpMethod
+
+    public let method: Action
 
     public let endpoint: Endpoint
 
@@ -22,9 +25,9 @@ public class RestRequest {
         set { endpoint.parameters = newValue }
     }
 
-    public init (_ endpoint: Endpoint, action: Action = .retrieve) {
+    public init (_ endpoint: Endpoint, action: Action = .GET) {
         self.endpoint = endpoint
-        self.action = action
+        self.method = action
     }
 
     @discardableResult
@@ -103,15 +106,6 @@ public class RestRequest {
 
 
 public extension RestRequest {
-    
-    typealias CachePolicy = URLRequest.CachePolicy
-
-    enum Action {
-        case create
-        case retrieve
-        case update
-        case delete
-    }
 
     class Endpoint: ExpressibleByStringLiteral {
 

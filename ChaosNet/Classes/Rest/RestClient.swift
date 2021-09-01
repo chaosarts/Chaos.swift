@@ -118,7 +118,7 @@ public class RestClient {
 
         var urlRequest = URLRequest(url: url, cachePolicy: cachePolicy, timeoutInterval: requestTimeout)
         request.headers.forEach { urlRequest.addValue($1, forHTTPHeaderField: $0) }
-        urlRequest.httpMethod = httpMethod(for: request).rawValue
+        urlRequest.httpMethod = request.method.rawValue
         urlRequest.httpShouldHandleCookies = delegate?.restClient(self, shouldUseHttpCookiesFor: request) ?? true
         urlRequest.httpBody = request.payload
         return urlRequest
@@ -138,23 +138,6 @@ public class RestClient {
         }
 
         return url
-    }
-
-    public func httpMethod (for request: RestRequest) -> HttpMethod {
-        if let delegate = delegate {
-            return delegate.restClient(self, httpMethodFor: request)
-        }
-
-        switch request.action {
-        case .create:
-            return .POST
-        case .retrieve:
-            return .GET
-        case .update:
-            return .PUT
-        case .delete:
-            return .DELETE
-        }
     }
 
 
