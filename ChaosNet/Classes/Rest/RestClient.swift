@@ -38,85 +38,80 @@ public class RestClient {
         self.dataEncoder = dataEncoder
     }
 
-    public func send<D: Decodable> (request: RestRequest, relativeTo baseUrl: URL? = nil, completion: (RestResult<D>) -> Void) throws {
 
-        delegate?.restClient(self, willSend: request)
-        let urlRequest = try self.urlRequest(for: request, relativeTo: baseUrl)
+    // MARK: Sending Requests
 
-        transportEngine.send(request: urlRequest, completion: { (response, error) in
-            if let error = self.evaluateReponse(response, error: error) {
+    public func send<D: Decodable> (request: RestRequest, relativeTo baseUrl: URL? = nil, completion: @escaping (RestResult<RestResponse<D>>) -> Void) {
+        send(request: request, relativeTo: baseUrl) { (result: RestResult<RestTransportEngine.Response>) in
+            switch result {
+            case .success(let transportEngineResponse):
+
+                guard let data = transportEngineResponse.data else {
+                    let error = RestInternalError(code: .noData)
+                    self.delegate?.restClient(self, didReceive: error, for: request)
+                    completion(.failure(error))
+                    return
+                }
+
+                do {
+                    let headers = self.headers(fromHttpUrlResponse: transportEngineResponse.response)
+                    let object: D = try self.dataDecoder.decode(D.self, from: data)
+                    let restResponse = RestResponse(data: object, headers: headers)
+                    self.delegate?.restClient(self, didReceive: restResponse, for: request)
+                    completion(.success(restResponse))
+                } catch {
+                    self.delegate?.restClient(self, didReceive: error, for: request)
+                    completion(.failure(error))
+                }
+            case .failure(let error):
                 completion(.failure(error))
-                self.delegate?.restClient(self, didReceive: error, for: request)
-                return
             }
+        }
+    }
 
-            guard let data = response?.data else {
-                let error = RestInternalError(code: .noData)
-                completion(.failure(error))
-                self.delegate?.restClient(self, didReceive: error, for: request)
-                return
-            }
-
-            do {
-                let object: D = try self.dataDecoder.decode(D.self, from: data)
-                let restResponse = RestResponse(data: object, headers: [:])
+    public func send (request: RestRequest, relativeTo baseUrl: URL? = nil, completion: @escaping (RestResult<RestResponse<Void>>) -> Void) {
+        send(request: request, relativeTo: baseUrl) { (result: RestResult<RestTransportEngine.Response>) in
+            switch result {
+            case .success(let transportEngineResponse):
+                let data: Void
+                let headers = self.headers(fromHttpUrlResponse: transportEngineResponse.response)
+                let restResponse = RestResponse<Void>(data: data, headers: headers)
                 completion(.success(restResponse))
-                self.delegate?.restClient(self, didReceive: restResponse, for: request)
-            } catch {
-                let error = RestInternalError(code: .decoding, previous: error)
+            case .failure(let error):
                 completion(.failure(error))
-                self.delegate?.restClient(self, didReceive: error, for: request)
             }
-        })
-        delegate?.restClient(self, didSend: request)
-    }
-
-    public func send (request: RestRequest, relativeTo baseUrl: URL? = nil, completion: (RestResult<Void>) -> Void) throws {
-        delegate?.restClient(self, willSend: request)
-        let urlRequest = try self.urlRequest(for: request, relativeTo: baseUrl)
-
-        transportEngine.send(request: urlRequest, completion: { (response, error) in
-            if let error = self.evaluateReponse(response, error: error) {
-                completion(.failure(error))
-                self.delegate?.restClient(self, didReceive: error, for: request)
-                return
-            }
-
-            let void: Void
-            let restResponse = RestResponse(data: void, headers: [:])
-            completion(.success(restResponse))
-            self.delegate?.restClient(self, didReceive: restResponse, for: request)
-        })
-        delegate?.restClient(self, didSend: request)
-    }
-
-    public func evaluateReponse (_ response: RestTransportEngine.Response?, error: Error?) -> Error? {
-        if let error = error {
-            return RestInternalError(code: .engine, previous: error)
-        }
-
-        guard let response = response else {
-            return RestInternalError(code: .badEngineImplementation)
-        }
-
-        guard delegate?.restClient(self, shouldFailForStatus: response.response.statusCode) ?? true else {
-            return nil
-        }
-
-        let httpStatus = HttpStatus(response.response.statusCode)
-        switch httpStatus.category {
-        case .information, .redirection:
-            return RestResponseError(code: .invalidStatus, response: response.response, data: response.data)
-        case .clientError:
-            return RestResponseError(code: .clientError, response: response.response, data: response.data)
-        case .serverError:
-            return RestResponseError(code: .serverError, response: response.response, data: response.data)
-        case .proprietaryError:
-            return RestResponseError(code: .proprietaryError, response: response.response, data: response.data)
-        default:
-            return nil
         }
     }
+
+    private func send (request: RestRequest, relativeTo baseUrl: URL?, completion: @escaping (RestResult<RestTransportEngine.Response>) -> Void) {
+        do {
+            delegate?.restClient(self, willSend: request)
+            let urlRequest = try self.urlRequest(for: request, relativeTo: baseUrl)
+
+            transportEngine.send(request: urlRequest, completion: { (response, error) in
+                if let error = self.evaluateReponse(response, error: error) {
+                    self.delegate?.restClient(self, didReceive: error, for: request)
+                    completion(.failure(error))
+                    return
+                }
+
+                guard let response = response else {
+                    completion(.failure(RestInternalError(code: .badEngineImplementation)))
+                    return
+                }
+
+                completion(.success(response))
+            })
+
+            delegate?.restClient(self, didSend: request)
+        } catch {
+            delegate?.restClient(self, didReceive: error, for: request)
+            completion(.failure(error))
+        }
+    }
+
+
+    // MARK: URL Request Helper
 
     public func urlRequest (for request: RestRequest, relativeTo baseUrl: URL?) throws -> URLRequest {
         let url = try self.url(for: request, relativeTo: baseUrl)
@@ -159,6 +154,48 @@ public class RestClient {
             return .PUT
         case .delete:
             return .DELETE
+        }
+    }
+
+
+    // MARK: HTTPURLResponse Helper
+
+    private func headers (fromHttpUrlResponse response: HTTPURLResponse) -> [String: String] {
+        var headers: [String: String] = [:]
+        for header in response.allHeaderFields {
+            guard let key = header.key as? String, let value = header.value as? String else {
+                continue
+            }
+            headers[key] = value
+        }
+        return headers
+    }
+
+    public func evaluateReponse (_ response: RestTransportEngine.Response?, error: Error?) -> Error? {
+        if let error = error {
+            return RestInternalError(code: .engine, previous: error)
+        }
+
+        guard let response = response else {
+            return RestInternalError(code: .badEngineImplementation)
+        }
+
+        guard delegate?.restClient(self, shouldFailForStatus: response.response.statusCode) ?? true else {
+            return nil
+        }
+
+        let httpStatus = HttpStatus(response.response.statusCode)
+        switch httpStatus.category {
+        case .information, .redirection:
+            return RestResponseError(code: .invalidStatus, response: response.response, data: response.data)
+        case .clientError:
+            return RestResponseError(code: .clientError, response: response.response, data: response.data)
+        case .serverError:
+            return RestResponseError(code: .serverError, response: response.response, data: response.data)
+        case .proprietaryError:
+            return RestResponseError(code: .proprietaryError, response: response.response, data: response.data)
+        default:
+            return nil
         }
     }
 }

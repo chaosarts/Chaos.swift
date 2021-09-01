@@ -18,7 +18,7 @@ public class GridMeshDataSource: MeshDataSource {
 
     public var horizontalSpacing: Float = 1
 
-    public func mesh(_ mesh: Mesh, verticesForPrimitve primitive: Mesh.PrimitiveType) -> [Vec3] {
+    public func mesh(_ mesh: Mesh, verticesFor primitive: Mesh.PrimitiveType) -> [Vec3] {
         []
     }
 

@@ -8,6 +8,6 @@
 import Foundation
 
 public enum RestResult<D> {
-    case success(RestResponse<D>)
+    case success(D)
     case failure(Error)
 }
