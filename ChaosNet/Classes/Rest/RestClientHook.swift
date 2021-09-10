@@ -8,6 +8,6 @@
 import Foundation
 
 public protocol RestClientHook {
-    func restClient (_ restClient: RestClient, willSendRequest request: RestRequest, completion: (RestRequest) -> Void)
-    func restClient (_ restClient: RestClient, didReceiveResponse response: RestTransportEngine.Response)
+    @available(iOS 15, *)
+    func restClient (_ restClient: RestClient, for request: RestRequest) async throws
 }

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D6B811826DF87A800956960 /* JsonEncoder+RestDataEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6B811126DF87A800956960 /* JsonEncoder+RestDataEncoder.swift */; };
+		0D6B811926DF87A800956960 /* JsonDecoder+RestDataDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6B811226DF87A800956960 /* JsonDecoder+RestDataDecoder.swift */; };
+		0D6B811A26DF87A800956960 /* RestClient+static.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6B811326DF87A800956960 /* RestClient+static.swift */; };
 		0DD4939426C18CA1001B56E2 /* ShapeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD4939326C18CA1001B56E2 /* ShapeTests.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
@@ -48,6 +51,9 @@
 
 /* Begin PBXFileReference section */
 		0C74F28DE98EFEDF25CF9831 /* Pods_Chaos_Example_Chaos_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chaos_Example_Chaos_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D6B811126DF87A800956960 /* JsonEncoder+RestDataEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JsonEncoder+RestDataEncoder.swift"; sourceTree = "<group>"; };
+		0D6B811226DF87A800956960 /* JsonDecoder+RestDataDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JsonDecoder+RestDataDecoder.swift"; sourceTree = "<group>"; };
+		0D6B811326DF87A800956960 /* RestClient+static.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RestClient+static.swift"; sourceTree = "<group>"; };
 		0DD4939326C18CA1001B56E2 /* ShapeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeTests.swift; sourceTree = "<group>"; };
 		12175E6805309BD4FA36768A /* Pods-Chaos_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chaos_Example.debug.xcconfig"; path = "Target Support Files/Pods-Chaos_Example/Pods-Chaos_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		1C460315E3D0C22CFAE7C975 /* Pods-Chaos_Example-Chaos_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chaos_Example-Chaos_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Chaos_Example-Chaos_Tests/Pods-Chaos_Example-Chaos_Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -110,6 +116,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D6B811026DF87A800956960 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				0D6B811126DF87A800956960 /* JsonEncoder+RestDataEncoder.swift */,
+				0D6B811226DF87A800956960 /* JsonDecoder+RestDataDecoder.swift */,
+				0D6B811326DF87A800956960 /* RestClient+static.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		0DD4939226C18C80001B56E2 /* ChaosThree */ = {
 			isa = PBXGroup;
 			children = (
@@ -145,6 +161,7 @@
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
+				0D6B811026DF87A800956960 /* Extensions */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
@@ -620,7 +637,10 @@
 			files = (
 				68C6735B2574E8670040FCFF /* UITestViewController.swift in Sources */,
 				68214781255D577C00501FD3 /* UIAppSetupViewController.swift in Sources */,
+				0D6B811826DF87A800956960 /* JsonEncoder+RestDataEncoder.swift in Sources */,
+				0D6B811926DF87A800956960 /* JsonDecoder+RestDataDecoder.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				0D6B811A26DF87A800956960 /* RestClient+static.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

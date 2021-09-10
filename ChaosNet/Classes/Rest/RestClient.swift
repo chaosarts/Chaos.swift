@@ -29,6 +29,8 @@ public class RestClient {
     /// Specifies the policy to use for caching
     public var cachePolicy: RestRequest.CachePolicy = .reloadIgnoringLocalAndRemoteCacheData
 
+    public var hooks: [RestClientHook] = []
+
 
     // MARK: Intialization
     
@@ -41,11 +43,76 @@ public class RestClient {
 
     // MARK: Sending Requests
 
-    public func send<D: Decodable> (request: RestRequest, relativeTo baseUrl: URL? = nil, completion: @escaping (RestResult<RestResponse<D>>) -> Void) {
+    @available(iOS 15, *)
+    public func send<D: Decodable> (request: RestRequest, relativeTo baseUrl: URL? = nil) async throws -> RestResponse<D> {
+        do {
+            let response: RestTransportEngine.Response = try await send(request: request, relativeTo:  baseUrl)
+            guard let data = response.data else {
+                throw RestInternalError(code: .noData, previous: nil)
+            }
+
+            let object = try dataDecoder.decode(D.self, from: data)
+            let headers = self.headers(fromHttpUrlResponse: response.response)
+            return RestResponse(data: object, headers: headers)
+        } catch {
+            delegate?.restClient(self, didReceive: error, for: request)
+            throw error
+        }
+    }
+
+    @available(iOS 15, *)
+    public func send (request: RestRequest, relativeTo baseUrl: URL? = nil) async throws -> RestResponse<Void> {
+        do {
+            let response: RestTransportEngine.Response = try await send(request: request, relativeTo:  baseUrl)
+            let headers = self.headers(fromHttpUrlResponse: response.response)
+            return RestResponse(data: Void(), headers: headers)
+        } catch {
+            delegate?.restClient(self, didReceive: error, for: request)
+            throw error
+        }
+    }
+
+    @available(iOS 15, *)
+    private func send (request: RestRequest, relativeTo baseUrl: URL? = nil) async throws -> RestTransportEngine.Response {
+        delegate?.restClient(self, willSend: request)
+
+        for hook in hooks {
+            try await hook.restClient(self, for: request)
+        }
+
+        let urlRequest = try self.urlRequest(for: request, relativeTo: baseUrl)
+        let response = try await transportEngine.send(request: urlRequest)
+
+        let httpStatus = HttpStatus(response.response.statusCode)
+        let clientShouldFailForStatus: Bool
+        if httpStatus.category != .success {
+            clientShouldFailForStatus = delegate?.restClient(self, shouldFailForStatus: response.response.statusCode) ?? true
+        } else {
+            clientShouldFailForStatus = false
+        }
+
+        if clientShouldFailForStatus {
+            switch httpStatus.category {
+            case .information, .redirection:
+                throw RestResponseError(code: .invalidStatus, response: response.response, data: response.data)
+            case .clientError:
+                throw RestResponseError(code: .clientError, response: response.response, data: response.data)
+            case .serverError:
+                throw RestResponseError(code: .serverError, response: response.response, data: response.data)
+            case .proprietaryError:
+                throw RestResponseError(code: .proprietaryError, response: response.response, data: response.data)
+            default:
+                break
+            }
+        }
+
+        return response
+    }
+
+    public func send<D: Decodable> (request: RestRequest, relativeTo baseUrl: URL? = nil, expecting: D.Type, completion: @escaping (RestResult<RestResponse<D>>) -> Void) {
         send(request: request, relativeTo: baseUrl) { (result: RestResult<RestTransportEngine.Response>) in
             switch result {
             case .success(let transportEngineResponse):
-
                 guard let data = transportEngineResponse.data else {
                     let error = RestInternalError(code: .noData)
                     self.delegate?.restClient(self, didReceive: error, for: request)
