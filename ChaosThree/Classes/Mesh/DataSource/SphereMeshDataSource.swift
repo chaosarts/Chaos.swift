@@ -33,6 +33,11 @@ public class SphereMeshDataSource: MeshDataSource {
 
 
     // MARK: Cache Properties
+
+    private var vertices: [Vec3]!
+
+    private var lastPrimitiveType: Mesh.PrimitiveType?
+
     /// Provides the spacing between latitudes in radians.
     private var latitudeSpacing: Float = 0.0
 
@@ -40,7 +45,7 @@ public class SphereMeshDataSource: MeshDataSource {
     private var longitudeSpacing: Float = 0.0
 
     // Indicates whether the cache properties needs to be updated or not.
-    private var needsUpdate: Bool = true
+    private var cacheNeedsUpdate: Bool = true
 
 
     // MARK: Initialization
@@ -55,18 +60,35 @@ public class SphereMeshDataSource: MeshDataSource {
 
     // MARK: ShapeDataSource Implementations
 
-    public func mesh(_ mesh: Mesh, verticesFor primitive: Mesh.PrimitiveType) -> [Vec3] {
-        updateIfNeeded()
-        switch primitive {
-        case .point:
-            return verticesForPoints()
+    public func mesh(_ mesh: Mesh, prepareForPrimitiveType primitiveType: Mesh.PrimitiveType) {
+        updateCacheIfNeeded(for: primitiveType)
+
+        guard vertices == nil else { return }
+
+        switch primitiveType {
+        case .point, .lineStrip, .triangleStrip:
+             vertices = verticesForPoints()
         case .line:
-            return verticesForLines()
+            vertices = verticesForLines()
         case .triangle:
-            return verticesForTriangles()
+            vertices = verticesForTriangles()
         }
+
+        lastPrimitiveType = primitiveType
     }
 
+    public func mesh(_ mesh: Mesh, numberOfVerticesForPrimitiveType primitiveType: Mesh.PrimitiveType) -> Int {
+        vertices.count
+    }
+
+    public func mesh(_ mesh: Mesh, vertexAt index: Int) -> Vec3 {
+        vertices[index]
+    }
+
+
+    // MARK: Helper Methods
+
+    /// Generates a list of vertices to describe the sphere for primitive type point, lineStrip and triangleStrip.
     private func verticesForPoints () -> [Vec3] {
         var vertices: [Vec3] = []
         vertices.append(center + Vec3(0, 1, 0) * radius)
@@ -81,6 +103,7 @@ public class SphereMeshDataSource: MeshDataSource {
         return vertices
     }
 
+    /// Generates a list of vertices to describe the sphere for primitive type line.
     private func verticesForLines () -> [Vec3] {
         var vertices: [Vec3] = []
 
@@ -118,6 +141,7 @@ public class SphereMeshDataSource: MeshDataSource {
         return vertices
     }
 
+    /// Generates a list of vertices to describe the sphere for primitive type triangle.
     private func verticesForTriangles () -> [Vec3] {
         var vertices: [Vec3] = []
 
@@ -170,15 +194,18 @@ public class SphereMeshDataSource: MeshDataSource {
     }
 
     private func setNeedsUpdate () {
-        needsUpdate = true
+        cacheNeedsUpdate = true
     }
 
-    private func updateIfNeeded () {
-        guard needsUpdate else { return }
-        update()
-    }
+    private func updateCacheIfNeeded (for primitiveType: Mesh.PrimitiveType) {
+        guard cacheNeedsUpdate else {
+            if primitiveType != lastPrimitiveType {
+                vertices = []
+            }
+            return
+        }
 
-    private func update () {
+        vertices = nil
         latitudeSpacing = .pi / Float(latitudeCount + 1)
         longitudeSpacing = (2 * .pi) / Float(longitudeCount)
     }
