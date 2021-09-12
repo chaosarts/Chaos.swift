@@ -13,11 +13,20 @@ public struct t_vec3<Component: SignedNumeric>: StaticVector {
 
     public private(set) var components: [Component]
 
-    public var x: Component { components[0] }
+    public var x: Component {
+        get { components[0] }
+        set { components[0] = newValue }
+    }
 
-    public var y: Component { components[1] }
+    public var y: Component {
+        get { components[1] }
+        set { components[1] = newValue }
+    }
 
-    public var z: Component { components[2] }
+    public var z: Component {
+        get { components[2] }
+        set { components[2] = newValue }
+    }
 
     public init (components: [Component]) {
         self.init()
@@ -90,16 +99,20 @@ public struct t_vec3<Component: SignedNumeric>: StaticVector {
     }
 }
 
+public extension t_vec3 {
+    static var zero: Self { t_vec3() }
+}
+
+public extension t_vec3 where Component: FloatingPoint {
+    public static var infinity: Self { t_vec3(.infinity, .infinity, .infinity) }
+}
+
 extension t_vec3: FloatingPointVector where Component: FloatingPoint {
-    
+
 }
 
 extension t_vec3: StaticFloatingPointVector where Component: FloatingPoint {
 
-}
-
-public extension t_vec3 {
-    static var zero: Self { t_vec3() }
 }
 
 public typealias Vec3f = t_vec3<Float>

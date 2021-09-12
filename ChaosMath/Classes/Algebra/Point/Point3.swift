@@ -45,6 +45,20 @@ public struct t_point3<Component: SignedNumeric>: StaticPoint {
     }
 }
 
+public extension t_point3 {
+    static var zero: Self { t_point3() }
+}
+
+public extension t_point3 where Component: FloatingPoint {
+    static var infinity: Self { t_point3(.infinity, .infinity, .infinity) }
+}
+
+extension t_point3: Equatable where Component: Equatable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z
+    }
+}
+
 public typealias Point3f = t_point3<Float>
 public typealias Point3d = t_point3<Double>
 public typealias Point3i = t_point3<Int>
