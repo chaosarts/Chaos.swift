@@ -100,7 +100,7 @@ public struct t_vec3<Component: SignedNumeric>: StaticVector {
 }
 
 public extension t_vec3 {
-    static var zero: Self { t_vec3() }
+    public static var zero: Self { t_vec3() }
 }
 
 public extension t_vec3 where Component: FloatingPoint {

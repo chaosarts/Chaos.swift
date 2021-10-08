@@ -10,6 +10,7 @@ PODS:
     - ChaosUi
   - ChaosMath (1.0.0):
     - ChaosCore
+  - ChaosMetal (1.0.0)
   - ChaosNet (1.0.0):
     - ChaosCore
     - Hippolyte (~> 1.2.0)
@@ -31,6 +32,7 @@ DEPENDENCIES:
   - ChaosGraphics (from `../`)
   - ChaosKit (from `../`)
   - ChaosMath (from `../`)
+  - ChaosMetal (from `../`)
   - ChaosNet (from `../`)
   - ChaosThree (from `../`)
   - ChaosUi (from `../`)
@@ -55,6 +57,8 @@ EXTERNAL SOURCES:
     :path: "../"
   ChaosMath:
     :path: "../"
+  ChaosMetal:
+    :path: "../"
   ChaosNet:
     :path: "../"
   ChaosThree:
@@ -68,6 +72,7 @@ SPEC CHECKSUMS:
   ChaosGraphics: aaaa5b393d11f8ac30b54991fbc4db80a6373be9
   ChaosKit: c41a0f4653596934e90f5a42cc3b03532c584741
   ChaosMath: 644c30e3faf9cbc174c38a11e1610eef5b4dc419
+  ChaosMetal: f53846acd8140672da283e863d4ab1d0e4dc383b
   ChaosNet: 6147fad9ef0c1e88901637a3b83346dc0d227c48
   ChaosThree: 60ed22f46d07d49738dd7ce35ddf21fa40cf6f2f
   ChaosUi: 5d985b3c9be74cef3a0ceb64a3193d98ec331fec
@@ -76,6 +81,6 @@ SPEC CHECKSUMS:
   PromisesSwift: fed4eb6f7a29846a22624d1b86b77e1dedb88724
   SwiftLint: c585ebd615d9520d7fbdbe151f527977b0534f1e
 
-PODFILE CHECKSUM: 5078f9565a75b1c4f6b3e430136f77946254b5e0
+PODFILE CHECKSUM: 992ad5abd7bb74367847f7e02bb6a3789261a855
 
 COCOAPODS: 1.10.1

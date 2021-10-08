@@ -98,7 +98,7 @@ extension t_vec4: StaticFloatingPointVector where Component: FloatingPoint {
 }
 
 public extension t_vec4 {
-    static var zero: Self { t_vec4() }
+    public static var zero: Self { t_vec4() }
 }
 
 public typealias Vec4f = t_vec4<Float>

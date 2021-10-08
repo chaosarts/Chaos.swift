@@ -10,6 +10,7 @@ pod 'ChaosMath', :path => '../'
 pod 'ChaosKit', :path => '../'
 pod 'ChaosNet', :path => '../'
 pod 'ChaosUi', :path => '../'
+pod 'ChaosMetal', :path => '../'
 pod 'ChaosThree', :path => '../'
 target 'Chaos_Example' do
   target 'Chaos_Tests' do

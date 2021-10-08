@@ -21,19 +21,4 @@ public protocol MeshDataSource: AnyObject {
     /// - Parameter index: The index of the vertex to return.
     /// - Returns: The vertex as `Vec3` corresponding to `index`
     func mesh (_ mesh: Mesh, vertexAt index: Int) -> Vec3
-
-    // MARK: Optional functions
-
-    /// Tells the data source to prepare the vertices to provide, if neccessary. Preparing vertices can be useful, when
-    /// the data source is generating vertices just-in-time. One can generate an internal array of vertices. This method
-    /// will be called before `numberOfVertices`.
-    /// - Parameter mesh: The mesh telling the data source to prepare.
-    func mesh (_ mesh: Mesh, prepareForPrimitiveType primitiveType: Mesh.PrimitiveType)
-}
-
-
-// MARK: - Default Implementation
-
-public extension MeshDataSource {
-    func mesh (_ mesh: Mesh, prepareForPrimitiveType primitiveType: Mesh.PrimitiveType) {}
 }

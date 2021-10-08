@@ -25,6 +25,8 @@ public class Mesh: NSObject {
 
     public weak var dataSource: MeshDataSource?
 
+    public weak var delegate: MeshDelegate?
+
     private var vertices: [Vec3] = []
 
     private var indices: [Int] = []
@@ -46,14 +48,13 @@ public class Mesh: NSObject {
 
     // MARK: Control Data
 
-    public func reloadData (for primitiveType: PrimitiveType) {
+    public func reloadVertices (withPrimitiveType primitiveType: PrimitiveType) {
         vertices = []
         indices = []
         bounds = .null
 
         guard let dataSource = dataSource else { return }
-
-        dataSource.mesh(self, prepareForPrimitiveType: primitiveType)
+        delegate?.mesh(self, willReloadVerticesWithPrimitiveType: primitiveType)
 
         let numberOfVertices = dataSource.mesh(self, numberOfVerticesForPrimitiveType: primitiveType)
         guard (numberOfVertices % primitiveType.vertexCount) == 0 else {
@@ -61,23 +62,18 @@ public class Mesh: NSObject {
                         "number of vertices per primitve (\(primitiveType.rawValue))")
         }
 
-        var min: Point3 = .infinity
-        var max: Point3 = -.infinity
-
         for index in 0..<numberOfVertices {
             let vertex = dataSource.mesh(self, vertexAt: index)
-            appendVertex(dataSource.mesh(self, vertexAt: index))
+            appendVertex(vertex)
         }
 
         bounds = self.bounds(for: vertices, withMinBox: nil)
+        delegate?.mesh(self, didReloadVerticesWithPrimitiveType: primitiveType)
     }
 
-    public func reloadVertices (at indices: [Int], for primitiveType: PrimitiveType) {
-
+    public func reloadVertices (at indices: [Int], withPrimitiveType primitiveType: PrimitiveType) {
         guard let dataSource = dataSource else { return }
-
-        var min: Point3 = bounds.origin
-        var max: Point3 = Point3(bounds.maxX, bounds.maxY, bounds.maxZ)
+        delegate?.mesh(self, didReloadVerticesAt: indices, withPrimitiveType: primitiveType)
 
         var newVertices: [Vec3] = []
         for index in indices {
@@ -91,10 +87,11 @@ public class Mesh: NSObject {
         }
 
         bounds = self.bounds(for: newVertices, withMinBox: bounds)
+        delegate?.mesh(self, didReloadVerticesAt: indices, withPrimitiveType: primitiveType)
     }
 
     /// Calculates the bounding box for the given set of vertices. If `minBox` is specified the resulting bounding box
-    /// will have at least its extend. If the list of vertices is empty and no `minBox` is specified a null box is
+    /// will have at least this extend. If the list of vertices is empty and no `minBox` is specified a null box is
     /// returned.
     /// - Parameter vertices: The list of vertices to calculate the bounding box for.
     /// - Parameter minBox: Specifies the minimum extend of the resulting box.
