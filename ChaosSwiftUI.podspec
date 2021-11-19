@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name             = 'ChaosMath'
+  s.name             = 'ChaosSwiftUI'
   s.version          = '1.0.0'
   s.summary          = 'Collection of all Chaos iOS Frameworks'
   s.description      = <<-DESC
@@ -18,7 +18,9 @@ Pod::Spec.new do |s|
   s.osx.deployment_target     = '10.13'
   s.watchos.deployment_target = '6.0'
 
-  s.source_files  = 'ChaosMath/Classes/**/*'
+  s.source_files  = 'ChaosSwiftUI/Classes/**/*'
   s.frameworks    = 'Foundation'
   s.dependency 'ChaosCore'
+  s.dependency 'ChaosMath'
+  s.dependency 'ChaosGraphics'
 end

@@ -71,13 +71,13 @@ open class CACircleSegmentLayer: CAShapeLayer {
                 path.addArc(center: center, radius: radius, startAngle: minAngle, endAngle: maxAngle, clockwise: !clockwise)
             } else {
                 path.addArc(center: center, radius: radius, startAngle: minAngle, endAngle: maxAngle, clockwise: !clockwise)
-                if lineCap == kCALineCapRound {
+                if lineCap == CAShapeLayerLineCap.round {
                     let vector = CGVector(radius: (radius + innerRadius) / 2, angle: maxAngle)
                     path.addArc(center: center + vector, radius: (radius - innerRadius) / 2, startAngle: maxAngle, endAngle: maxAngle + .pi, clockwise: !clockwise)
                 }
 
                 path.addArc(center: center, radius: innerRadius, startAngle: maxAngle, endAngle: minAngle, clockwise: clockwise)
-                if lineCap == kCALineCapRound {
+                if lineCap == CAShapeLayerLineCap.round {
                     let vector = CGVector(radius: (radius + innerRadius) / 2, angle: minAngle)
                     path.addArc(center: center + vector, radius: (radius - innerRadius) / 2, startAngle: minAngle + .pi, endAngle: minAngle, clockwise: !clockwise)
                 }

@@ -5,14 +5,19 @@ import PackageDescription
 
 let package = Package(
     name: "Chaos",
-    platforms: [.iOS(.v11)],
+    defaultLocalization: "en",
+    platforms: [.iOS(.v14)],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
+        .library(name: "ChaosAnimation", targets: ["ChaosAnimation"]),
         .library(name: "ChaosCore", targets: ["ChaosCore"]),
-        .library(name: "ChaosNet", targets: ["ChaosNet"]),
         .library(name: "ChaosGraphics", targets: ["ChaosGraphics"]),
+        .library(name: "ChaosKit", targets: ["ChaosKit"]),
+        .library(name: "ChaosMath", targets: ["ChaosMath"]),
+        .library(name: "ChaosMetal", targets: ["ChaosMetal"]),
+        .library(name: "ChaosNet", targets: ["ChaosNet"]),
+        .library(name: "ChaosThree", targets: ["ChaosThree"]),
         .library(name: "ChaosUi", targets: ["ChaosUi"]),
-        .library(name: "ChaosKit", targets: ["ChaosKit"])
     ],
     dependencies: [
         .package(name: "Promises", url: "https://github.com/google/promises.git", "1.2.8" ..< "1.3.0"),
@@ -20,18 +25,41 @@ let package = Package(
     ],
     targets: [
         .target(
+            name: "ChaosAnimation",
+            dependencies: [
+                "ChaosCore",
+                "ChaosGraphics"
+            ],
+            path: "ChaosAnimation/Classes"
+        ),
+        .target(
             name: "ChaosCore",
             dependencies: [
                 .product(name: "Promises", package: "Promises")
             ],
             path: "ChaosCore/Classes"
         ),
-        .testTarget(
-            name: "ChaosCoreTest",
+        .target(
+            name: "ChaosGraphics",
             dependencies: [
                 "ChaosCore"
             ],
-            path: "Example/Tests/ChaosCore"
+            path: "ChaosGraphics/Classes"
+        ),
+        .target(
+            name: "ChaosMath",
+            dependencies: [
+                "ChaosCore"
+            ],
+            path: "ChaosMath/Classes"
+        ),
+        .target(
+            name: "ChaosMetal",
+            dependencies: [
+                "ChaosCore",
+                "ChaosMath"
+            ],
+            path: "ChaosMetal/Classes"
         ),
         .target(
             name: "ChaosNet",
@@ -39,22 +67,15 @@ let package = Package(
                 "ChaosCore",
                 .product(name: "Alamofire", package: "Alamofire")
             ],
-            path: "ChaosNet"
+            path: "ChaosNet/Classes"
         ),
         .target(
-            name: "ChaosGraphics",
-            dependencies: [
-                "ChaosCore"
-            ],
-            path: "ChaosGraphics"
-        ),
-        .target(
-            name: "ChaosAnimation",
+            name: "ChaosThree",
             dependencies: [
                 "ChaosCore",
-                "ChaosGraphics"
+                "ChaosMath"
             ],
-            path: "ChaosAnimation"
+            path: "ChaosThree/Classes"
         ),
         .target(
             name: "ChaosUi",
@@ -62,7 +83,7 @@ let package = Package(
                 "ChaosCore",
                 "ChaosGraphics"
             ],
-            path: "ChaosUi"
+            path: "ChaosUi/Classes"
         ),
         .target(
             name: "ChaosKit",
@@ -71,7 +92,7 @@ let package = Package(
                 "ChaosNet",
                 "ChaosUi"
             ],
-            path: "ChaosKit"
+            path: "ChaosKit/Classes"
         )
     ]
 )

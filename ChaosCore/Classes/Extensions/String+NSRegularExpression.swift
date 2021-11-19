@@ -32,4 +32,20 @@ public extension String {
         let regex = try NSRegularExpression(pattern: pattern, options: options)
         return extract(withRegExp: regex)
     }
+
+    func replacing (regex: NSRegularExpression,
+                    withString replacement: String = "",
+                    options: NSRegularExpression.MatchingOptions = []) -> String {
+        let range = NSRange(location: 0, length: self.count)
+        return regex.stringByReplacingMatches(in: self, options: options, range: range, withTemplate: replacement)
+    }
+
+    func replacing (pattern: String,
+                  withString replacement: String = "",
+                  options: NSRegularExpression.Options = [],
+                  matchingOptions: NSRegularExpression.MatchingOptions = []) throws -> String {
+        replacing(regex: try NSRegularExpression(pattern: pattern, options: options),
+                  withString: replacement,
+                  options: matchingOptions)
+    }
 }

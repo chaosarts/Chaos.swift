@@ -17,3 +17,7 @@ public extension Array {
         return result
     }
 }
+
+public extension Array where Element: SignedNumeric {
+    var sum: Element { reduce(0) { $0 + $1 } }
+}

@@ -7,67 +7,35 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0D6B811826DF87A800956960 /* JsonEncoder+RestDataEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6B811126DF87A800956960 /* JsonEncoder+RestDataEncoder.swift */; };
-		0D6B811926DF87A800956960 /* JsonDecoder+RestDataDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6B811226DF87A800956960 /* JsonDecoder+RestDataDecoder.swift */; };
-		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
-		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
-		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
-		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		6814D9C0262C2C47004BBBD1 /* DynamicVectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6814D9BF262C2C47004BBBD1 /* DynamicVectorTests.swift */; };
-		68214781255D577C00501FD3 /* UIAppSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68214780255D577C00501FD3 /* UIAppSetupViewController.swift */; };
-		6821481A255D8DE500501FD3 /* MimeTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68214819255D8DE500501FD3 /* MimeTypeTests.swift */; };
-		683A0B782541EB0400705836 /* PlistTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 683A0B702541EAB400705836 /* PlistTest.swift */; };
-		683C581C2541D94B004CEA07 /* single-environment.plist in Resources */ = {isa = PBXBuildFile; fileRef = 683C581B2541D94B004CEA07 /* single-environment.plist */; };
-		683C58312541DABF004CEA07 /* missing-fields.plist in Resources */ = {isa = PBXBuildFile; fileRef = 683C58302541DABF004CEA07 /* missing-fields.plist */; };
-		683C583F2541DB8E004CEA07 /* multiple-environments.plist in Resources */ = {isa = PBXBuildFile; fileRef = 683C583E2541DB8D004CEA07 /* multiple-environments.plist */; };
-		684ECDDA253E02CE00DA04D5 /* UITimelineViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684ECDD9253E02CE00DA04D5 /* UITimelineViewTest.swift */; };
-		684ECDE3253E031000DA04D5 /* EnvironmentManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 684ECDE2253E031000DA04D5 /* EnvironmentManagerTest.swift */; };
-		68B1672F25CBFBB000F9AF02 /* DependencyResolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B1671825CBFB4700F9AF02 /* DependencyResolverTests.swift */; };
-		68B1673225CBFBB800F9AF02 /* TaskRunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B1671425CBFB4700F9AF02 /* TaskRunnerTests.swift */; };
-		68B1673725CBFBBB00F9AF02 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B1671625CBFB4700F9AF02 /* String.swift */; };
-		68BCA4B7262C800C0039C6CE /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68BCA4B6262C800C0039C6CE /* File.swift */; };
-		68C41DF826242DC20054CDC4 /* Vec4Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C41DE526242CB80054CDC4 /* Vec4Tests.swift */; };
-		68C6735B2574E8670040FCFF /* UITestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C6735A2574E8670040FCFF /* UITestViewController.swift */; };
-		68FBBEC9262890C700032A5E /* Point2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FBBEC8262890C700032A5E /* Point2Tests.swift */; };
-		68FBBECF2628943300032A5E /* Point3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FBBECE2628943300032A5E /* Point3Tests.swift */; };
-		68FBBED32628949400032A5E /* Point4Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FBBED22628949400032A5E /* Point4Tests.swift */; };
-		68FBBED72628956500032A5E /* Vec3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FBBED62628956500032A5E /* Vec3Tests.swift */; };
-		68FBBEDB2628960100032A5E /* Vec2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68FBBEDA2628960100032A5E /* Vec2Tests.swift */; };
-		8B3653E74AC9CAB6763D5788 /* Pods_Chaos_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5047144D23B39F8791F0EBB0 /* Pods_Chaos_Example.framework */; };
-		9A423F17E1D4A545F939D13B /* Pods_Chaos_Example_Chaos_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C74F28DE98EFEDF25CF9831 /* Pods_Chaos_Example_Chaos_Tests.framework */; };
+		0D22727F271064C400FEED1A /* ChaosSwiftUIExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D22727E271064C400FEED1A /* ChaosSwiftUIExampleApp.swift */; };
+		0D227281271064C400FEED1A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D227280271064C400FEED1A /* MainView.swift */; };
+		0D227283271064C600FEED1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D227282271064C600FEED1A /* Assets.xcassets */; };
+		0D227286271064C600FEED1A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D227285271064C600FEED1A /* Preview Assets.xcassets */; };
+		0D22728F2710661000FEED1A /* PieChartViewExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D22728E2710661000FEED1A /* PieChartViewExample.swift */; };
+		0D22729327107E5700FEED1A /* MoleculeRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D22729227107E5700FEED1A /* MoleculeRootView.swift */; };
+		0D227295271080DB00FEED1A /* ViewExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D227294271080DB00FEED1A /* ViewExample.swift */; };
+		9BEFB677253AEC3593D12A83 /* Pods_ChaosSwiftUIExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4261401030CED23B33512483 /* Pods_ChaosSwiftUIExample.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		607FACE61AFB9204008FA782 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 607FACCF1AFB9204008FA782;
-			remoteInfo = Chaos;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		0C74F28DE98EFEDF25CF9831 /* Pods_Chaos_Example_Chaos_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chaos_Example_Chaos_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		0D6B811126DF87A800956960 /* JsonEncoder+RestDataEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JsonEncoder+RestDataEncoder.swift"; sourceTree = "<group>"; };
-		0D6B811226DF87A800956960 /* JsonDecoder+RestDataDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JsonDecoder+RestDataDecoder.swift"; sourceTree = "<group>"; };
+		0D22727C271064C400FEED1A /* ChaosSwiftUIExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChaosSwiftUIExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D22727E271064C400FEED1A /* ChaosSwiftUIExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaosSwiftUIExampleApp.swift; sourceTree = "<group>"; };
+		0D227280271064C400FEED1A /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		0D227282271064C600FEED1A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0D227285271064C600FEED1A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		0D227287271064C600FEED1A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0D22728E2710661000FEED1A /* PieChartViewExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartViewExample.swift; sourceTree = "<group>"; };
+		0D22729227107E5700FEED1A /* MoleculeRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeRootView.swift; sourceTree = "<group>"; };
+		0D227294271080DB00FEED1A /* ViewExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExample.swift; sourceTree = "<group>"; };
 		12175E6805309BD4FA36768A /* Pods-Chaos_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chaos_Example.debug.xcconfig"; path = "Target Support Files/Pods-Chaos_Example/Pods-Chaos_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		1C460315E3D0C22CFAE7C975 /* Pods-Chaos_Example-Chaos_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chaos_Example-Chaos_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Chaos_Example-Chaos_Tests/Pods-Chaos_Example-Chaos_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		25CD25A9F670CAC3CDF4111B /* Pods-ChaosThree-Chaos_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChaosThree-Chaos_Tests.debug.xcconfig"; path = "Target Support Files/Pods-ChaosThree-Chaos_Tests/Pods-ChaosThree-Chaos_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		4261401030CED23B33512483 /* Pods_ChaosSwiftUIExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChaosSwiftUIExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5047144D23B39F8791F0EBB0 /* Pods_Chaos_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chaos_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		607FACD01AFB9204008FA782 /* Chaos_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chaos_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		607FACE51AFB9204008FA782 /* Chaos_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Chaos_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		635FFEFC7FF3FAA4E9310293 /* Chaos.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Chaos.podspec; path = ../Chaos.podspec; sourceTree = "<group>"; };
 		6814D9BF262C2C47004BBBD1 /* DynamicVectorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicVectorTests.swift; sourceTree = "<group>"; };
-		68214780255D577C00501FD3 /* UIAppSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAppSetupViewController.swift; sourceTree = "<group>"; };
 		68214819255D8DE500501FD3 /* MimeTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MimeTypeTests.swift; sourceTree = "<group>"; };
-		6826962D25CD97E700334E62 /* ChaosCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaosCoreTests.swift; sourceTree = "<group>"; };
-		6826962F25CD97E700334E62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6826964225CD9A8900334E62 /* ChaosCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ChaosCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		683A0B702541EAB400705836 /* PlistTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlistTest.swift; sourceTree = "<group>"; };
 		683C581B2541D94B004CEA07 /* single-environment.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "single-environment.plist"; sourceTree = "<group>"; };
@@ -81,44 +49,88 @@
 		68B982EB258BD1F700C583E2 /* Chaos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Chaos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		68BCA4B6262C800C0039C6CE /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		68C41DE526242CB80054CDC4 /* Vec4Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vec4Tests.swift; sourceTree = "<group>"; };
-		68C6735A2574E8670040FCFF /* UITestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestViewController.swift; sourceTree = "<group>"; };
 		68FBBEC8262890C700032A5E /* Point2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point2Tests.swift; sourceTree = "<group>"; };
 		68FBBECE2628943300032A5E /* Point3Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point3Tests.swift; sourceTree = "<group>"; };
 		68FBBED22628949400032A5E /* Point4Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point4Tests.swift; sourceTree = "<group>"; };
 		68FBBED62628956500032A5E /* Vec3Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vec3Tests.swift; sourceTree = "<group>"; };
 		68FBBEDA2628960100032A5E /* Vec2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vec2Tests.swift; sourceTree = "<group>"; };
+		7369872F663BF3D08AB5E38B /* Pods_ChaosThree.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChaosThree.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB9773F2C4AD28E3D06E4957 /* Pods-ChaosSwiftUIExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChaosSwiftUIExample.release.xcconfig"; path = "Target Support Files/Pods-ChaosSwiftUIExample/Pods-ChaosSwiftUIExample.release.xcconfig"; sourceTree = "<group>"; };
+		BF0D065EF2A306A478A15C51 /* Pods-ChaosThree-Chaos_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChaosThree-Chaos_Tests.release.xcconfig"; path = "Target Support Files/Pods-ChaosThree-Chaos_Tests/Pods-ChaosThree-Chaos_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		D2000F52D412E1AC9BD2FFDF /* Pods-ChaosSwiftUIExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChaosSwiftUIExample.debug.xcconfig"; path = "Target Support Files/Pods-ChaosSwiftUIExample/Pods-ChaosSwiftUIExample.debug.xcconfig"; sourceTree = "<group>"; };
 		E84B7DE021A147BC801FF97A /* Pods-Chaos_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chaos_Example.release.xcconfig"; path = "Target Support Files/Pods-Chaos_Example/Pods-Chaos_Example.release.xcconfig"; sourceTree = "<group>"; };
 		EBD62E7CDFAD6219C1026CFE /* Pods-Chaos_Example-Chaos_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chaos_Example-Chaos_Tests.release.xcconfig"; path = "Target Support Files/Pods-Chaos_Example-Chaos_Tests/Pods-Chaos_Example-Chaos_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		EC2F7F132E46CC5DC45E42D6 /* Pods-ChaosThree.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChaosThree.release.xcconfig"; path = "Target Support Files/Pods-ChaosThree/Pods-ChaosThree.release.xcconfig"; sourceTree = "<group>"; };
+		EDB66383669C3CD0A0BFA469 /* Pods-ChaosThree.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChaosThree.debug.xcconfig"; path = "Target Support Files/Pods-ChaosThree/Pods-ChaosThree.debug.xcconfig"; sourceTree = "<group>"; };
 		F4BBFE02143DA114020C760A /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		FB57655C510035BF19A2AAEA /* Pods_ChaosThree_Chaos_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChaosThree_Chaos_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		607FACCD1AFB9204008FA782 /* Frameworks */ = {
+		0D227279271064C400FEED1A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B3653E74AC9CAB6763D5788 /* Pods_Chaos_Example.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		607FACE21AFB9204008FA782 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9A423F17E1D4A545F939D13B /* Pods_Chaos_Example_Chaos_Tests.framework in Frameworks */,
+				9BEFB677253AEC3593D12A83 /* Pods_ChaosSwiftUIExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0D6B811026DF87A800956960 /* Extensions */ = {
+		0D22727D271064C400FEED1A /* ChaosSwiftUIExample */ = {
 			isa = PBXGroup;
 			children = (
-				0D6B811126DF87A800956960 /* JsonEncoder+RestDataEncoder.swift */,
-				0D6B811226DF87A800956960 /* JsonDecoder+RestDataDecoder.swift */,
+				0D22728C271065AC00FEED1A /* Resources */,
+				0D22728B271065A700FEED1A /* Sources */,
+				0D227287271064C600FEED1A /* Info.plist */,
+				0D227284271064C600FEED1A /* Preview Content */,
 			);
-			path = Extensions;
+			path = ChaosSwiftUIExample;
+			sourceTree = "<group>";
+		};
+		0D227284271064C600FEED1A /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				0D227285271064C600FEED1A /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		0D22728B271065A700FEED1A /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				0D22727E271064C400FEED1A /* ChaosSwiftUIExampleApp.swift */,
+				0D227294271080DB00FEED1A /* ViewExample.swift */,
+				0D22729027107E2600FEED1A /* Views */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		0D22728C271065AC00FEED1A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0D227282271064C600FEED1A /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		0D22728D271065F500FEED1A /* Molecule */ = {
+			isa = PBXGroup;
+			children = (
+				0D22728E2710661000FEED1A /* PieChartViewExample.swift */,
+			);
+			path = Molecule;
+			sourceTree = "<group>";
+		};
+		0D22729027107E2600FEED1A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0D227280271064C400FEED1A /* MainView.swift */,
+				0D22729227107E5700FEED1A /* MoleculeRootView.swift */,
+				0D22728D271065F500FEED1A /* Molecule */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		0DD4939226C18C80001B56E2 /* ChaosThree */ = {
@@ -132,9 +144,8 @@
 			isa = PBXGroup;
 			children = (
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
-				607FACD21AFB9204008FA782 /* Example for Chaos */,
 				607FACE81AFB9204008FA782 /* Tests */,
-				6826962C25CD97E700334E62 /* ChaosCoreTests */,
+				0D22727D271064C400FEED1A /* ChaosSwiftUIExample */,
 				607FACD11AFB9204008FA782 /* Products */,
 				7A145E401A1E9585C691299C /* Pods */,
 				C018ED653E1CC98D0DC644FC /* Frameworks */,
@@ -144,33 +155,9 @@
 		607FACD11AFB9204008FA782 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				607FACD01AFB9204008FA782 /* Chaos_Example.app */,
-				607FACE51AFB9204008FA782 /* Chaos_Tests.xctest */,
+				0D22727C271064C400FEED1A /* ChaosSwiftUIExample.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		607FACD21AFB9204008FA782 /* Example for Chaos */ = {
-			isa = PBXGroup;
-			children = (
-				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
-				607FACDC1AFB9204008FA782 /* Images.xcassets */,
-				0D6B811026DF87A800956960 /* Extensions */,
-				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
-				607FACD91AFB9204008FA782 /* Main.storyboard */,
-				607FACD31AFB9204008FA782 /* Supporting Files */,
-				6821477C255D574F00501FD3 /* UI */,
-			);
-			name = "Example for Chaos";
-			path = Chaos;
-			sourceTree = "<group>";
-		};
-		607FACD31AFB9204008FA782 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				607FACD41AFB9204008FA782 /* Info.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		607FACE81AFB9204008FA782 /* Tests */ = {
@@ -204,30 +191,12 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
-		6821477C255D574F00501FD3 /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				68214780255D577C00501FD3 /* UIAppSetupViewController.swift */,
-				68C6735A2574E8670040FCFF /* UITestViewController.swift */,
-			);
-			path = UI;
-			sourceTree = "<group>";
-		};
 		68214818255D8DCF00501FD3 /* Meta */ = {
 			isa = PBXGroup;
 			children = (
 				68214819255D8DE500501FD3 /* MimeTypeTests.swift */,
 			);
 			path = Meta;
-			sourceTree = "<group>";
-		};
-		6826962C25CD97E700334E62 /* ChaosCoreTests */ = {
-			isa = PBXGroup;
-			children = (
-				6826962D25CD97E700334E62 /* ChaosCoreTests.swift */,
-				6826962F25CD97E700334E62 /* Info.plist */,
-			);
-			path = ChaosCoreTests;
 			sourceTree = "<group>";
 		};
 		683A0B6F2541EAB400705836 /* PropertyWrappers */ = {
@@ -378,6 +347,12 @@
 				E84B7DE021A147BC801FF97A /* Pods-Chaos_Example.release.xcconfig */,
 				1C460315E3D0C22CFAE7C975 /* Pods-Chaos_Example-Chaos_Tests.debug.xcconfig */,
 				EBD62E7CDFAD6219C1026CFE /* Pods-Chaos_Example-Chaos_Tests.release.xcconfig */,
+				EDB66383669C3CD0A0BFA469 /* Pods-ChaosThree.debug.xcconfig */,
+				EC2F7F132E46CC5DC45E42D6 /* Pods-ChaosThree.release.xcconfig */,
+				25CD25A9F670CAC3CDF4111B /* Pods-ChaosThree-Chaos_Tests.debug.xcconfig */,
+				BF0D065EF2A306A478A15C51 /* Pods-ChaosThree-Chaos_Tests.release.xcconfig */,
+				D2000F52D412E1AC9BD2FFDF /* Pods-ChaosSwiftUIExample.debug.xcconfig */,
+				AB9773F2C4AD28E3D06E4957 /* Pods-ChaosSwiftUIExample.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -388,7 +363,9 @@
 				6826964225CD9A8900334E62 /* ChaosCore.framework */,
 				68B982EB258BD1F700C583E2 /* Chaos.framework */,
 				5047144D23B39F8791F0EBB0 /* Pods_Chaos_Example.framework */,
-				0C74F28DE98EFEDF25CF9831 /* Pods_Chaos_Example_Chaos_Tests.framework */,
+				7369872F663BF3D08AB5E38B /* Pods_ChaosThree.framework */,
+				FB57655C510035BF19A2AAEA /* Pods_ChaosThree_Chaos_Tests.framework */,
+				4261401030CED23B33512483 /* Pods_ChaosSwiftUIExample.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -396,44 +373,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		607FACCF1AFB9204008FA782 /* Chaos_Example */ = {
+		0D22727B271064C400FEED1A /* ChaosSwiftUIExample */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Chaos_Example" */;
+			buildConfigurationList = 0D227288271064C600FEED1A /* Build configuration list for PBXNativeTarget "ChaosSwiftUIExample" */;
 			buildPhases = (
-				5F09DB5E7EBC1BC177330867 /* [CP] Check Pods Manifest.lock */,
-				607FACCC1AFB9204008FA782 /* Sources */,
-				607FACCD1AFB9204008FA782 /* Frameworks */,
-				607FACCE1AFB9204008FA782 /* Resources */,
-				1AFC53D791E0CE187251E39F /* [CP] Embed Pods Frameworks */,
+				D4DBD516A3A8811F761AEB3A /* [CP] Check Pods Manifest.lock */,
+				0D227278271064C400FEED1A /* Sources */,
+				0D227279271064C400FEED1A /* Frameworks */,
+				0D22727A271064C400FEED1A /* Resources */,
+				52FA9AC667DE96FF21F9CFD2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = Chaos_Example;
-			productName = Chaos;
-			productReference = 607FACD01AFB9204008FA782 /* Chaos_Example.app */;
+			name = ChaosSwiftUIExample;
+			productName = ChaosSwiftUIExample;
+			productReference = 0D22727C271064C400FEED1A /* ChaosSwiftUIExample.app */;
 			productType = "com.apple.product-type.application";
-		};
-		607FACE41AFB9204008FA782 /* Chaos_Tests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Chaos_Tests" */;
-			buildPhases = (
-				2ECC9B4E9DABA4B3B8446C94 /* [CP] Check Pods Manifest.lock */,
-				607FACE11AFB9204008FA782 /* Sources */,
-				607FACE21AFB9204008FA782 /* Frameworks */,
-				607FACE31AFB9204008FA782 /* Resources */,
-				BF0B14F9FE1B9AEE126018A3 /* [CP] Embed Pods Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				607FACE71AFB9204008FA782 /* PBXTargetDependency */,
-			);
-			name = Chaos_Tests;
-			productName = Tests;
-			productReference = 607FACE51AFB9204008FA782 /* Chaos_Tests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -441,21 +398,14 @@
 		607FACC81AFB9204008FA782 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1240;
+				LastSwiftUpdateCheck = 1250;
 				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
-					607FACCF1AFB9204008FA782 = {
-						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = K9HA776UCH;
-						LastSwiftMigration = 0900;
+					0D22727B271064C400FEED1A = {
+						CreatedOnToolsVersion = 12.5.1;
+						DevelopmentTeam = 8F6ZA8LN96;
 						ProvisioningStyle = Automatic;
-					};
-					607FACE41AFB9204008FA782 = {
-						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = K9HA776UCH;
-						LastSwiftMigration = 0900;
-						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
 				};
 			};
@@ -472,43 +422,31 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				607FACCF1AFB9204008FA782 /* Chaos_Example */,
-				607FACE41AFB9204008FA782 /* Chaos_Tests */,
+				0D22727B271064C400FEED1A /* ChaosSwiftUIExample */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		607FACCE1AFB9204008FA782 /* Resources */ = {
+		0D22727A271064C400FEED1A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
-				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
-				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		607FACE31AFB9204008FA782 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				683C583F2541DB8E004CEA07 /* multiple-environments.plist in Resources */,
-				683C581C2541D94B004CEA07 /* single-environment.plist in Resources */,
-				683C58312541DABF004CEA07 /* missing-fields.plist in Resources */,
+				0D227286271064C600FEED1A /* Preview Assets.xcassets in Resources */,
+				0D227283271064C600FEED1A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1AFC53D791E0CE187251E39F /* [CP] Embed Pods Frameworks */ = {
+		52FA9AC667DE96FF21F9CFD2 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Chaos_Example/Pods-Chaos_Example-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-ChaosSwiftUIExample/Pods-ChaosSwiftUIExample-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ChaosAnimation/ChaosAnimation.framework",
 				"${BUILT_PRODUCTS_DIR}/ChaosCore/ChaosCore.framework",
 				"${BUILT_PRODUCTS_DIR}/ChaosGraphics/ChaosGraphics.framework",
@@ -516,6 +454,7 @@
 				"${BUILT_PRODUCTS_DIR}/ChaosMath/ChaosMath.framework",
 				"${BUILT_PRODUCTS_DIR}/ChaosMetal/ChaosMetal.framework",
 				"${BUILT_PRODUCTS_DIR}/ChaosNet/ChaosNet.framework",
+				"${BUILT_PRODUCTS_DIR}/ChaosSwiftUI/ChaosSwiftUI.framework",
 				"${BUILT_PRODUCTS_DIR}/ChaosThree/ChaosThree.framework",
 				"${BUILT_PRODUCTS_DIR}/ChaosUi/ChaosUi.framework",
 				"${BUILT_PRODUCTS_DIR}/Hippolyte/Hippolyte.framework",
@@ -531,6 +470,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosMath.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosMetal.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosNet.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosSwiftUI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosThree.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosUi.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hippolyte.framework",
@@ -539,10 +479,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chaos_Example/Pods-Chaos_Example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ChaosSwiftUIExample/Pods-ChaosSwiftUIExample-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		2ECC9B4E9DABA4B3B8446C94 /* [CP] Check Pods Manifest.lock */ = {
+		D4DBD516A3A8811F761AEB3A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -557,142 +497,90 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Chaos_Example-Chaos_Tests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-ChaosSwiftUIExample-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5F09DB5E7EBC1BC177330867 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Chaos_Example-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BF0B14F9FE1B9AEE126018A3 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Chaos_Example-Chaos_Tests/Pods-Chaos_Example-Chaos_Tests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/ChaosAnimation/ChaosAnimation.framework",
-				"${BUILT_PRODUCTS_DIR}/ChaosCore/ChaosCore.framework",
-				"${BUILT_PRODUCTS_DIR}/ChaosGraphics/ChaosGraphics.framework",
-				"${BUILT_PRODUCTS_DIR}/ChaosKit/ChaosKit.framework",
-				"${BUILT_PRODUCTS_DIR}/ChaosMath/ChaosMath.framework",
-				"${BUILT_PRODUCTS_DIR}/ChaosMetal/ChaosMetal.framework",
-				"${BUILT_PRODUCTS_DIR}/ChaosNet/ChaosNet.framework",
-				"${BUILT_PRODUCTS_DIR}/ChaosThree/ChaosThree.framework",
-				"${BUILT_PRODUCTS_DIR}/ChaosUi/ChaosUi.framework",
-				"${BUILT_PRODUCTS_DIR}/Hippolyte/Hippolyte.framework",
-				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
-				"${BUILT_PRODUCTS_DIR}/PromisesSwift/Promises.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosAnimation.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosCore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosGraphics.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosMath.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosMetal.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosNet.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosThree.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosUi.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hippolyte.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Promises.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chaos_Example-Chaos_Tests/Pods-Chaos_Example-Chaos_Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		607FACCC1AFB9204008FA782 /* Sources */ = {
+		0D227278271064C400FEED1A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				68C6735B2574E8670040FCFF /* UITestViewController.swift in Sources */,
-				68214781255D577C00501FD3 /* UIAppSetupViewController.swift in Sources */,
-				0D6B811826DF87A800956960 /* JsonEncoder+RestDataEncoder.swift in Sources */,
-				0D6B811926DF87A800956960 /* JsonDecoder+RestDataDecoder.swift in Sources */,
-				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		607FACE11AFB9204008FA782 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6814D9C0262C2C47004BBBD1 /* DynamicVectorTests.swift in Sources */,
-				68FBBECF2628943300032A5E /* Point3Tests.swift in Sources */,
-				68FBBED32628949400032A5E /* Point4Tests.swift in Sources */,
-				68FBBED72628956500032A5E /* Vec3Tests.swift in Sources */,
-				684ECDDA253E02CE00DA04D5 /* UITimelineViewTest.swift in Sources */,
-				6821481A255D8DE500501FD3 /* MimeTypeTests.swift in Sources */,
-				68B1672F25CBFBB000F9AF02 /* DependencyResolverTests.swift in Sources */,
-				684ECDE3253E031000DA04D5 /* EnvironmentManagerTest.swift in Sources */,
-				68B1673725CBFBBB00F9AF02 /* String.swift in Sources */,
-				68FBBEDB2628960100032A5E /* Vec2Tests.swift in Sources */,
-				68BCA4B7262C800C0039C6CE /* File.swift in Sources */,
-				68B1673225CBFBB800F9AF02 /* TaskRunnerTests.swift in Sources */,
-				68FBBEC9262890C700032A5E /* Point2Tests.swift in Sources */,
-				683A0B782541EB0400705836 /* PlistTest.swift in Sources */,
-				68C41DF826242DC20054CDC4 /* Vec4Tests.swift in Sources */,
+				0D22728F2710661000FEED1A /* PieChartViewExample.swift in Sources */,
+				0D227295271080DB00FEED1A /* ViewExample.swift in Sources */,
+				0D227281271064C400FEED1A /* MainView.swift in Sources */,
+				0D22729327107E5700FEED1A /* MoleculeRootView.swift in Sources */,
+				0D22727F271064C400FEED1A /* ChaosSwiftUIExampleApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		607FACE71AFB9204008FA782 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 607FACCF1AFB9204008FA782 /* Chaos_Example */;
-			targetProxy = 607FACE61AFB9204008FA782 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		607FACD91AFB9204008FA782 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				607FACDA1AFB9204008FA782 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		607FACDE1AFB9204008FA782 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				607FACDF1AFB9204008FA782 /* Base */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
+		0D227289271064C600FEED1A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D2000F52D412E1AC9BD2FFDF /* Pods-ChaosSwiftUIExample.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_ASSET_PATHS = "\"ChaosSwiftUIExample/Preview Content\"";
+				DEVELOPMENT_TEAM = 8F6ZA8LN96;
+				ENABLE_PREVIEWS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ChaosSwiftUIExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = de.chaosarts.ChaosSwiftUIExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0D22728A271064C600FEED1A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB9773F2C4AD28E3D06E4957 /* Pods-ChaosSwiftUIExample.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"ChaosSwiftUIExample/Preview Content\"";
+				DEVELOPMENT_TEAM = 8F6ZA8LN96;
+				ENABLE_PREVIEWS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ChaosSwiftUIExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = de.chaosarts.ChaosSwiftUIExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		607FACED1AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -742,11 +630,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -792,122 +681,32 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		607FACF01AFB9204008FA782 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 12175E6805309BD4FA36768A /* Pods-Chaos_Example.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = K9HA776UCH;
-				INFOPLIST_FILE = Chaos/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.Chaos-Example";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
-			};
-			name = Debug;
-		};
-		607FACF11AFB9204008FA782 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = E84B7DE021A147BC801FF97A /* Pods-Chaos_Example.release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = K9HA776UCH;
-				INFOPLIST_FILE = Chaos/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.Chaos-Example";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
-			};
-			name = Release;
-		};
-		607FACF31AFB9204008FA782 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1C460315E3D0C22CFAE7C975 /* Pods-Chaos_Example-Chaos_Tests.debug.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				DEVELOPMENT_TEAM = K9HA776UCH;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Chaos_Example.app/Chaos_Example";
-			};
-			name = Debug;
-		};
-		607FACF41AFB9204008FA782 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = EBD62E7CDFAD6219C1026CFE /* Pods-Chaos_Example-Chaos_Tests.release.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				DEVELOPMENT_TEAM = K9HA776UCH;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Chaos_Example.app/Chaos_Example";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0D227288271064C600FEED1A /* Build configuration list for PBXNativeTarget "ChaosSwiftUIExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0D227289271064C600FEED1A /* Debug */,
+				0D22728A271064C600FEED1A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "Chaos" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				607FACED1AFB9204008FA782 /* Debug */,
 				607FACEE1AFB9204008FA782 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Chaos_Example" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				607FACF01AFB9204008FA782 /* Debug */,
-				607FACF11AFB9204008FA782 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Chaos_Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				607FACF31AFB9204008FA782 /* Debug */,
-				607FACF41AFB9204008FA782 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
