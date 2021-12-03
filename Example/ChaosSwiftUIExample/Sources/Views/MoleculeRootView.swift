@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import ChaosMetal
 
 public struct MoleculeRootView: View {
 
@@ -20,6 +21,14 @@ public struct MoleculeRootView: View {
                 NavigationLink(element.id, destination: element.view)
             }
             .navigationTitle("Molecules")
+            .onAppear {
+                do {
+                    throw EnvironmentError(code: .noCommandQueue)
+                } catch {
+                    guard let cmError = error as? EnvironmentError else { return }
+                    print(cmError.localizedDescription)
+                }
+            }
         }
         .tabItem { Label("Molecules", image: "Molecule") }
     }

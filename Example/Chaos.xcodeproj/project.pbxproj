@@ -14,6 +14,17 @@
 		0D22728F2710661000FEED1A /* PieChartViewExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D22728E2710661000FEED1A /* PieChartViewExample.swift */; };
 		0D22729327107E5700FEED1A /* MoleculeRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D22729227107E5700FEED1A /* MoleculeRootView.swift */; };
 		0D227295271080DB00FEED1A /* ViewExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D227294271080DB00FEED1A /* ViewExample.swift */; };
+		0D8AC86B275A2DFD00533111 /* ChaosMetalExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8AC86A275A2DFD00533111 /* ChaosMetalExampleApp.swift */; };
+		0D8AC86D275A2DFD00533111 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8AC86C275A2DFD00533111 /* ContentView.swift */; };
+		0D8AC86F275A2DFE00533111 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D8AC86E275A2DFE00533111 /* Assets.xcassets */; };
+		0D8AC872275A2DFE00533111 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D8AC871275A2DFE00533111 /* Preview Assets.xcassets */; };
+		0D8AC87B275A2F2300533111 /* StateImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8AC87A275A2F2300533111 /* StateImageView.swift */; };
+		0D8AC87F275A34B500533111 /* StateImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8AC87E275A34B500533111 /* StateImageViewModel.swift */; };
+		0D8AC881275A38ED00533111 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8AC880275A38ED00533111 /* ContentViewModel.swift */; };
+		0D8AC883275A3EEF00533111 /* ImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8AC882275A3EEF00533111 /* ImageProcessor.swift */; };
+		0D8AC885275A3F5E00533111 /* GPUGaussFilterProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8AC884275A3F5E00533111 /* GPUGaussFilterProcessor.swift */; };
+		0D8AC889275A3FCC00533111 /* CPUGaussFilterProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8AC888275A3FCC00533111 /* CPUGaussFilterProcessor.swift */; };
+		5D90F90BC04E12856DFCA241 /* Pods_ChaosMetalExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F604F7772831655A580AC7A /* Pods_ChaosMetalExample.framework */; };
 		9BEFB677253AEC3593D12A83 /* Pods_ChaosSwiftUIExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4261401030CED23B33512483 /* Pods_ChaosSwiftUIExample.framework */; };
 /* End PBXBuildFile section */
 
@@ -27,11 +38,26 @@
 		0D22728E2710661000FEED1A /* PieChartViewExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartViewExample.swift; sourceTree = "<group>"; };
 		0D22729227107E5700FEED1A /* MoleculeRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeRootView.swift; sourceTree = "<group>"; };
 		0D227294271080DB00FEED1A /* ViewExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExample.swift; sourceTree = "<group>"; };
+		0D8AC868275A2DFD00533111 /* ChaosMetalExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChaosMetalExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D8AC86A275A2DFD00533111 /* ChaosMetalExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaosMetalExampleApp.swift; sourceTree = "<group>"; };
+		0D8AC86C275A2DFD00533111 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		0D8AC86E275A2DFE00533111 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0D8AC871275A2DFE00533111 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		0D8AC873275A2DFE00533111 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0D8AC874275A2DFE00533111 /* ChaosMetalExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ChaosMetalExample.entitlements; sourceTree = "<group>"; };
+		0D8AC87A275A2F2300533111 /* StateImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateImageView.swift; sourceTree = "<group>"; };
+		0D8AC87E275A34B500533111 /* StateImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateImageViewModel.swift; sourceTree = "<group>"; };
+		0D8AC880275A38ED00533111 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
+		0D8AC882275A3EEF00533111 /* ImageProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessor.swift; sourceTree = "<group>"; };
+		0D8AC884275A3F5E00533111 /* GPUGaussFilterProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPUGaussFilterProcessor.swift; sourceTree = "<group>"; };
+		0D8AC888275A3FCC00533111 /* CPUGaussFilterProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPUGaussFilterProcessor.swift; sourceTree = "<group>"; };
 		12175E6805309BD4FA36768A /* Pods-Chaos_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chaos_Example.debug.xcconfig"; path = "Target Support Files/Pods-Chaos_Example/Pods-Chaos_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		12441CC627E4D574E716F46F /* Pods-macOSExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-macOSExample.release.xcconfig"; path = "Target Support Files/Pods-macOSExample/Pods-macOSExample.release.xcconfig"; sourceTree = "<group>"; };
 		1C460315E3D0C22CFAE7C975 /* Pods-Chaos_Example-Chaos_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chaos_Example-Chaos_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Chaos_Example-Chaos_Tests/Pods-Chaos_Example-Chaos_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		25CD25A9F670CAC3CDF4111B /* Pods-ChaosThree-Chaos_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChaosThree-Chaos_Tests.debug.xcconfig"; path = "Target Support Files/Pods-ChaosThree-Chaos_Tests/Pods-ChaosThree-Chaos_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		4261401030CED23B33512483 /* Pods_ChaosSwiftUIExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChaosSwiftUIExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5047144D23B39F8791F0EBB0 /* Pods_Chaos_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chaos_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F604F7772831655A580AC7A /* Pods_ChaosMetalExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChaosMetalExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		635FFEFC7FF3FAA4E9310293 /* Chaos.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Chaos.podspec; path = ../Chaos.podspec; sourceTree = "<group>"; };
 		6814D9BF262C2C47004BBBD1 /* DynamicVectorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicVectorTests.swift; sourceTree = "<group>"; };
@@ -54,9 +80,13 @@
 		68FBBED22628949400032A5E /* Point4Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point4Tests.swift; sourceTree = "<group>"; };
 		68FBBED62628956500032A5E /* Vec3Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vec3Tests.swift; sourceTree = "<group>"; };
 		68FBBEDA2628960100032A5E /* Vec2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vec2Tests.swift; sourceTree = "<group>"; };
+		7147137DFCDF70CD25B8919E /* Pods-ChaosMetalExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChaosMetalExample.debug.xcconfig"; path = "Target Support Files/Pods-ChaosMetalExample/Pods-ChaosMetalExample.debug.xcconfig"; sourceTree = "<group>"; };
 		7369872F663BF3D08AB5E38B /* Pods_ChaosThree.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChaosThree.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		77E4B0A089487CAD935AFCC4 /* Pods_macOSExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_macOSExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB9773F2C4AD28E3D06E4957 /* Pods-ChaosSwiftUIExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChaosSwiftUIExample.release.xcconfig"; path = "Target Support Files/Pods-ChaosSwiftUIExample/Pods-ChaosSwiftUIExample.release.xcconfig"; sourceTree = "<group>"; };
 		BF0D065EF2A306A478A15C51 /* Pods-ChaosThree-Chaos_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChaosThree-Chaos_Tests.release.xcconfig"; path = "Target Support Files/Pods-ChaosThree-Chaos_Tests/Pods-ChaosThree-Chaos_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		C2128747D822A9B81CC127A7 /* Pods-macOSExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-macOSExample.debug.xcconfig"; path = "Target Support Files/Pods-macOSExample/Pods-macOSExample.debug.xcconfig"; sourceTree = "<group>"; };
+		CD8BF996F97CC5644144EB40 /* Pods-ChaosMetalExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChaosMetalExample.release.xcconfig"; path = "Target Support Files/Pods-ChaosMetalExample/Pods-ChaosMetalExample.release.xcconfig"; sourceTree = "<group>"; };
 		D2000F52D412E1AC9BD2FFDF /* Pods-ChaosSwiftUIExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChaosSwiftUIExample.debug.xcconfig"; path = "Target Support Files/Pods-ChaosSwiftUIExample/Pods-ChaosSwiftUIExample.debug.xcconfig"; sourceTree = "<group>"; };
 		E84B7DE021A147BC801FF97A /* Pods-Chaos_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chaos_Example.release.xcconfig"; path = "Target Support Files/Pods-Chaos_Example/Pods-Chaos_Example.release.xcconfig"; sourceTree = "<group>"; };
 		EBD62E7CDFAD6219C1026CFE /* Pods-Chaos_Example-Chaos_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chaos_Example-Chaos_Tests.release.xcconfig"; path = "Target Support Files/Pods-Chaos_Example-Chaos_Tests/Pods-Chaos_Example-Chaos_Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -72,6 +102,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				9BEFB677253AEC3593D12A83 /* Pods_ChaosSwiftUIExample.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D8AC865275A2DFD00533111 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5D90F90BC04E12856DFCA241 /* Pods_ChaosMetalExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,7 +139,6 @@
 			isa = PBXGroup;
 			children = (
 				0D22727E271064C400FEED1A /* ChaosSwiftUIExampleApp.swift */,
-				0D227294271080DB00FEED1A /* ViewExample.swift */,
 				0D22729027107E2600FEED1A /* Views */,
 			);
 			path = Sources;
@@ -128,9 +165,69 @@
 			children = (
 				0D227280271064C400FEED1A /* MainView.swift */,
 				0D22729227107E5700FEED1A /* MoleculeRootView.swift */,
+				0D227294271080DB00FEED1A /* ViewExample.swift */,
 				0D22728D271065F500FEED1A /* Molecule */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		0D8AC869275A2DFD00533111 /* ChaosMetalExample */ = {
+			isa = PBXGroup;
+			children = (
+				0D8AC874275A2DFE00533111 /* ChaosMetalExample.entitlements */,
+				0D8AC873275A2DFE00533111 /* Info.plist */,
+				0D8AC86A275A2DFD00533111 /* ChaosMetalExampleApp.swift */,
+				0D8AC86E275A2DFE00533111 /* Assets.xcassets */,
+				0D8AC870275A2DFE00533111 /* Preview Content */,
+				0D8AC878275A2E9200533111 /* ImageProcessor */,
+				0D8AC87C275A346900533111 /* ViewModels */,
+				0D8AC879275A2EEC00533111 /* Views */,
+			);
+			path = ChaosMetalExample;
+			sourceTree = "<group>";
+		};
+		0D8AC870275A2DFE00533111 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				0D8AC871275A2DFE00533111 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		0D8AC878275A2E9200533111 /* ImageProcessor */ = {
+			isa = PBXGroup;
+			children = (
+				0D8AC887275A3FB400533111 /* GaussFilter */,
+				0D8AC882275A3EEF00533111 /* ImageProcessor.swift */,
+			);
+			path = ImageProcessor;
+			sourceTree = "<group>";
+		};
+		0D8AC879275A2EEC00533111 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0D8AC86C275A2DFD00533111 /* ContentView.swift */,
+				0D8AC87A275A2F2300533111 /* StateImageView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		0D8AC87C275A346900533111 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				0D8AC880275A38ED00533111 /* ContentViewModel.swift */,
+				0D8AC87E275A34B500533111 /* StateImageViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		0D8AC887275A3FB400533111 /* GaussFilter */ = {
+			isa = PBXGroup;
+			children = (
+				0D8AC884275A3F5E00533111 /* GPUGaussFilterProcessor.swift */,
+				0D8AC888275A3FCC00533111 /* CPUGaussFilterProcessor.swift */,
+			);
+			path = GaussFilter;
 			sourceTree = "<group>";
 		};
 		0DD4939226C18C80001B56E2 /* ChaosThree */ = {
@@ -146,6 +243,7 @@
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACE81AFB9204008FA782 /* Tests */,
 				0D22727D271064C400FEED1A /* ChaosSwiftUIExample */,
+				0D8AC869275A2DFD00533111 /* ChaosMetalExample */,
 				607FACD11AFB9204008FA782 /* Products */,
 				7A145E401A1E9585C691299C /* Pods */,
 				C018ED653E1CC98D0DC644FC /* Frameworks */,
@@ -156,6 +254,7 @@
 			isa = PBXGroup;
 			children = (
 				0D22727C271064C400FEED1A /* ChaosSwiftUIExample.app */,
+				0D8AC868275A2DFD00533111 /* ChaosMetalExample.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -353,6 +452,10 @@
 				BF0D065EF2A306A478A15C51 /* Pods-ChaosThree-Chaos_Tests.release.xcconfig */,
 				D2000F52D412E1AC9BD2FFDF /* Pods-ChaosSwiftUIExample.debug.xcconfig */,
 				AB9773F2C4AD28E3D06E4957 /* Pods-ChaosSwiftUIExample.release.xcconfig */,
+				C2128747D822A9B81CC127A7 /* Pods-macOSExample.debug.xcconfig */,
+				12441CC627E4D574E716F46F /* Pods-macOSExample.release.xcconfig */,
+				7147137DFCDF70CD25B8919E /* Pods-ChaosMetalExample.debug.xcconfig */,
+				CD8BF996F97CC5644144EB40 /* Pods-ChaosMetalExample.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -366,6 +469,8 @@
 				7369872F663BF3D08AB5E38B /* Pods_ChaosThree.framework */,
 				FB57655C510035BF19A2AAEA /* Pods_ChaosThree_Chaos_Tests.framework */,
 				4261401030CED23B33512483 /* Pods_ChaosSwiftUIExample.framework */,
+				77E4B0A089487CAD935AFCC4 /* Pods_macOSExample.framework */,
+				5F604F7772831655A580AC7A /* Pods_ChaosMetalExample.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -392,6 +497,25 @@
 			productReference = 0D22727C271064C400FEED1A /* ChaosSwiftUIExample.app */;
 			productType = "com.apple.product-type.application";
 		};
+		0D8AC867275A2DFD00533111 /* ChaosMetalExample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0D8AC875275A2DFE00533111 /* Build configuration list for PBXNativeTarget "ChaosMetalExample" */;
+			buildPhases = (
+				C2303EE6DCB02B49B2F953D6 /* [CP] Check Pods Manifest.lock */,
+				0D8AC864275A2DFD00533111 /* Sources */,
+				0D8AC865275A2DFD00533111 /* Frameworks */,
+				0D8AC866275A2DFD00533111 /* Resources */,
+				2CB3EDD9D33A701F78C0DDA8 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ChaosMetalExample;
+			productName = ChaosMetalExample;
+			productReference = 0D8AC868275A2DFD00533111 /* ChaosMetalExample.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -405,6 +529,11 @@
 					0D22727B271064C400FEED1A = {
 						CreatedOnToolsVersion = 12.5.1;
 						DevelopmentTeam = 8F6ZA8LN96;
+						ProvisioningStyle = Automatic;
+					};
+					0D8AC867275A2DFD00533111 = {
+						CreatedOnToolsVersion = 12.5.1;
+						DevelopmentTeam = K9HA776UCH;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -423,6 +552,7 @@
 			projectRoot = "";
 			targets = (
 				0D22727B271064C400FEED1A /* ChaosSwiftUIExample */,
+				0D8AC867275A2DFD00533111 /* ChaosMetalExample */,
 			);
 		};
 /* End PBXProject section */
@@ -437,9 +567,56 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0D8AC866275A2DFD00533111 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D8AC872275A2DFE00533111 /* Preview Assets.xcassets in Resources */,
+				0D8AC86F275A2DFE00533111 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2CB3EDD9D33A701F78C0DDA8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ChaosMetalExample/Pods-ChaosMetalExample-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ChaosAnimation-macOS/ChaosAnimation.framework",
+				"${BUILT_PRODUCTS_DIR}/ChaosCore-macOS/ChaosCore.framework",
+				"${BUILT_PRODUCTS_DIR}/ChaosGraphics-macOS/ChaosGraphics.framework",
+				"${BUILT_PRODUCTS_DIR}/ChaosMath-macOS/ChaosMath.framework",
+				"${BUILT_PRODUCTS_DIR}/ChaosMetal-macOS/ChaosMetal.framework",
+				"${BUILT_PRODUCTS_DIR}/ChaosNet-macOS/ChaosNet.framework",
+				"${BUILT_PRODUCTS_DIR}/ChaosSwiftUI-macOS/ChaosSwiftUI.framework",
+				"${BUILT_PRODUCTS_DIR}/ChaosThree-macOS/ChaosThree.framework",
+				"${BUILT_PRODUCTS_DIR}/Hippolyte-macOS/Hippolyte.framework",
+				"${BUILT_PRODUCTS_DIR}/PromisesObjC-macOS/FBLPromises.framework",
+				"${BUILT_PRODUCTS_DIR}/PromisesSwift-macOS/Promises.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosAnimation.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosGraphics.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosMath.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosMetal.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosNet.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosSwiftUI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChaosThree.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hippolyte.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Promises.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ChaosMetalExample/Pods-ChaosMetalExample-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		52FA9AC667DE96FF21F9CFD2 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -447,19 +624,19 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ChaosSwiftUIExample/Pods-ChaosSwiftUIExample-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/ChaosAnimation/ChaosAnimation.framework",
-				"${BUILT_PRODUCTS_DIR}/ChaosCore/ChaosCore.framework",
-				"${BUILT_PRODUCTS_DIR}/ChaosGraphics/ChaosGraphics.framework",
+				"${BUILT_PRODUCTS_DIR}/ChaosAnimation-iOS/ChaosAnimation.framework",
+				"${BUILT_PRODUCTS_DIR}/ChaosCore-iOS/ChaosCore.framework",
+				"${BUILT_PRODUCTS_DIR}/ChaosGraphics-iOS/ChaosGraphics.framework",
 				"${BUILT_PRODUCTS_DIR}/ChaosKit/ChaosKit.framework",
-				"${BUILT_PRODUCTS_DIR}/ChaosMath/ChaosMath.framework",
-				"${BUILT_PRODUCTS_DIR}/ChaosMetal/ChaosMetal.framework",
-				"${BUILT_PRODUCTS_DIR}/ChaosNet/ChaosNet.framework",
-				"${BUILT_PRODUCTS_DIR}/ChaosSwiftUI/ChaosSwiftUI.framework",
-				"${BUILT_PRODUCTS_DIR}/ChaosThree/ChaosThree.framework",
+				"${BUILT_PRODUCTS_DIR}/ChaosMath-iOS/ChaosMath.framework",
+				"${BUILT_PRODUCTS_DIR}/ChaosMetal-iOS/ChaosMetal.framework",
+				"${BUILT_PRODUCTS_DIR}/ChaosNet-iOS/ChaosNet.framework",
+				"${BUILT_PRODUCTS_DIR}/ChaosSwiftUI-iOS/ChaosSwiftUI.framework",
+				"${BUILT_PRODUCTS_DIR}/ChaosThree-iOS/ChaosThree.framework",
 				"${BUILT_PRODUCTS_DIR}/ChaosUi/ChaosUi.framework",
-				"${BUILT_PRODUCTS_DIR}/Hippolyte/Hippolyte.framework",
-				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
-				"${BUILT_PRODUCTS_DIR}/PromisesSwift/Promises.framework",
+				"${BUILT_PRODUCTS_DIR}/Hippolyte-iOS/Hippolyte.framework",
+				"${BUILT_PRODUCTS_DIR}/PromisesObjC-iOS/FBLPromises.framework",
+				"${BUILT_PRODUCTS_DIR}/PromisesSwift-iOS/Promises.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -480,6 +657,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ChaosSwiftUIExample/Pods-ChaosSwiftUIExample-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C2303EE6DCB02B49B2F953D6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ChaosMetalExample-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D4DBD516A3A8811F761AEB3A /* [CP] Check Pods Manifest.lock */ = {
@@ -516,6 +715,21 @@
 				0D227281271064C400FEED1A /* MainView.swift in Sources */,
 				0D22729327107E5700FEED1A /* MoleculeRootView.swift in Sources */,
 				0D22727F271064C400FEED1A /* ChaosSwiftUIExampleApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0D8AC864275A2DFD00533111 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0D8AC86D275A2DFD00533111 /* ContentView.swift in Sources */,
+				0D8AC889275A3FCC00533111 /* CPUGaussFilterProcessor.swift in Sources */,
+				0D8AC86B275A2DFD00533111 /* ChaosMetalExampleApp.swift in Sources */,
+				0D8AC87F275A34B500533111 /* StateImageViewModel.swift in Sources */,
+				0D8AC87B275A2F2300533111 /* StateImageView.swift in Sources */,
+				0D8AC883275A3EEF00533111 /* ImageProcessor.swift in Sources */,
+				0D8AC881275A38ED00533111 /* ContentViewModel.swift in Sources */,
+				0D8AC885275A3F5E00533111 /* GPUGaussFilterProcessor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -581,6 +795,71 @@
 			};
 			name = Release;
 		};
+		0D8AC876275A2DFE00533111 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7147137DFCDF70CD25B8919E /* Pods-ChaosMetalExample.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = ChaosMetalExample/ChaosMetalExample.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_ASSET_PATHS = "\"ChaosMetalExample/Preview Content\"";
+				DEVELOPMENT_TEAM = K9HA776UCH;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ChaosMetalExample/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 11.3;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = de.chaosarts.ChaosMetalExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		0D8AC877275A2DFE00533111 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CD8BF996F97CC5644144EB40 /* Pods-ChaosMetalExample.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = ChaosMetalExample/ChaosMetalExample.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_ASSET_PATHS = "\"ChaosMetalExample/Preview Content\"";
+				DEVELOPMENT_TEAM = K9HA776UCH;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ChaosMetalExample/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 11.3;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = de.chaosarts.ChaosMetalExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		607FACED1AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -631,6 +910,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -682,6 +962,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -698,6 +979,15 @@
 			buildConfigurations = (
 				0D227289271064C600FEED1A /* Debug */,
 				0D22728A271064C600FEED1A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0D8AC875275A2DFE00533111 /* Build configuration list for PBXNativeTarget "ChaosMetalExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0D8AC876275A2DFE00533111 /* Debug */,
+				0D8AC877275A2DFE00533111 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

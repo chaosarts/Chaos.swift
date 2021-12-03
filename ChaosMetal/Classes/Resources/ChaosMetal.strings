@@ -1,0 +1,9 @@
+/* 
+  Localizable.strings
+  Pods
+
+  Created by Fu Lam Diep on 19.11.21.
+  
+*/
+
+"ChaosMetal.DeviceError.error.0" = "Device could not create command buffer.";

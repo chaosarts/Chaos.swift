@@ -1,21 +1,22 @@
 use_frameworks!
 inhibit_all_warnings!
 
-platform :ios, '14.0'
 
 pod 'ChaosCore', :path => '../'
 pod 'ChaosGraphics', :path => '../'
 pod 'ChaosAnimation', :path => '../'
 pod 'ChaosMath', :path => '../'
-pod 'ChaosKit', :path => '../'
 pod 'ChaosNet', :path => '../'
-pod 'ChaosUi', :path => '../'
 pod 'ChaosSwiftUI', :path => '../'
 pod 'ChaosMetal', :path => '../'
 pod 'ChaosThree', :path => '../'
+
 target 'ChaosSwiftUIExample' do
-#  target 'Chaos_Tests' do
-#    pod 'SwiftLint'
-#    pod 'Hippolyte'
-#  end
+  platform :ios, '14.0'
+  pod 'ChaosKit', :path => '../'
+  pod 'ChaosUi', :path => '../'
+end
+
+target 'ChaosMetalExample' do
+  platform :osx, '11'
 end

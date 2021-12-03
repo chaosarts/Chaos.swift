@@ -9,54 +9,43 @@ import Foundation
 
 public class Log {
 
+    // MARK: Internal Types
+
+    public enum Level: Int, CaseIterable {
+        case debug = 1
+        case info = 2
+        case warn = 4
+        case error = 8
+
+        public var string: String {
+            switch self {
+            case .debug: return "DEBUG"
+            case .info: return "INFO"
+            case .warn: return "WARN"
+            case .error: return "ERROR"
+            }
+        }
+    }
+
+
+    // MARK: Properties
+
     /// Specifies for which type to log the messages. This can restrict visibility, when type is not enabled with static function
     /// `enable(types:)`.
-    public let type: AnyClass?
-
-    /// Specifies the levels enabled for logging.
-    private var levelOptions: LevelOptions = LevelOptions(rawValue: 0)
-
-    /// Provides the list of levels to log.
-    public var levels: [Log.Level] { Log.Level.allCases.filter({ levelOptions.contains(level: $0) }) }
+    public let type: Any.Type?
 
 
     // MARK: Initialization
 
-    public init (_ type: AnyClass? = nil, levels: [Log.Level] = []) {
+    public init (_ type: AnyClass? = nil) {
         self.type = type
-        self.levelOptions = LevelOptions(rawValue: levels.reduce(0, { $0 | $1.rawValue }))
     }
 
 
-    // MARK: Control Log Levels
-
-    /// Enables logging for the given list of log levels
-    public func enable (levels: [Log.Level]) -> Self {
-        for level in levels {
-            let option = LevelOptions(rawValue: level.rawValue)
-            levelOptions.insert(option)
-        }
-        return self
-    }
-
-    public func enable (_ levels: Log.Level...) -> Self {
-        enable(levels: levels)
-    }
-
-    public func disable (levels: [Log.Level]) -> Self {
-        for level in levels {
-            let option = LevelOptions(rawValue: level.rawValue)
-            levelOptions.remove(option)
-        }
-        return self
-    }
-
-    public func disable (_ levels: Log.Level...) -> Self {
-        disable(levels: levels)
-    }
+    // MARK: Writing Logs
 
     private func log (level: Level, format: String, args: [CVarArg]) {
-        guard Log.isTypeEnabled(type), levelOptions.contains(level: level) else { return }
+        guard Log.isLevelEnabled(level, forType: type) else { return }
 
         var internalFormat = "\(Date())"
         if let type = type { internalFormat += " \(String(describing: type))" }
@@ -64,7 +53,7 @@ public class Log {
         let message = String(format: internalFormat, arguments: args)
 
         Log.delegate?.log(self, willPrintMessage: message, onLevel: level)
-        print(message)
+        Log.output.write(message: message)
         Log.delegate?.log(self, didPrintMessage: message, onLevel: level)
     }
 
@@ -105,24 +94,11 @@ public class Log {
     }
 }
 
+// MARK: - Static Extension
 
 public extension Log {
 
-    public enum Level: Int, CaseIterable {
-        case debug = 1
-        case info = 2
-        case warn = 4
-        case error = 8
-
-        public var string: String {
-            switch self {
-            case .debug: return "DEBUG"
-            case .info: return "INFO"
-            case .warn: return "WARN"
-            case .error: return "ERROR"
-            }
-        }
-    }
+    // MARK: Nested Types
 
     public struct LevelOptions: OptionSet, ExpressibleByIntegerLiteral {
 
@@ -140,35 +116,58 @@ public extension Log {
             self.init(rawValue: value)
         }
 
+        public init(levels: [Level]) {
+            self.init(rawValue: levels.reduce(0, { $0 | $1.rawValue }))
+        }
+
         public func contains(level: Log.Level) -> Bool {
             return contains(LevelOptions(rawValue: level.rawValue))
         }
-    }
-}
 
-public extension Log {
-
-    public static var delegate: LogDelegate?
-
-    private static var enabledTypes: [AnyClass] = []
-
-    public static func isTypeEnabled (_ type: AnyClass) -> Bool {
-        enabledTypes.contains(where: { $0 == type })
+        public static var none: LevelOptions { [] }
+        public static var all: LevelOptions { LevelOptions(levels: Log.Level.allCases) }
     }
 
-    public static func isTypeEnabled (_ type: AnyClass?) -> Bool {
-        guard let type = type else { return true }
-        return isTypeEnabled(type)
+    internal struct Configuration {
+        public let type: Any.Type?
+        public var options: LevelOptions
     }
 
-    public static func enable (types: [AnyClass]) {
-        for type in types {
-            guard enabledTypes.contains(where: { $0 == type }) else { continue }
-            enabledTypes.append(type)
+
+    // MARK: Properties
+
+    public static var output: LogOutput = PrintLogOutput()
+
+    public static weak var delegate: LogDelegate?
+
+    private static var configurations: [Configuration] = []
+
+
+    // MARK: Control Log Level by Type
+
+    @discardableResult
+    public static func enable(_ levels: [Level], forType type: Any.Type? = nil) -> Log.Type {
+        let levelOptions = LevelOptions(levels: levels)
+        return enable(levelOptions, forType: type)
+    }
+
+    @discardableResult
+    public static func enable(_ levelOptions: LevelOptions, forType type: Any.Type? = nil) -> Log.Type {
+        add(configuration: Configuration(type: type, options: levelOptions))
+        return self
+    }
+
+    @discardableResult
+    internal static func add(configuration: Configuration) -> Log.Type {
+        if let index = configurations.firstIndex(where: { $0.type == configuration.type }) {
+            configurations[index] = configuration
+        } else {
+            configurations.append(configuration)
         }
+        return self
     }
 
-    public static func enable (_ types: AnyClass...) {
-        enable(types: types)
+    public static func isLevelEnabled(_ level: Level, forType type: Any.Type?) -> Bool {
+        configurations.first(where: { $0.type == type })?.options.contains(level: level) ?? false
     }
 }

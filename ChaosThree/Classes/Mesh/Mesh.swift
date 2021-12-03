@@ -18,7 +18,7 @@ public class Mesh: NSObject {
 
     // MARK: Meta properties
 
-    private var log: Log = Log(Mesh.self, levels: [.warn, .error])
+    private var log: Log = Log(Mesh.self)
 
 
     // MARK: Data properties

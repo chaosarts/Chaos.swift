@@ -10,13 +10,15 @@ PODS:
     - ChaosUi
   - ChaosMath (1.0.0):
     - ChaosCore
-  - ChaosMetal (1.0.0)
+  - ChaosMetal (1.0.0):
+    - ChaosCore
   - ChaosNet (1.0.0):
     - ChaosCore
     - Hippolyte (~> 1.2.0)
   - ChaosSwiftUI (1.0.0):
     - ChaosCore
     - ChaosGraphics
+    - ChaosMath
   - ChaosThree (1.0.0):
     - ChaosMath
   - ChaosUi (1.0.0):
@@ -69,20 +71,20 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ChaosAnimation: fed665ba8268b7ed280cab60ad50683a095ecedf
-  ChaosCore: b699129a105d6cd22be6b2de2d1d66ccb77740d8
-  ChaosGraphics: 5ec102aa4989ee7b3c2df6c358dffc8526560fc4
-  ChaosKit: 749d5801cd4bb14e388e2ad80d95af3150fa9e49
-  ChaosMath: b3788561b86debbd140eef1710c387c44b1285dd
-  ChaosMetal: 21243d96bf48315e688d166223272feca2f22a7f
-  ChaosNet: c35935c0e4e57313f8b373515948b254f8de6385
-  ChaosSwiftUI: 9bc91935b9c7174faefb328dbaa62f3e03ad8afe
-  ChaosThree: 1003105243b377db93d292dfcddcd2b40063be3c
-  ChaosUi: c3f7f95b3fd91e21448b183a44744ecddd358db2
+  ChaosAnimation: a0677d0e1868282b34bd2268b2ae5c9f5c6360ff
+  ChaosCore: 8db0eace6265ff6295d557962dfc0c6141d3eb6c
+  ChaosGraphics: c6b3183889385ef0cd41a80aaad6a9b723c8a277
+  ChaosKit: d3f0e571fb824b1074912784f235921585edf2f1
+  ChaosMath: 555ef16f589a361f956f3073686463031d7e39cf
+  ChaosMetal: 376e75df2a681fac0d95c5b56309100c0210043a
+  ChaosNet: 5603002a1ba8fbf42af3414a408006f60ebd7b39
+  ChaosSwiftUI: 74934329e9e193c30149b799a744394c0001e9d5
+  ChaosThree: 45607903ee15151ac4d0710be234e56fb0773908
+  ChaosUi: 424f0f9f6b366cf78183f1f7a84ac768f6b94378
   Hippolyte: 0ee31559319c51c293c1fe47c9ea21f659be11cd
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   PromisesSwift: fed4eb6f7a29846a22624d1b86b77e1dedb88724
 
-PODFILE CHECKSUM: 47fcbf292313a58e5c5fa3c6b577fb906c5b8fac
+PODFILE CHECKSUM: 23389687fdf23e0540d9fc1865ed612317a41a4c
 
 COCOAPODS: 1.10.1

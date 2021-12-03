@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol ChaosError: CustomNSError {
+public protocol ChaosError: CustomNSError, AnyObject {
     associatedtype Code: RawRepresentable where Code.RawValue == Int
 
     var code: Code { get }
@@ -17,4 +17,13 @@ public protocol ChaosError: CustomNSError {
 
 public extension ChaosError {
     var errorCode: Int { code.rawValue }
+
+    var descriptionKey: String { "\(Self.errorDomain).\(code.rawValue).description" }
+
+    var localizedDescription: String {
+        NSLocalizedString(descriptionKey,
+                          tableName: moduleName(Self.self),
+                          bundle: Bundle(for: Self.self),
+                          comment: "")
+    }
 }
