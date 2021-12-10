@@ -12,6 +12,8 @@ public class RestRequest {
     public typealias CachePolicy = URLRequest.CachePolicy
     public typealias Action = HttpMethod
 
+    public let id: String = UUID().uuidString
+
     public let method: Action
 
     public let endpoint: Endpoint

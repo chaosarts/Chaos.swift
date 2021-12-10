@@ -21,9 +21,10 @@ public struct RestResponseError {
 
 extension RestResponseError: RestError {
     @objc public enum Code: Int, RawRepresentable {
-        case invalidStatus
+        case invalidErrorCode
         case proprietaryError
         case clientError
         case serverError
+        case unknown
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ChaosCore
 
 /// Client class for rest calls, that is intended to be positioned on top of the network transport layer (e.g.: http). The class attempts
 /// to simplify the process of sending requests and receiving responses. For example does it evaluate the http status
@@ -30,6 +31,9 @@ public class RestClient {
     public var cachePolicy: RestRequest.CachePolicy = .reloadIgnoringLocalAndRemoteCacheData
 
     public var hooks: [RestClientHook] = []
+
+
+    private let log: Log = Log(RestClient.self)
 
 
     // MARK: Intialization
@@ -122,10 +126,11 @@ public class RestClient {
                 do {
                     let headers = self.headers(fromHttpUrlResponse: transportEngineResponse.response)
                     let object: D = try self.dataDecoder.decode(D.self, from: data)
-                    let restResponse = RestResponse(data: object, headers: headers)
+                    let restResponse = RestResponse(to: request, data: object, headers: headers)
                     self.delegate?.restClient(self, didReceive: restResponse, for: request)
                     completion(.success(restResponse))
                 } catch {
+                    self.log.error(format: "Unable to decode response of request %@", request.id)
                     self.delegate?.restClient(self, didReceive: error, for: request)
                     completion(.failure(error))
                 }
@@ -139,9 +144,8 @@ public class RestClient {
         send(request: request, relativeTo: baseUrl) { (result: RestResult<RestTransportEngine.Response>) in
             switch result {
             case .success(let transportEngineResponse):
-                let data: Void
                 let headers = self.headers(fromHttpUrlResponse: transportEngineResponse.response)
-                let restResponse = RestResponse<Void>(data: data, headers: headers)
+                let restResponse = RestResponse<Void>(to: request, headers: headers)
                 completion(.success(restResponse))
             case .failure(let error):
                 completion(.failure(error))
@@ -154,23 +158,38 @@ public class RestClient {
             delegate?.restClient(self, willSend: request)
             let urlRequest = try self.urlRequest(for: request, relativeTo: baseUrl)
 
-            transportEngine.send(request: urlRequest, completion: { (response, error) in
-                if let error = self.evaluateReponse(response, error: error) {
+            log.info(format: "Sending request %@ to %@", request.id, urlRequest.url?.absoluteString ?? "-")
+
+            transportEngine.send(request: urlRequest, completion: { result in
+                switch result {
+                case .failure(let error):
+                    self.log.error(format: "Rest transport engine failed to send request %@ with error %@", request.id, error as NSError)
+
                     self.delegate?.restClient(self, didReceive: error, for: request)
-                    completion(.failure(error))
-                    return
-                }
+                    completion(.failure(RestInternalError(code: .engine, previous: error)))
+                case .success(let transportEngineResponse):
+                    let httpStatusCode = transportEngineResponse.response.statusCode
 
-                guard let response = response else {
-                    completion(.failure(RestInternalError(code: .badEngineImplementation)))
-                    return
-                }
+                    self.log.info(format: "Rest request %@ returned with status %@", request.id, httpStatusCode)
+                    self.log.debug(format: "%@", transportEngineResponse.debugDescription)
 
-                completion(.success(response))
+                    guard delegate?.restClient(self, shouldFailForStatus: httpStatusCode) != true else {
+
+                        self.log.error(format: "Rest client delegate decided to fail for request %@ returned with status %@", request.id, httpStatusCode)
+
+                        let error = RestResponseError(code: restResponseErrorCode(forHttpStatusCode: httpStatusCode), response: transportEngineResponse.response)
+                        self.delegate?.restClient(self, didReceive: error, for: request)
+                        completion(.failure(error))
+                        return
+                    }
+
+                    completion(.success(transportEngineResponse))
+                }
             })
 
             delegate?.restClient(self, didSend: request)
         } catch {
+            log.error(format: "Rest request failed with error %@", error as NSError)
             delegate?.restClient(self, didReceive: error, for: request)
             completion(.failure(error))
         }
@@ -220,31 +239,22 @@ public class RestClient {
         return headers
     }
 
-    public func evaluateReponse (_ response: RestTransportEngine.Response?, error: Error?) -> Error? {
-        if let error = error {
-            return RestInternalError(code: .engine, previous: error)
-        }
+    public func restResponseErrorCode(forHttpStatusCode httpStatusCode: Int) -> RestResponseError.Code {
+        restResponseErrorCode(forHttpStatus: HttpStatus(httpStatusCode))
+    }
 
-        guard let response = response else {
-            return RestInternalError(code: .badEngineImplementation)
-        }
-
-        guard delegate?.restClient(self, shouldFailForStatus: response.response.statusCode) ?? true else {
-            return nil
-        }
-
-        let httpStatus = HttpStatus(response.response.statusCode)
+    public func restResponseErrorCode(forHttpStatus httpStatus: HttpStatus) -> RestResponseError.Code {
         switch httpStatus.category {
-        case .information, .redirection:
-            return RestResponseError(code: .invalidStatus, response: response.response, data: response.data)
+        case .information, .redirection, .success:
+            return .invalidErrorCode
         case .clientError:
-            return RestResponseError(code: .clientError, response: response.response, data: response.data)
+            return .clientError
         case .serverError:
-            return RestResponseError(code: .serverError, response: response.response, data: response.data)
+            return .serverError
         case .proprietaryError:
-            return RestResponseError(code: .proprietaryError, response: response.response, data: response.data)
-        default:
-            return nil
+            return .proprietaryError
+        case .unknown:
+            return .unknown
         }
     }
 }
