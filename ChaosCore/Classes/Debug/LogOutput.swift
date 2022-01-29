@@ -23,3 +23,11 @@ public struct OSLogOutput: LogOutput {
         os_log("\(message)")
     }
 }
+
+public struct CombinedLogOutput: LogOutput {
+    var logOutputs: [LogOutput]
+
+    public func write(message: String) {
+        logOutputs.forEach({ $0.write(message: message) })
+    }
+}

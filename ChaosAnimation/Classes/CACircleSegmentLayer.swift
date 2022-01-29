@@ -50,8 +50,6 @@ open class CACircleSegmentLayer: CAShapeLayer {
     // MARK: Layer Lifecycle
 
     open override func draw(in ctx: CGContext) {
-        let segment = CGMutablePath()
-
         let minAngle = clockwise ? self.minAngle : -self.minAngle
         let maxAngle = clockwise ? self.maxAngle : -self.maxAngle
         
@@ -64,7 +62,7 @@ open class CACircleSegmentLayer: CAShapeLayer {
             path.addArc(center: center, radius: innerRadius, startAngle: minAngle, endAngle: maxAngle, clockwise: !clockwise)
             ctx.addPath(path)
         } else {
-            var path = CGMutablePath()
+            let path = CGMutablePath()
 
             if innerRadius <= 0 {
                 path.move(to: center)

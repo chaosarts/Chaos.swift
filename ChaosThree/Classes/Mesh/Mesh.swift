@@ -5,7 +5,7 @@
 //  Created by Fu Lam Diep on 14.04.21.
 //
 
-import Foundation
+import Metal
 import ChaosMath
 import ChaosCore
 
@@ -122,7 +122,7 @@ public class Mesh: NSObject {
     }
 
     private func appendVertex (_ vertex: Vec3) {
-        if let index = vertices.index(of: vertex) {
+        if let index = vertices.firstIndex(of: vertex) {
             indices.append(index)
         } else {
             indices.append(vertices.count)
@@ -131,8 +131,8 @@ public class Mesh: NSObject {
     }
 
     private func insertVertex (_ vertex: Vec3, at index: Int) {
-        var insertionIndex = max(0, min(vertices.count, index))
-        if let vertexIndex = vertices.index(of: vertex) {
+        let insertionIndex = max(0, min(vertices.count, index))
+        if let vertexIndex = vertices.firstIndex(of: vertex) {
             indices.insert(vertexIndex, at: insertionIndex)
         } else {
             indices.insert(vertices.count, at: insertionIndex)

@@ -40,7 +40,7 @@ public struct t_mat3<Component: SignedNumeric>: StaticSquareMatrix {
         return a + b + c - d - e - f
     }
 
-    public init (components: [Component] = []) {
+    public init (components: [Component]) {
         self.init()
         for index in 0..<min(dimension, components.count) {
             self.components[index] = components[index]
@@ -154,10 +154,10 @@ public struct t_mat3<Component: SignedNumeric>: StaticSquareMatrix {
             a11: a11_1 + a11_2 + a11_3,
             a12: a12_1 + a12_2 + a12_3,
             a13: a13_1 + a13_2 + a13_3,
-            a21: a11_1 + a11_2 + a11_3,
+            a21: a21_1 + a21_2 + a21_3,
             a22: a22_1 + a22_2 + a22_3,
             a23: a23_1 + a23_2 + a23_3,
-            a31: a11_1 + a11_2 + a11_3,
+            a31: a31_1 + a31_2 + a31_3,
             a32: a32_1 + a32_2 + a32_3,
             a33: a33_1 + a33_2 + a33_3
         )

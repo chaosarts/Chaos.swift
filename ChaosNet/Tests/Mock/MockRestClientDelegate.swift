@@ -12,7 +12,7 @@ public class MockRestClientDelegate: RestClientDelegate {
 
     public var callHistory: [CallHistoryItem] = []
 
-    public var shouldFailWithResponse: ((RestTransportEngineResponse, RestRequest) -> Bool)?
+    public var acceptsResponse: ((RestTransportEngineResponse, RestRequest) -> Bool)?
 
     public var shouldRescueRequest: ((RestRequest, RestTransportEngineResponse) -> Bool)?
 
@@ -30,9 +30,9 @@ public class MockRestClientDelegate: RestClientDelegate {
         callHistory.append(.didSend(request))
     }
 
-    public func restClient(_ restClient: RestClient, shouldFailWithResponse response: RestTransportEngineResponse, forRequest request: RestRequest) -> Bool {
-        callHistory.append(.shouldFailWithResponse(response, request))
-        return shouldFailWithResponse?(response, request) ?? true
+    public func restClient(_ restClient: RestClient, acceptsResponse response: RestTransportEngineResponse, forRequest request: RestRequest) -> Bool {
+        callHistory.append(.acceptsResponse(response, request))
+        return acceptsResponse?(response, request) ?? false
     }
 
     public func restClient(_ restClient: RestClient, shouldRescueRequest request: RestRequest, withResponse response: RestTransportEngineResponse) -> Bool {
@@ -59,7 +59,7 @@ public extension MockRestClientDelegate {
         case willSend(RestRequest)
         case sendingRequestDidFailWithError(Error, RestRequest)
         case didSend(RestRequest)
-        case shouldFailWithResponse(RestTransportEngineResponse, RestRequest)
+        case acceptsResponse(RestTransportEngineResponse, RestRequest)
         case shouldRescueRequest(RestRequest, RestTransportEngineResponse)
         case rescueRequest(RestRequest, RestTransportEngineResponse)
         case didProduceRestResponse(RestRequest)
@@ -68,7 +68,7 @@ public extension MockRestClientDelegate {
         public var restRequest: RestRequest {
             switch self {
             case .willSend(let request), .sendingRequestDidFailWithError(_, let request), .didSend(let request),
-                    .shouldFailWithResponse(_, let request), .shouldRescueRequest(let request, _),
+                    .acceptsResponse(_, let request), .shouldRescueRequest(let request, _),
                     .rescueRequest(let request, _), .didProduceRestResponse(let request),
                     .responseProcessingDidFailWithError(_, let request):
                 return request
@@ -80,7 +80,7 @@ public extension MockRestClientDelegate {
             case .sendingRequestDidFailWithError(let error, _),
                     .responseProcessingDidFailWithError(let error, _):
                 return error
-            case .willSend, .didSend, .shouldFailWithResponse, .shouldRescueRequest, .rescueRequest,
+            case .willSend, .didSend, .acceptsResponse, .shouldRescueRequest, .rescueRequest,
                     .didProduceRestResponse:
                 return nil
             }
@@ -91,7 +91,7 @@ public extension MockRestClientDelegate {
             case .willSend, .sendingRequestDidFailWithError, .didSend, .didProduceRestResponse,
                     .responseProcessingDidFailWithError:
                 return nil
-            case .shouldFailWithResponse(let restTransportEngineResponse, _),
+            case .acceptsResponse(let restTransportEngineResponse, _),
                     .shouldRescueRequest(_, let restTransportEngineResponse),
                     .rescueRequest(_, let restTransportEngineResponse):
                 return restTransportEngineResponse
@@ -113,8 +113,8 @@ public extension MockRestClientDelegate {
             return false
         }
 
-        public var isShouldFailWithResponse: Bool {
-            if case .shouldFailWithResponse = self { return true }
+        public var isAcceptsResponse: Bool {
+            if case .acceptsResponse = self { return true }
             return false
         }
 

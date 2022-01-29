@@ -19,8 +19,4 @@ struct ChaosMetalExampleApp: App {
                 .frame(maxWidth: size.width, maxHeight: size.height, alignment: .center)
         }
     }
-
-    init() {
-        Log.enable(.all, forType: ChaosMetal.Environment.self)
-    }
 }

@@ -35,7 +35,7 @@ public protocol RestClientDelegate: AnyObject {
     /// - Parameter response: The response received by the transport engine
     /// - Parameter request: The request associated with the response
     /// - Returns: True if the rest client should fail, otherwise false
-    func restClient (_ restClient: RestClient, shouldFailWithResponse response: RestTransportEngineResponse, forRequest request: RestRequest) -> Bool
+    func restClient (_ restClient: RestClient, acceptsResponse response: RestTransportEngineResponse, forRequest request: RestRequest) -> Bool
 
     /// Asks the delegate if the client should attempt to rescue the failed request.
     ///
@@ -68,7 +68,7 @@ public extension RestClientDelegate {
     func restClient(_ restClient: RestClient, willSend request: RestRequest) {}
     func restClient(_ restClient: RestClient, sendingRequestDidFailWithError error: Error, forRequest request: RestRequest) {}
     func restClient(_ restClient: RestClient, didSend request: RestRequest) {}
-    func restClient(_ restClient: RestClient, shouldFailWithResponse response: RestTransportEngineResponse, forRequest request: RestRequest) -> Bool { true }
+    func restClient(_ restClient: RestClient, acceptsResponse response: RestTransportEngineResponse, forRequest request: RestRequest) -> Bool { true }
     func restClient(_ restClient: RestClient, shouldRescueRequest request: RestRequest, withResponse response: RestTransportEngineResponse) -> Bool { false }
     func restClient(_ restClient: RestClient, rescueRequest request: RestRequest, withResponse response: RestTransportEngineResponse) async throws -> RestTransportEngineResponse { response }
     func restClient<D>(_ restClient: RestClient, didProduceRestResponse restReponse: RestResponse<D>, forRequest request: RestRequest) {}

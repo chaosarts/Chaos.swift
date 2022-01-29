@@ -23,9 +23,9 @@ public struct MoleculeRootView: View {
             .navigationTitle("Molecules")
             .onAppear {
                 do {
-                    throw EnvironmentError(code: .noCommandQueue)
+                    throw ChaosMetalError(code: .noCommandQueue)
                 } catch {
-                    guard let cmError = error as? EnvironmentError else { return }
+                    guard let cmError = error as? ChaosMetalError else { return }
                     print(cmError.localizedDescription)
                 }
             }

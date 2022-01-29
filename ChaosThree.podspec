@@ -21,4 +21,5 @@ Pod::Spec.new do |s|
   s.source_files  = 'ChaosThree/Classes/**/*'
   s.frameworks    = 'Foundation'
   s.dependency 'ChaosMath'
+  s.dependency 'ChaosMetal'
 end

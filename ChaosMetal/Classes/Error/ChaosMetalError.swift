@@ -10,6 +10,7 @@ import ChaosCore
 public class ChaosMetalError: ChaosError {
 
     public enum Code: Int {
+        case noDeviceFound
         case noCommandQueue
         case noCommandBuffer
         case noCommandEncoder

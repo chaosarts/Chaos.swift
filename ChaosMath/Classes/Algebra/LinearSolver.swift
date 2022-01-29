@@ -8,12 +8,5 @@
 import Foundation
 
 public struct LinearSolver<M: Matrix> {
-
     public var matrix: M
-
-    public func solve<V: Vector, R: Vector>(rhs vector: V) throws -> R? {
-        guard vector.dimension != matrix.shape.1 else {
-            return nil
-        }
-    }
 }

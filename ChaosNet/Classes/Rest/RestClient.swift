@@ -52,41 +52,40 @@ public class RestClient {
 
     // MARK: Sending Requests Synchronous
 
-    private func response (for request: RestRequest, relativeTo baseUrl: URL? = nil) async throws -> RestTransportEngine.Response {
+    private func acceptsResponse(_ response: RestTransportEngineResponse, for request: RestRequest) -> Bool {
+        HttpStatus.isSuccessStatusCode(response.httpURLResponse.statusCode) ||
+            delegate?.restClient(self, acceptsResponse: response, forRequest: request) ?? false
+    }
+
+    internal func response (forRequest request: RestRequest, relativeTo baseUrl: URL? = nil) async throws -> RestTransportEngine.Response {
         do {
-            request.timeoutInterval = request.timeoutInterval ?? defaultTimeoutInterval
-            request.cachePolicy = request.cachePolicy ?? defaultCachePolicy
-            request.shouldUseHttpCookies = request.shouldUseHttpCookies ?? shouldUseHttpCookies
+            request.timeoutInterval.setIfNil(defaultTimeoutInterval)
+            request.cachePolicy.setIfNil(defaultCachePolicy)
+            request.shouldUseHttpCookies.setIfNil(shouldUseHttpCookies)
 
             delegate?.restClient(self, willSend: request)
             let urlRequest = try request.urlRequest(relativeTo: baseUrl)
             log.info(format: "Sending request %@ to %@", request.id, urlRequest.url?.absoluteString ?? "-")
+            var response = try await transportEngine.send(request: urlRequest,
+                                                          withIdentifier: request.id)
 
-            var transportEngineResponse = try await transportEngine.send(request: urlRequest, withIdentifier: request.id)
             delegate?.restClient(self, didSend: request)
+            self.log.info(format: "Rest request %@ returned with status %@", request.id, response.httpURLResponse.statusCode)
+            self.log.debug(format: "%@", response.debugDescription)
 
-            self.log.info(format: "Rest request %@ returned with status %@", request.id, transportEngineResponse.httpURLResponse.statusCode)
-            self.log.debug(format: "%@", transportEngineResponse.debugDescription)
-
-            while HttpStatus(transportEngineResponse.httpURLResponse.statusCode).category != .success &&
-                    delegate?.restClient(self, shouldFailWithResponse: transportEngineResponse, forRequest: request) == true &&
-                    request.rescueCount < maxRescueCount &&
-                    delegate?.restClient(self, shouldRescueRequest: request, withResponse: transportEngineResponse) == true {
-
-                request.rescueCount += 1
-                self.log.info(format: "Rest client delegate decided to fail for request %@. Try to rescue with attempt %@", request.id, request.rescueCount)
-                transportEngineResponse = try await delegate!.restClient(self, rescueRequest: request, withResponse: transportEngineResponse)
-            }
-
-            if HttpStatus(transportEngineResponse.httpURLResponse.statusCode).category != .success {
-                if delegate?.restClient(self, shouldFailWithResponse: transportEngineResponse, forRequest: request) == true {
-                    throw RestResponseError(code: restResponseErrorCode(forHttpStatusCode: transportEngineResponse.httpURLResponse.statusCode),
-                                            response: transportEngineResponse.httpURLResponse,
-                                            data: transportEngineResponse.data)
+            while !acceptsResponse(response, for: request) {
+                guard request.rescueCount < maxRescueCount,
+                      (delegate?.restClient(self, shouldRescueRequest: request, withResponse: response) ?? false) else {
+                    throw RestResponseError(code: restResponseErrorCode(forHttpStatusCode: response.httpURLResponse.statusCode),
+                                            response: response.httpURLResponse,
+                                            data: response.data)
                 }
+
+                response = try await delegate!.restClient(self, rescueRequest: request, withResponse: response)
+                request.rescueCount += 1
             }
 
-            return transportEngineResponse
+            return response
         } catch let error where !(error is RestError) {
             self.log.error(format: "Rest transport engine failed to send request %@ with error %@", request.id, error as NSError)
             let restError = RestInternalError(code: .engine, previous: error)
@@ -96,7 +95,7 @@ public class RestClient {
     }
 
     public func send<D: Decodable> (request: RestRequest, relativeTo baseUrl: URL? = nil, expecting type: D.Type) async throws -> RestResponse<D> {
-        let transportEngineResponse = try await response(for: request, relativeTo:  baseUrl)
+        let transportEngineResponse = try await response(forRequest: request, relativeTo:  baseUrl)
 
         guard let data = transportEngineResponse.data else {
             let restError = RestInternalError(code: .noData, previous: nil)
@@ -118,7 +117,7 @@ public class RestClient {
     }
 
     public func send (request: RestRequest, relativeTo baseUrl: URL? = nil) async throws -> RestResponse<Void> {
-        let transportEngineResponse = try await response(for: request, relativeTo:  baseUrl)
+        let transportEngineResponse = try await response(forRequest: request, relativeTo:  baseUrl)
         let headers = self.headers(fromHttpUrlResponse: transportEngineResponse.httpURLResponse)
         let restResponse = RestResponse(to: request, data: Void(), headers: headers)
         delegate?.restClient(self, didProduceRestResponse: restResponse, forRequest: request)

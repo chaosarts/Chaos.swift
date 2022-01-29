@@ -24,6 +24,11 @@ public struct RestTransportEngineResponse {
 
     public let data: Data?
 
+    public init (httpURLResponse: HTTPURLResponse, data: Data? = nil) {
+        self.httpURLResponse = httpURLResponse
+        self.data = data
+    }
+
     public var debugDescription: String {
         var output = httpURLResponse.debugDescription
         if let data = data, let string = String(data: data, encoding: .utf8) {

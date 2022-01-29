@@ -8,7 +8,7 @@
 import UIKit
 
 /// Protocol to describe a data source for a timeline view.
-@objc public protocol UITimelineViewDataSource: AnyObject, NSObjectProtocol {
+@objc public protocol UITimelineViewDataSource: AnyObject {
 
     /// Asks the data source for the total number of milestones it keeps.
     @objc func numberOfMilestones (_ timelineView: UITimelineView) -> Int

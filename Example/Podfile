@@ -6,9 +6,9 @@ pod 'ChaosCore', :path => '../'
 pod 'ChaosGraphics', :path => '../'
 pod 'ChaosAnimation', :path => '../'
 pod 'ChaosMath', :path => '../'
-pod 'ChaosNet', :path => '../'
+pod 'ChaosNet', :path => '../', :testspecs => ['Tests']
 pod 'ChaosSwiftUI', :path => '../'
-pod 'ChaosMetal', :path => '../'
+pod 'ChaosMetal', :path => '../', :testspecs => ['Tests']
 pod 'ChaosThree', :path => '../'
 
 target 'ChaosSwiftUIExample' do

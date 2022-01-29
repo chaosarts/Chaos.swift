@@ -31,6 +31,10 @@ public struct HttpStatus {
         self.code = code
         self.text = text
     }
+
+    public static func isSuccessStatusCode (_ statusCode: Int) -> Bool {
+        Category.from(code: statusCode) == .success
+    }
 }
 
 

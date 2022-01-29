@@ -32,7 +32,7 @@ public struct t_mat2<Component: SignedNumeric>: StaticSquareMatrix {
         components[0] * components[3] - components[1] * components[2]
     }
 
-    public init (components: [Component] = []) {
+    public init (components: [Component]) {
         self.init()
         for index in 0..<min(dimension, components.count) {
             self.components[index] = components[index]

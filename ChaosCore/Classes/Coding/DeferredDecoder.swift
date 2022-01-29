@@ -71,7 +71,7 @@ public struct DeferredDecoder: Decodable, Decoder {
 
 
     public func container<Key>(keyedBy type: Key.Type) throws -> KeyedDecodingContainer<Key> where Key : CodingKey {
-        return try container(keyedBy: type)
+        return try decoder.container(keyedBy: type)
     }
 
 

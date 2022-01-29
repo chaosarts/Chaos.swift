@@ -7,7 +7,7 @@
 
 import UIKit
 
-@objc public protocol UITimelineViewConnector: AnyObject, NSObjectProtocol {
+@objc public protocol UITimelineViewConnector: AnyObject {
     @objc optional var weight: CGFloat { get }
     @objc optional var inset: Bool { get }
     @objc optional var fillColor: CGColor { get }

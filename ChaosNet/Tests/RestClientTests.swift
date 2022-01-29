@@ -10,7 +10,7 @@ import XCTest
 
 public class RestClientTests: XCTestCase {
 
-    let baseURL: URL? = URL(string: "https://test.com/api")
+    let baseURL: URL = URL(string: "https://test.com/api")!
 
     let restTransportEngine = MockRestTransportEngine()
 
@@ -29,6 +29,7 @@ public class RestClientTests: XCTestCase {
             fatalError()
         }
 
+        restClient.maxRescueCount = 1
         restClient.delegate = restClientDelegate
 
         do {
@@ -39,6 +40,9 @@ public class RestClientTests: XCTestCase {
             fatalError(error.localizedDescription)
         }
     }
+
+
+    // MARK: - Common Request Tests
 
     public func testExecute_sendsURLRequest () async {
         // Assign
@@ -54,7 +58,7 @@ public class RestClientTests: XCTestCase {
         // Act
 
         for request in requests {
-            _ = try? await restClient.send(request: request, relativeTo: URL(string: "https://net.chaosarts.de"))
+            _ = try? await restClient.response(forRequest: request, relativeTo: URL(string: "https://net.chaosarts.de"))
         }
 
         // Assert
@@ -80,26 +84,29 @@ public class RestClientTests: XCTestCase {
         let request = RestRequest("hps://fulam@chrono24:bam")
 
         // Act
-        var catchedError: Error?
+        var catchedError: URLError?
         do {
-            _ = try await restClient.send(request: request, relativeTo: nil)
+            _ = try await restClient.response(forRequest: request, relativeTo: nil)
+        } catch let error as RestInternalError {
+            catchedError = error.previous as? URLError
         } catch {
-            catchedError = error
+
         }
 
         XCTAssertNotNil(catchedError)
+        XCTAssertEqual(catchedError?.code, .badURL)
     }
 
-    public func testExecute_returnsError_whenSendingRequestFails_forVoidResponse () async {
+    public func testExecute_returnsError_whenSendingRequestFails () async {
         // Assign
         let request = RestRequest("user/data")
-        let transportEngineError = URLError(.badURL)
+        let transportEngineError = URLError(.notConnectedToInternet)
         restTransportEngine.results = [.failure(transportEngineError)]
 
         // Act
         var restClientError: RestInternalError?
         do {
-            _ = try await restClient.send(request: request, relativeTo: nil)
+            _ = try await restClient.response(forRequest: request, relativeTo: nil)
         } catch let error as RestInternalError {
             restClientError = error
         } catch {
@@ -115,45 +122,260 @@ public class RestClientTests: XCTestCase {
         XCTAssertEqual(restClientError?.previous as? URLError, transportEngineError)
     }
 
-    public func testExecute_delegateCallSequence_whenRestClientReceivesSuccessResponse_forVoidResponse() async {
+    public func testExecute_returnsError_whenDelegateNotRescuingNonSuccessResponse () async {
         // Assign
         let request = RestRequest("user/data")
+        restTransportEngine.results = [unauthorizedResponseResult(for: baseURL)]
+
+        restClientDelegate.acceptsResponse = { _, _ in false }
+
+        // Act
+        var catchedError: Error?
+        do {
+            _ = try await restClient.response(forRequest: request, relativeTo: nil)
+        } catch {
+            catchedError = error
+        }
+
+        // Assert
+        XCTAssertEqual(restClientDelegate.callHistory.count, 4)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 0]?.isWillSend, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 1]?.isDidSend, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 2]?.isAcceptsResponse, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 3]?.isShouldRescueRequest, true)
+        XCTAssertNotNil(catchedError)
+    }
+
+    public func testExecute_returnsError_whenDelegateNotRescuingNonSuccessRescueResponse () async {
+        // Assign
+        let request = RestRequest("user/data")
+        restClient.maxRescueCount = 2
+        restTransportEngine.results = [unauthorizedResponseResult(for: baseURL)]
+
+        restClientDelegate.acceptsResponse = { _, _ in false }
+        restClientDelegate.shouldRescueRequest = { request, _ in request.rescueCount < 1 }
+
+
+        // Act
+        var catchedError: Error?
+        do {
+            _ = try await restClient.response(forRequest: request, relativeTo: nil)
+        } catch {
+            catchedError = error
+        }
+
+        // Assert
+        XCTAssertEqual(restClientDelegate.callHistory.count, 7)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 0]?.isWillSend, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 1]?.isDidSend, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 2]?.isAcceptsResponse, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 3]?.isShouldRescueRequest, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 4]?.isRescueRequest, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 5]?.isAcceptsResponse, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 6]?.isShouldRescueRequest, true)
+        XCTAssertNotNil(catchedError)
+    }
+
+    public func testExecute_returnsError_whenRequestRescueCountExceedsMaxRescueCount () async {
+        // Assign
+        let request = RestRequest("user/data")
+        restClient.maxRescueCount = 2
+        restTransportEngine.results = [unauthorizedResponseResult(for: baseURL)]
+
+        restClientDelegate.acceptsResponse = { _, _ in false }
+        restClientDelegate.shouldRescueRequest = { _, _ in true }
+
+        // Act
+        var catchedError: Error?
+        do {
+            _ = try await restClient.response(forRequest: request, relativeTo: nil)
+        } catch {
+            catchedError = error
+        }
+
+        // Assert
+        XCTAssertEqual(restClientDelegate.callHistory.count, 9)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 0]?.isWillSend, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 1]?.isDidSend, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 2]?.isAcceptsResponse, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 3]?.isShouldRescueRequest, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 4]?.isRescueRequest, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 5]?.isAcceptsResponse, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 6]?.isShouldRescueRequest, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 7]?.isRescueRequest, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 8]?.isAcceptsResponse, true)
+        XCTAssertEqual(request.rescueCount, 2)
+        XCTAssertNotNil(catchedError)
+    }
+
+    public func testExecute_returnsResponse_whenDelegateAcceptsNonSuccessRescuedResponse () async {
+        // Assign
+        let request = RestRequest("user/data")
+        restTransportEngine.results = [unauthorizedResponseResult(for: baseURL)]
+
+        restClientDelegate.acceptsResponse = { _, _ in request.rescueCount > 0 }
+        restClientDelegate.shouldRescueRequest = { _, _ in true }
+
+        // Act
+        let response = try? await restClient.response(forRequest: request, relativeTo: nil)
+
+        // Assert
+        XCTAssertEqual(restClientDelegate.callHistory.count, 6)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 0]?.isWillSend, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 1]?.isDidSend, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 2]?.isAcceptsResponse, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 3]?.isShouldRescueRequest, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 4]?.isRescueRequest, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 5]?.isAcceptsResponse, true)
+        XCTAssertEqual(request.rescueCount, 1)
+        XCTAssertNotNil(response)
+    }
+
+    public func testExecute_returnsResponse_whenDelegateAcceptsSuccessRescuedResponse () async {
+        // Assign
+        let request = RestRequest("user/data")
+        restTransportEngine.results = [unauthorizedResponseResult(for: baseURL)]
+
+        restClientDelegate.acceptsResponse = { response, _ in response.httpURLResponse.statusCode == 200 }
+        restClientDelegate.shouldRescueRequest = { _, _ in true }
+        restClientDelegate.rescueRequest = { request, _ in RestTransportEngineResponse(httpURLResponse: .ok(for: self.baseURL)!) }
+
+        // Act
+        let response = try? await restClient.response(forRequest: request, relativeTo: nil)
+
+        // Assert
+        XCTAssertEqual(restClientDelegate.callHistory.count, 5)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 0]?.isWillSend, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 1]?.isDidSend, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 2]?.isAcceptsResponse, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 3]?.isShouldRescueRequest, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 4]?.isRescueRequest, true)
+        XCTAssertEqual(request.rescueCount, 1)
+        XCTAssertNotNil(response)
+    }
+
+    public func testExecute_returnsResponse_whenDelegateAcceptsNonSuccessResponse () async {
+        // Assign
+        let request = RestRequest("user/data")
+        restTransportEngine.results = [unauthorizedResponseResult(for: baseURL)]
+        restClientDelegate.acceptsResponse = { _, _ in true }
+
+        // Act
+        let response = try? await restClient.response(forRequest: request, relativeTo: nil)
+
+        // Assert
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 0]?.isWillSend, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 1]?.isDidSend, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 2]?.isAcceptsResponse, true)
+        XCTAssertNotNil(response)
+    }
+
+    public func testExecute_returnsResponse_whenTransportEngineReturnsSuccessResponse () async {
+        // Assign
+        let request = RestRequest("user/data")
+        restTransportEngine.results = [okResponseResult(for: baseURL)]
+        restClientDelegate.acceptsResponse = { _, _ in true }
+
+        // Act
+        let response = try? await restClient.response(forRequest: request, relativeTo: nil)
+
+        // Assert
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 0]?.isWillSend, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 1]?.isDidSend, true)
+        XCTAssertNotNil(response)
+    }
+
+
+    // MARK: - Void Response Tests
+
+    public func testExecute_returnsError_whenReponseMethodFails_forVoidResponse () async {
+        // Assign
+        let request = RestRequest("user/data")
+        let transportEngineError = URLError(.notConnectedToInternet)
+        restTransportEngine.results = [.failure(transportEngineError)]
+
+        // Act
+        var catchedError: Error?
+        do {
+            _ = try await restClient.response(forRequest: request, relativeTo: nil)
+        } catch {
+            catchedError = error
+        }
+
+        // Assert
+        XCTAssertNotNil(catchedError)
+    }
+
+    public func testExecute_returnsResponse_whenReponseMethodSucceeds_forVoidResponse () async {
+        // Assign
+        let request = RestRequest("user/data")
+        restTransportEngine.results = [okResponseResult(for: baseURL)]
 
         // Act
         let response = try? await restClient.send(request: request, relativeTo: nil)
 
         // Assert
-        XCTAssertEqual(restClientDelegate.callHistory.count, 3)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 0]?.isWillSend, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 1]?.isDidSend, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 1]?.isSendingRequestDidFailWithError, false)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 2]?.isDidProduceRestResponse, true)
         XCTAssertNotNil(response)
     }
 
+    // MARK: - Object Response Tests
 
-    public func testExecute_delegateCallSequence_whenSendingRequestFails_forObjectResponse () async {
+    public func testExecute_returnsError_whenReponseMethodFails_forObjectResponse () async {
         // Assign
         let request = RestRequest("user/data")
-        let transportEngineError = URLError(.badURL)
+        let transportEngineError = URLError(.notConnectedToInternet)
         restTransportEngine.results = [.failure(transportEngineError)]
 
         // Act
-        var restClientError: RestInternalError?
+        var catchedError: Error?
         do {
             _ = try await restClient.send(request: request, relativeTo: nil, expecting: User.self)
-        } catch let error as RestInternalError {
-            restClientError = error
         } catch {
-
+            catchedError = error
         }
 
         // Assert
-        XCTAssertEqual(restClientDelegate.callHistory.count, 2)
-        XCTAssertEqual(restClientDelegate.callHistory[0].isWillSend, true)
-        XCTAssertEqual(restClientDelegate.callHistory[1].isSendingRequestDidFailWithError, true)
-        XCTAssertEqual(restClientDelegate.callHistory[1].isDidSend, false)
-        XCTAssertEqual(restClientError?.code, .engine)
-        XCTAssertEqual(restClientError?.previous as? URLError, transportEngineError)
+        XCTAssertNotNil(catchedError)
+    }
+
+    public func testExecute_returnsError_whenReponseMethodReturnsInvalidData_forObjectResponse () async {
+        // Assign
+        let request = RestRequest("user/data")
+        let transportEngineError = URLError(.notConnectedToInternet)
+        restTransportEngine.results = [.failure(transportEngineError)]
+
+        // Act
+        var catchedError: Error?
+        do {
+            _ = try await restClient.send(request: request, relativeTo: nil, expecting: User.self)
+        } catch {
+            catchedError = error
+        }
+
+        // Assert
+        XCTAssertNotNil(catchedError)
+    }
+
+    public func testExecute_returnsResponse_whenReponseMethodSucceeds_forObjectResponse () async {
+        // Assign
+        let request = RestRequest("user/data")
+        restTransportEngine.results = [okResponseResult(for: baseURL, data: userData)]
+
+        // Act
+        let response = try? await restClient.send(request: request, relativeTo: nil, expecting: User.self)
+
+        // Assert
+        XCTAssertNotNil(response?.data.email)
+        XCTAssertNotNil(response?.data.username)
+    }
+
+    // MARK: - Helper Methods
+
+    func unauthorizedResponseResult (for url: URL, data: Data? = nil) -> Result<RestTransportEngineResponse, Error> {
+        .success(.init(httpURLResponse: .unauthorized(for: url, headers: nil)!, data: data))
+    }
+
+    func okResponseResult (for url: URL, data: Data? = nil) -> Result<RestTransportEngineResponse, Error> {
+        .success(.init(httpURLResponse: .ok(for: url, headers: nil)!, data: data))
     }
 }

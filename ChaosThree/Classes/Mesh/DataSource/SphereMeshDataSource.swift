@@ -72,6 +72,8 @@ public class SphereMeshDataSource: MeshDataSource {
             vertices = verticesForLines()
         case .triangle:
             vertices = verticesForTriangles()
+        @unknown default:
+            fatalError()
         }
 
         lastPrimitiveType = primitiveType

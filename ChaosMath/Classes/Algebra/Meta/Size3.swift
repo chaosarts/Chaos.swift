@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct t_size3<Component: SignedNumeric> {
+public struct t_size3<Component: SignedNumeric & Comparable> {
 
     /// Provides the measure along the x-axis.
     public var width: Component
@@ -20,6 +20,17 @@ public struct t_size3<Component: SignedNumeric> {
 
     /// Provides the volume of the size indicated by the three measures.
     public var volume: Component { width * height * depth }
+
+    /// Indicates whether the size is 0 or not
+    public var isZero: Bool { volume == 0 }
+
+    /// Indicates whether the size has valid components or not. An invalid size is present, when width, height or depth
+    /// is less than zero.
+    public var isValid: Bool {
+        width >= Component.zero &&
+        height >= Component.zero &&
+        depth >= Component.zero
+    }
 
     /// Modifies the measures of the size by subtracting the values component wise
     public mutating func insetBy (width: Component = 0, height: Component = 0, depth: Component = 0) {

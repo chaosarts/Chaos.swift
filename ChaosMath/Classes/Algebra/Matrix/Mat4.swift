@@ -42,7 +42,7 @@ public struct t_mat4<Component: SignedNumeric>: StaticSquareMatrix {
         return a - b + c - d
     }
 
-    public init (components: [Component] = []) {
+    public init (components: [Component]) {
         self.init()
         for index in 0..<min(components.count, self.components.count) {
             self.components[index] = components[index]

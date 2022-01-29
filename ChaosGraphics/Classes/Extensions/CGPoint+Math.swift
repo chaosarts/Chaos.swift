@@ -5,7 +5,8 @@
 //  Created by Fu Lam Diep on 22.02.21.
 //
 
-import Foundation
+import CoreGraphics
+import ChaosMath
 
 public extension CGPoint {
 

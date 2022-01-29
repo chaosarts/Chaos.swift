@@ -78,8 +78,6 @@ open class UITaskRunnerViewController: UIViewController {
 
 extension UITaskRunnerViewController: TaskRunnerDelegate {
     public func taskRunner(_ taskRunner: TaskRunner, willRunTaskAt index: Int) {
-        let task = taskRunner.task(at: index)
-
         taskTitleText = delegate?.taskRunnerViewController?(self, titleForTaskAt: index)
         taskDetailText = delegate?.taskRunnerViewController?(self, detailForTaskAt: index)
         taskImage = delegate?.taskRunnerViewController?(self, imageForTaskAt: index)
@@ -92,8 +90,6 @@ extension UITaskRunnerViewController: TaskRunnerDelegate {
     }
 
     public func taskRunner(_ taskRunner: TaskRunner, taskAt index: Int, didFailWithError error: Error) {
-        let task = taskRunner.task(at: index)
-        let targetMethod = task.id.snakecased()
         delegate?.taskRunnerViewController?(self, present: error, forTaskAt: index)
     }
 
@@ -106,7 +102,7 @@ extension UITaskRunnerViewController: TaskRunnerDelegate {
 
 // MARK: -
 
-@objc public protocol UITaskRunnerViewControllerDelegate: AnyObject, NSObjectProtocol {
+@objc public protocol UITaskRunnerViewControllerDelegate: AnyObject {
 
     /// Asks the delegate for the title to display for the task corresponding to
     /// given id.

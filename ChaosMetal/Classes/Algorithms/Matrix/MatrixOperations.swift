@@ -9,8 +9,8 @@ import MetalKit
 
 
 public func gpu_transpose (matrix: [Float],
-                           width: UInt,
-                           height: UInt? = nil,
+                           width: Int,
+                           height: Int? = nil,
                            inCommandQueue commandQueue: MTLCommandQueue,
                            completion: @escaping ([Float]) -> Void) {
     let height = height ?? width
@@ -41,13 +41,12 @@ public func gpu_transpose (matrix: [Float],
 }
 
 public func gpu_matrix_transpose (matrix: MTLBuffer,
-                                  width: UInt,
-                                  height: UInt,
-                                  tileSize: UInt = 128,
+                                  width: Int,
+                                  height: Int,
                                   inCommandQueue commandQueue: MTLCommandQueue,
                                   completion: @escaping (MTLBuffer) -> Void) {
 
-    guard var output = commandQueue.device.makeBuffer(length: matrix.length, options: []) else {
+    guard let output = commandQueue.device.makeBuffer(length: matrix.length, options: []) else {
         fatalError("Unable to create output buffer")
     }
 
@@ -56,26 +55,28 @@ public func gpu_matrix_transpose (matrix: MTLBuffer,
 
         // Prepare Arguments
 
-        var tileSize = tileSize
-        var matrixSize = SIMD2<UInt>(width, height)
+        
+        var threadgroupArrayVolume = commandQueue.device.maxThreadgroupMemoryLength / MemoryLayout<Float>.stride
+        threadgroupArrayVolume = threadgroupArrayVolume - threadgroupArrayVolume % 4
 
+        let threadgroupArraySize = MTLSize(width: commandQueue.device.maxThreadsPerThreadgroup.width -
+                                            commandQueue.device.maxThreadsPerThreadgroup.width % 4)
+
+        var width = width
+        var height = height
         command.encoder.setBuffer(matrix, offset: 0, index: 0)
-        command.encoder.setBytes(&matrixSize, length: MemoryLayout<SIMD2<UInt>>.stride, index: 1)
-        command.encoder.setBytes(&tileSize, length: MemoryLayout<SIMD2<UInt>>.stride, index: 2)
+        command.encoder.setBytes(&width, length: MemoryLayout<Int>.stride, index: 1)
+        command.encoder.setBytes(&height, length: MemoryLayout<Int>.stride, index: 2)
         command.encoder.setBuffer(output, offset: 0, index: 3)
-        command.encoder.setThreadgroupMemoryLength(MemoryLayout<Float>.stride * Int(tileSize) * Int(tileSize), index: 0)
+        command.encoder.setThreadgroupMemoryLength(threadgroupArraySize.memoryLength(forType: Float.self),
+                                                   index: 0)
 
 
         // Specify Threadgroups
 
-        let threadgroupsPerGrid = MTLSize(width: Int(floor(Float(width) / Float(tileSize))),
-                                          height: Int(floor(Float(height) / Float(tileSize))),
-                                          depth: 1)
-        let threadsPerThreadgroup = MTLSize(width: Int(tileSize),
-                                            height: 1,
-                                            depth: 1)
-
-        command.encoder.dispatchThreadgroups(threadgroupsPerGrid, threadsPerThreadgroup: threadsPerThreadgroup)
+        let gridHeight: Int = Int(ceil(Float(height) / Float(threadgroupArraySize.width)))
+        let gridSize = MTLSize(width: width, height: gridHeight, depth: 1)
+        command.encoder.dispatchThreadgroups(gridSize, threadsPerThreadgroup: threadgroupArraySize.with(height: 1))
 
 
         // Handle Completion
@@ -93,7 +94,6 @@ public func gpu_matrix_transpose (matrix: MTLBuffer,
         command.encoder.endEncoding()
         command.buffer.commit()
     } catch {
-        let err = error
         fatalError(error.localizedDescription)
     }
 }

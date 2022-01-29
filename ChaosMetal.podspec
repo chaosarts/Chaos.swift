@@ -19,6 +19,11 @@ Pod::Spec.new do |s|
   s.watchos.deployment_target = '6.0'
 
   s.source_files  = 'ChaosMetal/Classes/**/*'
-  s.frameworks    = 'MetalKit'
+  s.frameworks    = 'Metal'
   s.dependency 'ChaosCore'
+  s.dependency 'ChaosMath'
+
+  s.test_spec 'Tests' do |test_spec|
+    test_spec.source_files = 'ChaosMetal/Tests/**/*'
+  end
 end

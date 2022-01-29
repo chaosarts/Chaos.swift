@@ -8,7 +8,7 @@
 import UIKit
 
 @objc
-public protocol UIEnvironmentSelectionViewControllerDelegate: AnyObject, NSObjectProtocol {
+public protocol UIEnvironmentSelectionViewControllerDelegate: AnyObject {
 
     /// Tells the delegate, that the environment selection view controller did
     /// select the environment at the given index.

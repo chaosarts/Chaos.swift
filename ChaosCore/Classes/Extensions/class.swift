@@ -13,7 +13,7 @@ public func class_conformsToProtocol (_ cls: AnyClass?, _ proto: Protocol) -> Bo
     return conforms || ChaosCore.class_conformsToProtocol(class_getSuperclass(cls), proto)
 }
 
-public func class_getInjectables () -> [Resolvable.Type] {
+public func class_getResolvables () -> [Resolvable.Type] {
     ChaosCore.class_getClassList().compactMap({
         guard ChaosCore.class_conformsToProtocol($0, Resolvable.self) else { return nil }
         return $0 as? Resolvable.Type

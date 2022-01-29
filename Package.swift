@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.5
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "Chaos",
     defaultLocalization: "en",
-    platforms: [.iOS(.v14)],
+    platforms: [.iOS(.v15), .macOS(.v11)],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(name: "ChaosAnimation", targets: ["ChaosAnimation"]),
@@ -39,10 +39,16 @@ let package = Package(
             ],
             path: "ChaosCore/Classes"
         ),
+        .testTarget(
+            name: "ChaosCoreTests",
+            dependencies: ["ChaosCore"],
+            path: "ChaosCore/Tests"
+        ),
         .target(
             name: "ChaosGraphics",
             dependencies: [
-                "ChaosCore"
+                "ChaosCore",
+                "ChaosMath"
             ],
             path: "ChaosGraphics/Classes"
         ),
@@ -69,6 +75,14 @@ let package = Package(
             ],
             path: "ChaosNet/Classes"
         ),
+        .testTarget(
+            name: "ChaosNetTests",
+            dependencies: ["ChaosNet"],
+            path: "ChaosNet/Tests",
+            resources: [
+                .process("Resources", localization: nil)
+            ]
+        ),
         .target(
             name: "ChaosThree",
             dependencies: [
@@ -81,7 +95,8 @@ let package = Package(
             name: "ChaosUi",
             dependencies: [
                 "ChaosCore",
-                "ChaosGraphics"
+                "ChaosGraphics",
+                "ChaosAnimation"
             ],
             path: "ChaosUi/Classes"
         ),

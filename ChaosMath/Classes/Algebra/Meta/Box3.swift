@@ -8,7 +8,7 @@
 import Foundation
 
 /// A struct describing a box by its origin and size. This struct corresponds to `CGRect` but for the 3d space.
-public struct t_box3<Component: SignedNumeric> {
+public struct t_box3<Component: SignedNumeric & Comparable> {
 
     public typealias Point3 = t_point3<Component>
 
@@ -45,7 +45,9 @@ public struct t_box3<Component: SignedNumeric> {
         get { size.volume }
     }
 
-    public var isEmpty: Bool { size.volume == 0 }
+    public var isZero: Bool { size.isZero }
+
+    public var isValid: Bool { size.isValid }
 
 
     // MARK: Origin Properties
@@ -68,12 +70,12 @@ public struct t_box3<Component: SignedNumeric> {
 
     // MARK: Initialization
 
-    public init (origin: Point3, size: Size3) {
+    public init (origin: Point3 = .zero, size: Size3 = .zero) {
         self.origin = origin
         self.size = size
     }
 
-    public init (minX: Component, minY: Component, minZ: Component, maxX: Component, maxY: Component, maxZ: Component) {
+    public init (minX: Component = .zero, minY: Component = .zero, minZ: Component = .zero, maxX: Component, maxY: Component, maxZ: Component) {
         self.init(origin: Point3(minX, minY, minZ), size: t_size3(width: maxX - minX, height: maxY - minY, depth: maxZ - minZ))
     }
 
@@ -117,19 +119,19 @@ public extension t_box3 {
 public extension t_box3 where Component: FloatingPoint {
 
     /// Provides the center of the box implied by `origin` and `size`.
-    public var center: Point3 { Point3(midX, midY, midZ) }
+    var center: Point3 { Point3(midX, midY, midZ) }
 
     /// Provides the x-component of `center`
-    public var midX: Component { origin.x + size.width / 2 }
+    var midX: Component { origin.x + size.width / 2 }
 
     /// Provides the y-component of `center`
-    public var midY: Component { origin.y + size.height / 2 }
+    var midY: Component { origin.y + size.height / 2 }
 
     /// Provides the z-component of `center`
-    public var midZ: Component { origin.z + size.depth / 2 }
+    var midZ: Component { origin.z + size.depth / 2 }
 
     /// Determines if the given point is inside the box.
-    public func contains (_ point: Point3) -> Bool {
+    func contains (_ point: Point3) -> Bool {
         !(point.x > maxX || point.x < minX || point.y > maxY || point.y < minY || point.z > maxZ || point.z < minZ)
     }
 }

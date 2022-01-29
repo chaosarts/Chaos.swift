@@ -8,8 +8,10 @@
 
 import Foundation
 import AppKit
+import ChaosMetal
 
 public class GPUGaussFilterProcessor: ImageProcessor {
+
     public func process(image: NSImage, completion: @escaping (Result<NSImage, Error>) -> Void) {
         completion(.success(image))
     }

@@ -5,12 +5,10 @@
 //  Created by Fu Lam Diep on 11.02.21.
 //
 
-import Foundation
-import ChaosAnimation
-
+import UIKit
 
 internal extension UIPieChart {
-    internal class SegmentData {
+    class SegmentData {
         var title: String?
         var value: Double = 0.0
         var color: UIColor = .systemBlue

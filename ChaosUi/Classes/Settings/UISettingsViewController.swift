@@ -63,7 +63,7 @@ extension UISettingsView: UITableViewDataSource {
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        tableView.dequeueReusableCell(withIdentifier: "SettingsViewCell", for: indexPath) ?? UITableViewCell(style: .subtitle, reuseIdentifier: "UISettingsViewCell")
+        tableView.dequeueReusableCell(withIdentifier: "SettingsViewCell", for: indexPath)
     }
 }
 

@@ -71,7 +71,7 @@ public final class Resolver {
 
     /// Initalizes the resolver.
     private init () {
-        resolvableTypes = class_getInjectables()
+        resolvableTypes = class_getResolvables()
     }
 
 

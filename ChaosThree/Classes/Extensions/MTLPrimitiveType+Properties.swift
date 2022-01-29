@@ -16,6 +16,8 @@ public extension MTLPrimitiveType {
             return 2
         case .triangle:
             return 3
+        @unknown default:
+            fatalError()
         }
     }
 }
