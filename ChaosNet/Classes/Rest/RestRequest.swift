@@ -9,25 +9,49 @@ import Foundation
 
 public class RestRequest {
 
-    public typealias CachePolicy = URLRequest.CachePolicy
-    public typealias Action = HttpMethod
+    // MARK: - Nested Types
 
+    public typealias CachePolicy = URLRequest.CachePolicy
+
+    public typealias Method = HttpMethod
+
+
+    // MARK: - Properties
+
+    /// The id of the request. This is used by the rest client in order to distinguish requests for cancellation.
     public let id: String = UUID().uuidString
 
-    public let method: Action
+    /// The method to use for this request.
+    public let method: Method
 
+    /// The target endpoint to send the request to.
     public let endpoint: Endpoint
 
+    /// Headers to enrich the request. This will be used for the resulting url request.
     public var headers: [String: String] = [:]
 
     public var payload: Data?
+
+    /// Indicates, how many retries has been performed on this request.
+    public internal(set) var rescueCount: Int = 0
+
+    /// Spacifies in which way to consider caches, this will overwrite the default behaviour of the rest client, that
+    /// sends this request.
+    public var cachePolicy: CachePolicy?
+
+    /// Specifies whether the reqest request should use cookies for the resulting url request or not. If not specified
+    /// the default of the rest client is taken into account.
+    public var shouldUseHttpCookies: Bool?
+
+    ///
+    public var timeoutInterval: TimeInterval?
 
     public var queryParameters: [String: String?] {
         get { endpoint.parameters }
         set { endpoint.parameters = newValue }
     }
 
-    public init (_ endpoint: Endpoint, action: Action = .GET) {
+    public init (_ endpoint: Endpoint, action: Method = .GET) {
         self.endpoint = endpoint
         self.method = action
     }
@@ -157,5 +181,34 @@ public extension RestRequest {
         public func containsParameter (_ name: String) -> Bool {
             parameters.contains(where: { $0.key == name })
         }
+    }
+}
+
+extension RestRequest: URLRequestConvertible {
+    public func urlRequest(relativeTo baseURL: URL? = nil) throws -> URLRequest {
+        guard var urlComponents = URLComponents(string: endpoint.path) else {
+            throw URLError(.badURL)
+        }
+
+        if !queryParameters.isEmpty {
+            urlComponents.queryItems = queryParameters.map({
+                URLQueryItem(name: $0.key, value: $0.value)
+            })
+        }
+
+        guard let url = urlComponents.url(relativeTo: baseURL) else {
+            throw URLError(.badURL)
+        }
+
+        let defaultURLRequest = URLRequest(url: url)
+        var urlRequest = URLRequest(url: url,
+                                    cachePolicy: cachePolicy ?? defaultURLRequest.cachePolicy,
+                                    timeoutInterval: timeoutInterval ?? defaultURLRequest.timeoutInterval)
+
+        headers.forEach { urlRequest.addValue($1, forHTTPHeaderField: $0) }
+        urlRequest.httpMethod = method.rawValue
+        urlRequest.httpShouldHandleCookies = shouldUseHttpCookies ?? true
+        urlRequest.httpBody = payload
+        return urlRequest
     }
 }

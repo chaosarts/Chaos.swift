@@ -14,5 +14,5 @@ public protocol RestError: CustomNSError {
 }
 
 public extension RestError {
-    public var errorCode: Int { code.rawValue }
+    var errorCode: Int { code.rawValue }
 }

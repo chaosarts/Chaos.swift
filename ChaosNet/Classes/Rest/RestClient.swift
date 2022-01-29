@@ -25,206 +25,113 @@ public class RestClient {
     public let dataEncoder: RestDataEncoder
 
     /// Indicates the time interval to use for request timeouts
-    public var requestTimeout: TimeInterval = 30
+    public var defaultTimeoutInterval: TimeInterval = 30
 
-    /// Specifies the policy to use for caching
-    public var cachePolicy: RestRequest.CachePolicy = .reloadIgnoringLocalAndRemoteCacheData
+    /// Specifies the policy to use for caching by default. Request objects can specify
+    public var defaultCachePolicy: RestRequest.CachePolicy = .reloadIgnoringLocalAndRemoteCacheData
 
-    public var hooks: [RestClientHook] = []
+    /// Specifies whether a request should use cookies or not. This behaviour can be overwritten by a request object
+    /// itself.
+    public var shouldUseHttpCookies: Bool = true
 
+    public var maxRescueCount: Int = 1
 
     private let log: Log = Log(RestClient.self)
 
 
     // MARK: Intialization
     
-    public init (transportEngine: RestTransportEngine, dataDecoder: RestDataDecoder, dataEncoder: RestDataEncoder) {
+    public init (transportEngine: RestTransportEngine,
+                 dataDecoder: RestDataDecoder = JSONDecoder(),
+                 dataEncoder: RestDataEncoder = JSONEncoder()) {
         self.transportEngine = transportEngine
         self.dataDecoder = dataDecoder
         self.dataEncoder = dataEncoder
     }
 
 
-    // MARK: Sending Requests
+    // MARK: Sending Requests Synchronous
 
-//    public func send<D: Decodable> (request: RestRequest, relativeTo baseUrl: URL? = nil) async throws -> RestResponse<D> {
-//        do {
-//            let response: RestTransportEngine.Response = try await send(request: request, relativeTo:  baseUrl)
-//            guard let data = response.data else {
-//                throw RestInternalError(code: .noData, previous: nil)
-//            }
-//
-//            let object = try dataDecoder.decode(D.self, from: data)
-//            let headers = self.headers(fromHttpUrlResponse: response.response)
-//            return RestResponse(data: object, headers: headers)
-//        } catch {
-//            delegate?.restClient(self, didReceive: error, for: request)
-//            throw error
-//        }
-//    }
-//
-//    @available(iOS 15, *)
-//    public func send (request: RestRequest, relativeTo baseUrl: URL? = nil) async throws -> RestResponse<Void> {
-//        do {
-//            let response: RestTransportEngine.Response = try await send(request: request, relativeTo:  baseUrl)
-//            let headers = self.headers(fromHttpUrlResponse: response.response)
-//            return RestResponse(data: Void(), headers: headers)
-//        } catch {
-//            delegate?.restClient(self, didReceive: error, for: request)
-//            throw error
-//        }
-//    }
-//
-//    @available(iOS 15, *)
-//    private func send (request: RestRequest, relativeTo baseUrl: URL? = nil) async throws -> RestTransportEngine.Response {
-//        delegate?.restClient(self, willSend: request)
-//
-//        for hook in hooks {
-//            try await hook.restClient(self, for: request)
-//        }
-//
-//        let urlRequest = try self.urlRequest(for: request, relativeTo: baseUrl)
-//        let response = try await transportEngine.send(request: urlRequest)
-//
-//        let httpStatus = HttpStatus(response.response.statusCode)
-//        let clientShouldFailForStatus: Bool
-//        if httpStatus.category != .success {
-//            clientShouldFailForStatus = delegate?.restClient(self, shouldFailForStatus: response.response.statusCode) ?? true
-//        } else {
-//            clientShouldFailForStatus = false
-//        }
-//
-//        if clientShouldFailForStatus {
-//            switch httpStatus.category {
-//            case .information, .redirection:
-//                throw RestResponseError(code: .invalidStatus, response: response.response, data: response.data)
-//            case .clientError:
-//                throw RestResponseError(code: .clientError, response: response.response, data: response.data)
-//            case .serverError:
-//                throw RestResponseError(code: .serverError, response: response.response, data: response.data)
-//            case .proprietaryError:
-//                throw RestResponseError(code: .proprietaryError, response: response.response, data: response.data)
-//            default:
-//                break
-//            }
-//        }
-//
-//        return response
-//    }
-
-    public func send<D: Decodable> (request: RestRequest, relativeTo baseUrl: URL? = nil, expecting: D.Type, completion: @escaping (RestResult<RestResponse<D>>) -> Void) {
-        send(request: request, relativeTo: baseUrl) { (result: RestResult<RestTransportEngine.Response>) in
-            switch result {
-            case .success(let transportEngineResponse):
-                guard let data = transportEngineResponse.data else {
-                    let error = RestInternalError(code: .noData)
-                    self.delegate?.restClient(self, didReceive: error, for: request)
-                    completion(.failure(error))
-                    return
-                }
-
-                do {
-                    let headers = self.headers(fromHttpUrlResponse: transportEngineResponse.response)
-                    let object: D = try self.dataDecoder.decode(D.self, from: data)
-                    let restResponse = RestResponse(to: request, data: object, headers: headers)
-                    self.delegate?.restClient(self, didReceive: restResponse, for: request)
-                    completion(.success(restResponse))
-                } catch {
-                    self.log.error(format: "Unable to decode response of request %@", request.id)
-                    self.delegate?.restClient(self, didReceive: error, for: request)
-                    completion(.failure(error))
-                }
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
-
-    public func send (request: RestRequest, relativeTo baseUrl: URL? = nil, completion: @escaping (RestResult<RestResponse<Void>>) -> Void) {
-        send(request: request, relativeTo: baseUrl) { (result: RestResult<RestTransportEngine.Response>) in
-            switch result {
-            case .success(let transportEngineResponse):
-                let headers = self.headers(fromHttpUrlResponse: transportEngineResponse.response)
-                let restResponse = RestResponse<Void>(to: request, headers: headers)
-                completion(.success(restResponse))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
-
-    private func send (request: RestRequest, relativeTo baseUrl: URL?, completion: @escaping (RestResult<RestTransportEngine.Response>) -> Void) {
+    private func response (for request: RestRequest, relativeTo baseUrl: URL? = nil) async throws -> RestTransportEngine.Response {
         do {
-            delegate?.restClient(self, willSend: request)
-            let urlRequest = try self.urlRequest(for: request, relativeTo: baseUrl)
+            request.timeoutInterval = request.timeoutInterval ?? defaultTimeoutInterval
+            request.cachePolicy = request.cachePolicy ?? defaultCachePolicy
+            request.shouldUseHttpCookies = request.shouldUseHttpCookies ?? shouldUseHttpCookies
 
+            delegate?.restClient(self, willSend: request)
+            let urlRequest = try request.urlRequest(relativeTo: baseUrl)
             log.info(format: "Sending request %@ to %@", request.id, urlRequest.url?.absoluteString ?? "-")
 
-            transportEngine.send(request: urlRequest, completion: { result in
-                switch result {
-                case .failure(let error):
-                    self.log.error(format: "Rest transport engine failed to send request %@ with error %@", request.id, error as NSError)
-
-                    self.delegate?.restClient(self, didReceive: error, for: request)
-                    completion(.failure(RestInternalError(code: .engine, previous: error)))
-                case .success(let transportEngineResponse):
-                    let httpStatusCode = transportEngineResponse.response.statusCode
-
-                    self.log.info(format: "Rest request %@ returned with status %@", request.id, httpStatusCode)
-                    self.log.debug(format: "%@", transportEngineResponse.debugDescription)
-
-                    guard delegate?.restClient(self, shouldFailForStatus: httpStatusCode) != true else {
-
-                        self.log.error(format: "Rest client delegate decided to fail for request %@ returned with status %@", request.id, httpStatusCode)
-
-                        let error = RestResponseError(code: restResponseErrorCode(forHttpStatusCode: httpStatusCode), response: transportEngineResponse.response)
-                        self.delegate?.restClient(self, didReceive: error, for: request)
-                        completion(.failure(error))
-                        return
-                    }
-
-                    completion(.success(transportEngineResponse))
-                }
-            })
-
+            var transportEngineResponse = try await transportEngine.send(request: urlRequest, withIdentifier: request.id)
             delegate?.restClient(self, didSend: request)
+
+            self.log.info(format: "Rest request %@ returned with status %@", request.id, transportEngineResponse.httpURLResponse.statusCode)
+            self.log.debug(format: "%@", transportEngineResponse.debugDescription)
+
+            while HttpStatus(transportEngineResponse.httpURLResponse.statusCode).category != .success &&
+                    delegate?.restClient(self, shouldFailWithResponse: transportEngineResponse, forRequest: request) == true &&
+                    request.rescueCount < maxRescueCount &&
+                    delegate?.restClient(self, shouldRescueRequest: request, withResponse: transportEngineResponse) == true {
+
+                request.rescueCount += 1
+                self.log.info(format: "Rest client delegate decided to fail for request %@. Try to rescue with attempt %@", request.id, request.rescueCount)
+                transportEngineResponse = try await delegate!.restClient(self, rescueRequest: request, withResponse: transportEngineResponse)
+            }
+
+            if HttpStatus(transportEngineResponse.httpURLResponse.statusCode).category != .success {
+                if delegate?.restClient(self, shouldFailWithResponse: transportEngineResponse, forRequest: request) == true {
+                    throw RestResponseError(code: restResponseErrorCode(forHttpStatusCode: transportEngineResponse.httpURLResponse.statusCode),
+                                            response: transportEngineResponse.httpURLResponse,
+                                            data: transportEngineResponse.data)
+                }
+            }
+
+            return transportEngineResponse
+        } catch let error where !(error is RestError) {
+            self.log.error(format: "Rest transport engine failed to send request %@ with error %@", request.id, error as NSError)
+            let restError = RestInternalError(code: .engine, previous: error)
+            delegate?.restClient(self, sendingRequestDidFailWithError: restError, forRequest: request)
+            throw restError
+        }
+    }
+
+    public func send<D: Decodable> (request: RestRequest, relativeTo baseUrl: URL? = nil, expecting type: D.Type) async throws -> RestResponse<D> {
+        let transportEngineResponse = try await response(for: request, relativeTo:  baseUrl)
+
+        guard let data = transportEngineResponse.data else {
+            let restError = RestInternalError(code: .noData, previous: nil)
+            delegate?.restClient(self, responseProcessingDidFailWithError: restError, forRequest: request)
+            throw restError
+        }
+
+        do {
+            let object = try dataDecoder.decode(D.self, from: data)
+            let headers = self.headers(fromHttpUrlResponse: transportEngineResponse.httpURLResponse)
+            let restResponse = RestResponse(to: request, data: object, headers: headers)
+            delegate?.restClient(self, didProduceRestResponse: restResponse, forRequest: request)
+            return restResponse
         } catch {
-            log.error(format: "Rest request failed with error %@", error as NSError)
-            delegate?.restClient(self, didReceive: error, for: request)
-            completion(.failure(error))
+            let restError = RestInternalError(code: .decoding, previous: error)
+            delegate?.restClient(self, responseProcessingDidFailWithError: restError, forRequest: request)
+            throw restError
         }
     }
 
-
-    // MARK: URL Request Helper
-
-    public func urlRequest (for request: RestRequest, relativeTo baseUrl: URL?) throws -> URLRequest {
-        let url = try self.url(for: request, relativeTo: baseUrl)
-
-        var urlRequest = URLRequest(url: url, cachePolicy: cachePolicy, timeoutInterval: requestTimeout)
-        request.headers.forEach { urlRequest.addValue($1, forHTTPHeaderField: $0) }
-        urlRequest.httpMethod = request.method.rawValue
-        urlRequest.httpShouldHandleCookies = delegate?.restClient(self, shouldUseHttpCookiesFor: request) ?? true
-        urlRequest.httpBody = request.payload
-        return urlRequest
+    public func send (request: RestRequest, relativeTo baseUrl: URL? = nil) async throws -> RestResponse<Void> {
+        let transportEngineResponse = try await response(for: request, relativeTo:  baseUrl)
+        let headers = self.headers(fromHttpUrlResponse: transportEngineResponse.httpURLResponse)
+        let restResponse = RestResponse(to: request, data: Void(), headers: headers)
+        delegate?.restClient(self, didProduceRestResponse: restResponse, forRequest: request)
+        return restResponse
     }
 
-    public func url (for request: RestRequest, relativeTo baseURL: URL?) throws -> URL {
-        guard var urlComponents = URLComponents(string: request.endpoint.path) else {
-            throw RestRequestError(code: .badEndpointPath)
-        }
-
-        urlComponents.queryItems = request.queryParameters.map({
-            URLQueryItem(name: $0.key, value: $0.value)
-        })
-
-        guard let url = urlComponents.url(relativeTo: baseURL) else {
-            throw RestRequestError(code: .badEndpointPath)
-        }
-
-        return url
+    public func cancelRequest (_ request: RestRequest) {
+        cancelRequest(withIdentifier: request.id)
     }
 
+    public func cancelRequest (withIdentifier id: String) {
+        transportEngine.cancelRequest(withIdentifier: id)
+    }
 
     // MARK: HTTPURLResponse Helper
 
@@ -239,11 +146,11 @@ public class RestClient {
         return headers
     }
 
-    public func restResponseErrorCode(forHttpStatusCode httpStatusCode: Int) -> RestResponseError.Code {
+    private func restResponseErrorCode (forHttpStatusCode httpStatusCode: Int) -> RestResponseError.Code {
         restResponseErrorCode(forHttpStatus: HttpStatus(httpStatusCode))
     }
 
-    public func restResponseErrorCode(forHttpStatus httpStatus: HttpStatus) -> RestResponseError.Code {
+    private func restResponseErrorCode (forHttpStatus httpStatus: HttpStatus) -> RestResponseError.Code {
         switch httpStatus.category {
         case .information, .redirection, .success:
             return .invalidErrorCode

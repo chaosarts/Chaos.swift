@@ -7,7 +7,10 @@
 
 import Foundation
 
+@available(iOS 15, *)
 public protocol RestClientHook {
-//    @available(iOS 15, *)
-//    func restClient (_ restClient: RestClient, for request: RestRequest) async throws
+
+    var identifier: String { get }
+
+    func restClient (_ restClient: RestClient, for request: RestRequest) async throws
 }

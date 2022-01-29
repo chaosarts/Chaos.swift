@@ -23,7 +23,7 @@ public class RestResponse<D> {
 }
 
 public extension RestResponse where D == Void {
-    public convenience init (to request: RestRequest, headers: [String: String] = [:]) {
+    convenience init (to request: RestRequest, headers: [String: String] = [:]) {
         let void: Void
         self.init(to: request, data: void, headers: headers)
     }

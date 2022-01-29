@@ -22,4 +22,8 @@ Pod::Spec.new do |s|
   s.frameworks    = 'Foundation'
   s.dependency 'ChaosCore'
   s.dependency 'Hippolyte', '~> 1.2.0', :configurations => :debug
+
+  s.test_spec 'Tests' do |test_spec|
+    test_spec.source_files = 'ChaosNet/Tests/**/*'
+  end
 end

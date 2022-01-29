@@ -9,20 +9,23 @@ import Foundation
 
 public protocol RestTransportEngine {
     typealias Response = RestTransportEngineResponse
-    func send (request: URLRequest, completion: (Result<Response, Error>) -> Void)
 
-//    @available(iOS 15, *)
-//    func send (request: URLRequest) async throws -> Response
+    /// Tells the engine to perform an native request. This function should return a response, when the rest system
+    /// responses regardless of the status code. For all other error cases, in which the engine is unable to reach the
+    /// rest system it should throw an error.
+    func send (request: URLRequest, withIdentifier identifier: String) async throws -> Response
+
+    func cancelRequest(withIdentifier identifier: String)
 }
 
 
 public struct RestTransportEngineResponse {
-    public let response: HTTPURLResponse
+    public let httpURLResponse: HTTPURLResponse
 
     public let data: Data?
 
     public var debugDescription: String {
-        var output = response.debugDescription
+        var output = httpURLResponse.debugDescription
         if let data = data, let string = String(data: data, encoding: .utf8) {
             output += "\n\(string)"
         }
