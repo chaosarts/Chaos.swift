@@ -19,10 +19,7 @@ let package = Package(
         .library(name: "ChaosThree", targets: ["ChaosThree"]),
         .library(name: "ChaosUi", targets: ["ChaosUi"]),
     ],
-    dependencies: [
-        .package(name: "Promises", url: "https://github.com/google/promises.git", "1.2.8" ..< "1.3.0"),
-        .package(name: "Alamofire", url: "https://github.com/Alamofire/Alamofire.git", "5.4.1" ..< "5.5.0")
-    ],
+    dependencies: [],
     targets: [
         .target(
             name: "ChaosAnimation",
@@ -34,9 +31,6 @@ let package = Package(
         ),
         .target(
             name: "ChaosCore",
-            dependencies: [
-                .product(name: "Promises", package: "Promises")
-            ],
             path: "ChaosCore/Classes"
         ),
         .testTarget(
@@ -70,8 +64,7 @@ let package = Package(
         .target(
             name: "ChaosNet",
             dependencies: [
-                "ChaosCore",
-                .product(name: "Alamofire", package: "Alamofire")
+                "ChaosCore"
             ],
             path: "ChaosNet/Classes"
         ),
