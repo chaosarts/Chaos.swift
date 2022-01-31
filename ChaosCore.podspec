@@ -21,6 +21,8 @@ Pod::Spec.new do |s|
 
   s.source_files  = 'ChaosCore/Classes/**/*'
   s.frameworks    = 'Foundation'
-  s.dependency 'PromisesSwift', '~> 1.2.8'
 
+  s.test_spec 'Tests' do |test_spec|
+    test_spec.source_files = 'ChaosCore/Tests/**/*'
+  end
 end
