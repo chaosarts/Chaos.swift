@@ -49,6 +49,12 @@ public class RestClient {
         self.dataEncoder = dataEncoder
     }
 
+    // MARK: Create Request
+
+    public func makeRequest (endpoint: RestRequest.Endpoint, method: RestRequest.Method = .GET) -> RestRequest {
+        RestRequest(endpoint, method: method, encoder: dataEncoder)
+    }
+
 
     // MARK: Sending Requests Synchronous
 

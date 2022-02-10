@@ -22,15 +22,20 @@ public class RestRequest {
     public let id: String = UUID().uuidString
 
     /// The method to use for this request.
-    public let method: Method
+    public var method: Method
 
     /// The target endpoint to send the request to.
-    public let endpoint: Endpoint
+    public var endpoint: Endpoint
 
     /// Headers to enrich the request. This will be used for the resulting url request.
     public var headers: [String: String] = [:]
 
     public var payload: Data?
+
+    public var queryParameters: [String: String?] {
+        get { endpoint.parameters }
+        set { endpoint.parameters = newValue }
+    }
 
     /// Indicates, how many retries has been performed on this request.
     public internal(set) var rescueCount: Int = 0
@@ -43,23 +48,27 @@ public class RestRequest {
     /// the default of the rest client is taken into account.
     public var shouldUseHttpCookies: Bool?
 
-    ///
+    /// Provides the time interval to wait before the request should timeout. If not set, the default timeout of the
+    /// rest client sending the request will be used.
     public var timeoutInterval: TimeInterval?
 
-    public var queryParameters: [String: String?] {
-        get { endpoint.parameters }
-        set { endpoint.parameters = newValue }
-    }
+    private let encoder: RestDataEncoder
 
-    public init (_ endpoint: Endpoint, action: Method = .GET) {
+    public init (_ endpoint: Endpoint, method: Method = .GET, encoder: RestDataEncoder) {
         self.endpoint = endpoint
-        self.method = action
+        self.method = method
+        self.encoder = encoder
     }
 
     @discardableResult
     public func setHeader (_ name: String, value: String) -> Self {
         headers.updateValue(value, forKey: name)
         return self
+    }
+
+    @discardableResult
+    public func setContentType (_ contentType: String) -> Self {
+        setHeader("Content-Type", value: contentType)
     }
 
     @discardableResult
@@ -124,9 +133,19 @@ public class RestRequest {
     }
 
     @discardableResult
-    public func setPayload (_ payload: Data?) -> Self {
+    public func setPayload<E: Encodable> (_ encodable: E) -> Self {
+        self.payload = try? encoder.encode(encodable)
+        return self
+    }
+
+    @discardableResult
+    public func setPayload (_ payload: Data) -> Self {
         self.payload = payload
         return self
+    }
+
+    public func setPayload(withParameters parameters: [String: String], files: [String]) {
+        
     }
 }
 
