@@ -11,7 +11,7 @@ public class Log {
 
     // MARK: Nested Types
 
-    public enum Level: Int, CaseIterable {
+    public enum Level: Int, CaseIterable, Hashable {
         case debug = 1
         case info = 2
         case warn = 4
@@ -29,10 +29,15 @@ public class Log {
 
     public struct LevelOptions: OptionSet, ExpressibleByIntegerLiteral {
 
-        public var rawValue: Int
+        private var levels: Set<Level> = []
+
+        public var rawValue: Int {
+            levels.reduce(0, { $0 | $1.rawValue })
+        }
 
         public init(rawValue: Int) {
-            self.rawValue = rawValue
+            let levels = Level.allCases.filter({ rawValue & $0.rawValue != 0 })
+            self.levels = Set(levels)
         }
 
         public init(integerLiteral value: RawValue) {
@@ -40,11 +45,15 @@ public class Log {
         }
 
         public init(levels: [Level]) {
-            self.init(rawValue: levels.reduce(0, { $0 | $1.rawValue }))
+            self.levels = Set(levels)
+        }
+
+        public init(levels: Level...) {
+            self.init(levels: levels)
         }
 
         public func contains(level: Log.Level) -> Bool {
-            return contains(LevelOptions(rawValue: level.rawValue))
+            levels.contains(level)
         }
 
         public static var none: LevelOptions { [] }
