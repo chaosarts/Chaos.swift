@@ -7,7 +7,11 @@
 
 import Foundation
 
-public struct t_quaternion<Component: FloatingPoint> {
+public struct t_quaternion<Component: FloatingPoint & Codable>: Codable {
+
+    public typealias Component = Component
+
+    public typealias Vec3 = t_vec3<Component>
 
     public private(set) var components: [Component]
 
@@ -36,7 +40,7 @@ public struct t_quaternion<Component: FloatingPoint> {
         set { components[0] = newValue }
     }
 
-    public var imaginary: t_vec3<Component> {
+    public var imaginary: Vec3 {
         get { t_vec3(components[1], components[2], components[3]) }
         set {
             components[1] = newValue.x
@@ -57,11 +61,45 @@ public struct t_quaternion<Component: FloatingPoint> {
         self / length
     }
 
+    public var rotationMatrix: t_mat4<Component> {
+        var matrix: t_mat4<Component> = .zero
+        let vector = self.imaginary
+        let real = self.real
+
+        let x2 = 2 * vector.x * vector.x
+        let y2 = 2 * vector.y * vector.y
+        let z2 = 2 * vector.z * vector.z
+
+        let xy = 2 * vector.x * vector.y
+        let xz = 2 * vector.x * vector.z
+        let yz = 2 * vector.y * vector.z
+
+        let real_x = 2 * real * vector.x
+        let real_y = 2 * real * vector.y
+        let real_z = 2 * real * vector.z
+
+        matrix[0, 0] = 1 - y2 - z2
+        matrix[0, 1] = xy - real_z
+        matrix[0, 2] = xz + real_y
+
+        matrix[1, 0] = xy + real_z
+        matrix[1, 1] = 1 - x2 - z2
+        matrix[1, 2] = yz - real_x
+
+        matrix[2, 0] = xz - real_y
+        matrix[2, 1] = yz + real_x
+        matrix[2, 2] = 1 - x2 - y2
+
+        matrix[3, 3] = 1
+
+        return matrix
+    }
+
     public init (_ r: Component = 0, _ i: Component = 0, _ j: Component = 0, _ k: Component = 0) {
         components = [r, i, j, k]
     }
 
-    public init (real: Component = 0, imaginary: t_vec3<Component> = t_vec3<Component>()) {
+    public init (real: Component = 0, imaginary: Vec3 = Vec3()) {
         components = [real, imaginary.x, imaginary.y, imaginary.z]
     }
 
@@ -136,6 +174,10 @@ public struct t_quaternion<Component: FloatingPoint> {
     public static func / (_ lhs: Self, _ rhs: Component) -> Self {
         lhs * (1 / rhs)
     }
+}
+
+public extension t_quaternion {
+    static var zero: Self { t_quaternion(0, 0, 0, 0) }
 }
 
 public typealias Quaternion = t_quaternion<Float>

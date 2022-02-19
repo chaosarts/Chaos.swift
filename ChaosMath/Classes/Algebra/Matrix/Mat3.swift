@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct t_mat3<Component: SignedNumeric>: StaticSquareMatrix {
+public struct t_mat3<Component: CodableSignedNumeric>: StaticSquareMatrix {
 
     public typealias TransposedMatrix = Self
 
@@ -17,7 +17,7 @@ public struct t_mat3<Component: SignedNumeric>: StaticSquareMatrix {
 
     public static var dimension: Int { 3 }
 
-    public static var shape: Shape { (3, 3) }
+    public static var shape: Shape { Shape(rows: 3, columns: 3) }
 
     public var components: [Component]
 

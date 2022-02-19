@@ -8,7 +8,7 @@
 import Foundation
 
 /// A generic static point implementation for points in 2d space.
-public struct t_point2<Component: SignedNumeric>: StaticPoint {
+public struct t_point2<Component: CodableSignedNumeric>: StaticPoint {
 
     public static var dimension: Int { 2 }
 

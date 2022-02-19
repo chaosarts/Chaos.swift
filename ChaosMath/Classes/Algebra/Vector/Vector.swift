@@ -9,10 +9,10 @@ import Foundation
 
 // MARK: - Vector
 
-public protocol Vector: CustomStringConvertible, Hashable {
+public protocol Vector: CustomStringConvertible, Hashable, Codable {
 
     /// Describes the data type of the components of this vector
-    associatedtype Component: SignedNumeric
+    associatedtype Component: SignedNumeric & Codable
 
     /// Provides the dimension of the vector, which is equal to the count of
     /// components.

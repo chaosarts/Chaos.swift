@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct t_mat2<Component: SignedNumeric>: StaticSquareMatrix {
+public struct t_mat2<Component: CodableSignedNumeric>: StaticSquareMatrix {
 
     public typealias Component = Component
 

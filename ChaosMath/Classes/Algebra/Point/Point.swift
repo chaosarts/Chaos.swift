@@ -10,7 +10,7 @@ import Foundation
 // MARK: - Point
 
 /// A protocol describing the structure for a algebra point object
-public protocol Point: Equatable {
+public protocol Point: Equatable, Codable {
 
     /// The type of the components of a point.
     associatedtype Component: SignedNumeric

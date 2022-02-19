@@ -9,11 +9,26 @@ import Foundation
 
 // MARK: - Matrix
 
+public struct MatrixShape: Equatable, Codable {
+
+    public var rows: Int
+
+    public var columns: Int
+
+    public var volume: Int {
+        rows * columns
+    }
+
+    public var swapped: MatrixShape {
+        MatrixShape(rows: columns, columns: rows)
+    }
+}
+
 /// A protocol to describe the structur of a matrix type.
-public protocol Matrix: Equatable {
+public protocol Matrix: Equatable, Codable {
 
     /// Represents the type to indicate the shape of a matrix
-    typealias Shape = (Int, Int)
+    typealias Shape = MatrixShape
 
     /// The data type of the components of this matrix.
     associatedtype Component
@@ -79,12 +94,12 @@ public extension Matrix {
 
     subscript(row index: Int) -> RowVector {
         get {
-            let offset = index * shape.1
-            return RowVector(components: Array(components[offset..<(offset + shape.1)]))
+            let offset = index * shape.rows
+            return RowVector(components: Array(components[offset..<(offset + shape.rows)]))
         }
         set {
-            let offset = index * shape.1
-            for i in 0..<shape.1 {
+            let offset = index * shape.rows
+            for i in 0..<shape.rows {
                 setComponent(newValue[i], at: offset + i)
             }
         }
@@ -94,27 +109,27 @@ public extension Matrix {
         get {
             var components: [Component] = []
             var offset = index
-            for _ in 0..<shape.0 {
+            for _ in 0..<shape.columns {
                 components.append(self.components[offset])
-                offset += shape.1
+                offset += shape.columns
             }
             return ColVector(components: components)
         }
         set {
             var offset = index
-            for i in 0..<shape.0 {
+            for i in 0..<shape.columns {
                 setComponent(newValue[i], at: offset)
-                offset += shape.1
+                offset += shape.columns
             }
         }
     }
 
     subscript(row: Int, col: Int) -> Component {
         get {
-            components[row * shape.1 + col]
+            components[row * shape.rows + col]
         }
         set {
-            setComponent(newValue, at: row * shape.1 + col)
+            setComponent(newValue, at: row * shape.rows + col)
         }
     }
 
@@ -131,6 +146,9 @@ public extension Matrix {
     }
 }
 
+
+// MARK: - Static Matrix
+
 public protocol StaticMatrix: Matrix {
     static var shape: Shape { get }
 }
@@ -139,6 +157,9 @@ public extension StaticMatrix {
     var shape: Shape { Self.shape }
 }
 
+
+// MARK: - Square Matrix
+
 public protocol SquareMatrix: Matrix where RowVector == ColVector {
     var dimension: Int { get }
     var determinant: Component { get }
@@ -146,15 +167,20 @@ public protocol SquareMatrix: Matrix where RowVector == ColVector {
     @inlinable static func * (_ lhs: Self, rhs: Self) -> Self
 }
 
+
+// MARK: - Static Square Matrix
+
 public protocol StaticSquareMatrix: StaticMatrix & SquareMatrix {
     static var dimension: Int { get }
 }
 
 public extension StaticSquareMatrix {
-    static var shape: Shape { (dimension, dimension) }
+    static var shape: Shape { Shape(rows: dimension, columns: dimension) }
     var dimension: Int { Self.dimension }
 }
 
+
+// MARK: - Floating Point Matrix
 
 public protocol FloatingPointMatrix: Matrix where Component: FloatingPoint {
     @inlinable static func / (_ lhs: Self, _ rhs: Component) -> Self

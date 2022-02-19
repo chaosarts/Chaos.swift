@@ -8,7 +8,7 @@
 import Foundation
 
 /// A struct describing a box by its origin and size. This struct corresponds to `CGRect` but for the 3d space.
-public struct t_box3<Component: SignedNumeric & Comparable> {
+public struct t_box3<Component: CodableSignedNumeric & Comparable> {
 
     public typealias Point3 = t_point3<Component>
 

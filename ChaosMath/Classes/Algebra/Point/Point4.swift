@@ -8,7 +8,7 @@
 import Foundation
 
 /// A generic static point implementation for points in 4d space.
-public struct t_point4<Component: SignedNumeric>: StaticPoint {
+public struct t_point4<Component: CodableSignedNumeric>: StaticPoint {
     public static var dimension: Int { 4 }
 
     public private(set) var components: [Component] = [0, 0, 0, 0]

@@ -7,9 +7,11 @@
 
 import Foundation
 
+public typealias CodableSignedNumeric = SignedNumeric & Codable
+
 // MARK: - Dimension 4
 
-public func *<Component: SignedNumeric> (_ lhs: t_point4<Component>, _ rhs: t_mat4<Component>) -> t_point4<Component> {
+public func *<Component: CodableSignedNumeric> (_ lhs: t_point4<Component>, _ rhs: t_mat4<Component>) -> t_point4<Component> {
     var x = lhs.components[0] * rhs.components[0]
     x += lhs.components[1] * rhs.components[4]
     x += lhs.components[2] * rhs.components[8]
@@ -33,7 +35,7 @@ public func *<Component: SignedNumeric> (_ lhs: t_point4<Component>, _ rhs: t_ma
     return t_point4(x, y, z, w)
 }
 
-public func *<Component: SignedNumeric> (_ lhs: t_mat4<Component>, _ rhs: t_point4<Component>) -> t_point4<Component> {
+public func *<Component: CodableSignedNumeric> (_ lhs: t_mat4<Component>, _ rhs: t_point4<Component>) -> t_point4<Component> {
     var x = rhs.components[0] * lhs.components[0]
     x += rhs.components[1] * lhs.components[1]
     x += rhs.components[2] * lhs.components[2]
@@ -57,7 +59,7 @@ public func *<Component: SignedNumeric> (_ lhs: t_mat4<Component>, _ rhs: t_poin
     return t_point4(x, y, z, w)
 }
 
-public func *<Component: SignedNumeric> (_ lhs: t_vec4<Component>, _ rhs: t_mat4<Component>) -> t_vec4<Component> {
+public func *<Component: CodableSignedNumeric> (_ lhs: t_vec4<Component>, _ rhs: t_mat4<Component>) -> t_vec4<Component> {
     var x = lhs.components[0] * rhs.components[0]
     x += lhs.components[1] * rhs.components[4]
     x += lhs.components[2] * rhs.components[8]
@@ -81,7 +83,7 @@ public func *<Component: SignedNumeric> (_ lhs: t_vec4<Component>, _ rhs: t_mat4
     return t_vec4(components: [x, y, z, w])
 }
 
-public func *<Component: SignedNumeric> (_ lhs: t_mat4<Component>, _ rhs: t_vec4<Component>) -> t_vec4<Component> {
+public func *<Component: CodableSignedNumeric> (_ lhs: t_mat4<Component>, _ rhs: t_vec4<Component>) -> t_vec4<Component> {
     var x = rhs.components[0] * lhs.components[0]
     x += rhs.components[1] * lhs.components[1]
     x += rhs.components[2] * lhs.components[2]
@@ -105,7 +107,7 @@ public func *<Component: SignedNumeric> (_ lhs: t_mat4<Component>, _ rhs: t_vec4
     return t_vec4(components: [x, y, z, w])
 }
 
-public func +<Component: SignedNumeric> (_ lhs: t_point4<Component>, _ rhs: t_vec4<Component>) -> t_point4<Component> {
+public func +<Component: CodableSignedNumeric> (_ lhs: t_point4<Component>, _ rhs: t_vec4<Component>) -> t_point4<Component> {
     t_point4(components: [
         lhs.components[0] + rhs.components[0],
         lhs.components[1] + rhs.components[1],
@@ -114,14 +116,14 @@ public func +<Component: SignedNumeric> (_ lhs: t_point4<Component>, _ rhs: t_ve
     ])
 }
 
-public func -<Component: SignedNumeric> (_ lhs: t_point4<Component>, _ rhs: t_vec4<Component>) -> t_point4<Component> {
+public func -<Component: CodableSignedNumeric> (_ lhs: t_point4<Component>, _ rhs: t_vec4<Component>) -> t_point4<Component> {
     lhs + -rhs
 }
 
 
 // MARK: - Dimension 3
 
-public func *<Component: SignedNumeric> (_ lhs: t_point3<Component>, _ rhs: t_mat4<Component>) -> t_point3<Component> {
+public func *<Component: CodableSignedNumeric> (_ lhs: t_point3<Component>, _ rhs: t_mat4<Component>) -> t_point3<Component> {
     var x = lhs.components[0] * rhs.components[0]
     x += lhs.components[1] * rhs.components[3]
     x += lhs.components[2] * rhs.components[6]
@@ -137,7 +139,7 @@ public func *<Component: SignedNumeric> (_ lhs: t_point3<Component>, _ rhs: t_ma
     return t_point3(x, y, z)
 }
 
-public func *<Component: SignedNumeric> (_ lhs: t_mat3<Component>, _ rhs: t_point3<Component>) -> t_point3<Component> {
+public func *<Component: CodableSignedNumeric> (_ lhs: t_mat3<Component>, _ rhs: t_point3<Component>) -> t_point3<Component> {
     var x = rhs.components[0] * lhs.components[0]
     x += rhs.components[1] * lhs.components[1]
     x += rhs.components[2] * lhs.components[2]
@@ -153,7 +155,7 @@ public func *<Component: SignedNumeric> (_ lhs: t_mat3<Component>, _ rhs: t_poin
     return t_point3(x, y, z)
 }
 
-public func *<Component: SignedNumeric> (_ lhs: t_vec3<Component>, _ rhs: t_mat4<Component>) -> t_vec3<Component> {
+public func *<Component: CodableSignedNumeric> (_ lhs: t_vec3<Component>, _ rhs: t_mat4<Component>) -> t_vec3<Component> {
     var x = lhs.components[0] * rhs.components[0]
     x += lhs.components[1] * rhs.components[3]
     x += lhs.components[2] * rhs.components[6]
@@ -169,7 +171,7 @@ public func *<Component: SignedNumeric> (_ lhs: t_vec3<Component>, _ rhs: t_mat4
     return t_vec3(x, y, z)
 }
 
-public func *<Component: SignedNumeric> (_ lhs: t_mat3<Component>, _ rhs: t_vec3<Component>) -> t_vec3<Component> {
+public func *<Component: CodableSignedNumeric> (_ lhs: t_mat3<Component>, _ rhs: t_vec3<Component>) -> t_vec3<Component> {
     var x = rhs.components[0] * lhs.components[0]
     x += rhs.components[1] * lhs.components[1]
     x += rhs.components[2] * lhs.components[2]
@@ -185,7 +187,7 @@ public func *<Component: SignedNumeric> (_ lhs: t_mat3<Component>, _ rhs: t_vec3
     return t_vec3(x, y, z)
 }
 
-public func +<Component: SignedNumeric> (_ lhs: t_point3<Component>, _ rhs: t_vec3<Component>) -> t_point3<Component> {
+public func +<Component: CodableSignedNumeric> (_ lhs: t_point3<Component>, _ rhs: t_vec3<Component>) -> t_point3<Component> {
     t_point3(components: [
         lhs.components[0] + rhs.components[0],
         lhs.components[1] + rhs.components[1],
@@ -193,11 +195,11 @@ public func +<Component: SignedNumeric> (_ lhs: t_point3<Component>, _ rhs: t_ve
     ])
 }
 
-public func -<Component: SignedNumeric> (_ lhs: t_point3<Component>, _ rhs: t_vec3<Component>) -> t_point3<Component> {
+public func -<Component: CodableSignedNumeric> (_ lhs: t_point3<Component>, _ rhs: t_vec3<Component>) -> t_point3<Component> {
     lhs + -rhs
 }
 
-public func -<Component: SignedNumeric> (_ lhs: t_point3<Component>, _ rhs: t_point3<Component>) -> t_vec3<Component> {
+public func -<Component: CodableSignedNumeric> (_ lhs: t_point3<Component>, _ rhs: t_point3<Component>) -> t_vec3<Component> {
     t_vec3(
         lhs.components[0] - rhs.components[0],
         lhs.components[1] - rhs.components[1],
@@ -207,7 +209,7 @@ public func -<Component: SignedNumeric> (_ lhs: t_point3<Component>, _ rhs: t_po
 
 // MARK: - Dimension 2
 
-public func *<Component: SignedNumeric> (_ lhs: t_point2<Component>, _ rhs: t_mat4<Component>) -> t_point2<Component> {
+public func *<Component: CodableSignedNumeric> (_ lhs: t_point2<Component>, _ rhs: t_mat4<Component>) -> t_point2<Component> {
     var x = lhs.components[0] * rhs.components[0]
     x += lhs.components[1] * rhs.components[2]
 
@@ -217,7 +219,7 @@ public func *<Component: SignedNumeric> (_ lhs: t_point2<Component>, _ rhs: t_ma
     return t_point2(x, y)
 }
 
-public func *<Component: SignedNumeric> (_ lhs: t_mat3<Component>, _ rhs: t_point2<Component>) -> t_point2<Component> {
+public func *<Component: CodableSignedNumeric> (_ lhs: t_mat3<Component>, _ rhs: t_point2<Component>) -> t_point2<Component> {
     var x = rhs.components[0] * lhs.components[0]
     x += rhs.components[1] * lhs.components[1]
 
@@ -227,18 +229,18 @@ public func *<Component: SignedNumeric> (_ lhs: t_mat3<Component>, _ rhs: t_poin
     return t_point2(x, y)
 }
 
-public func +<Component: SignedNumeric> (_ lhs: t_point2<Component>, _ rhs: t_vec2<Component>) -> t_point2<Component> {
+public func +<Component: CodableSignedNumeric> (_ lhs: t_point2<Component>, _ rhs: t_vec2<Component>) -> t_point2<Component> {
     t_point2(components: [
         lhs.components[0] + rhs.components[0],
         lhs.components[1] + rhs.components[1]
     ])
 }
 
-public func -<Component: SignedNumeric> (_ lhs: t_point2<Component>, _ rhs: t_vec2<Component>) -> t_point2<Component> {
+public func -<Component: CodableSignedNumeric> (_ lhs: t_point2<Component>, _ rhs: t_vec2<Component>) -> t_point2<Component> {
     lhs + -rhs
 }
 
-public func -<Component: SignedNumeric> (_ lhs: t_point2<Component>, _ rhs: t_point2<Component>) -> t_vec2<Component> {
+public func -<Component: CodableSignedNumeric> (_ lhs: t_point2<Component>, _ rhs: t_point2<Component>) -> t_vec2<Component> {
     t_vec2(
         lhs.components[0] - rhs.components[0],
         lhs.components[1] - rhs.components[1]

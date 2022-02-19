@@ -9,12 +9,20 @@ import Foundation
 
 public protocol FloatingPointVector: Vector where Component: FloatingPoint {
     var length: Component { get }
+
+    var unified: Self { get }
     
     @inlinable static func / (_ lhs: Self, _ rhs: Component) -> Self
 }
 
 public extension FloatingPointVector {
     var length: Component { sqrt(dot(self)) }
+
+    var unified: Self {
+        let length = self.length
+        let components = components.map { $0 / length }
+        return Self.init(components: components)
+    }
 
     @inlinable static func / (_ lhs: Self, _ rhs: Component) -> Self {
         lhs * (1 / rhs)

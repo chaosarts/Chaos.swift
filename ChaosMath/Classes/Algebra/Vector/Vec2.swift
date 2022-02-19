@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct t_vec2<Component: SignedNumeric>: StaticVector {
+public struct t_vec2<Component: CodableSignedNumeric>: StaticVector {
 
     public static var dimension: Int { 2 }
 

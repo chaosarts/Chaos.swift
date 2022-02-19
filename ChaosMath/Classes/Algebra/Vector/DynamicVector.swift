@@ -8,7 +8,7 @@
 import Foundation
 
 /// A `Vector` implementation for vectors of dynamic dimension.
-public struct t_dynamic_vector<Component: SignedNumeric>: Vector {
+public struct t_dynamic_vector<Component: CodableSignedNumeric>: Vector {
 
     public private(set) var components: [Component]
 

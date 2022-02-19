@@ -7,7 +7,7 @@
 
 import ChaosCore
 
-public struct DynamicMatrix<Component: SignedNumeric>: Matrix {
+public struct DynamicMatrix<Component: CodableSignedNumeric>: Matrix {
 
     public typealias TransposedMatrix = Self
 
@@ -21,17 +21,17 @@ public struct DynamicMatrix<Component: SignedNumeric>: Matrix {
 
     public var transposed: Self {
         var components: [Component] = []
-        for col in 0..<shape.1 {
-            for row in 0..<shape.0 {
-                components.append(self.components[row * shape.1 + col])
+        for col in 0..<shape.columns {
+            for row in 0..<shape.rows {
+                components.append(self.components[row * shape.rows + col])
             }
         }
-        return Self(components: components, shape: (shape.1, shape.0))
+        return Self(components: components, shape: shape.swapped)
     }
 
     public init (components: [Component], shape: Shape) {
         self.shape = shape
-        self.components = Array(repeating: 0, count: shape.0 * shape.1)
+        self.components = Array(repeating: 0, count: shape.volume)
         for index in 0..<min(self.components.count, components.count) {
             self.components[index] = components[index]
         }
