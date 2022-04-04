@@ -114,10 +114,10 @@ public class RestClientTests: XCTestCase {
         }
 
         // Assert
-        XCTAssertEqual(restClientDelegate.callHistory.count, 2)
-        XCTAssertEqual(restClientDelegate.callHistory[0].isWillSend, true)
-        XCTAssertEqual(restClientDelegate.callHistory[1].isSendingRequestDidFailWithError, true)
-        XCTAssertEqual(restClientDelegate.callHistory[1].isDidSend, false)
+        XCTAssertEqual(restClientDelegate.callHistory.count, 3)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 0]?.isWillSend, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 1]?.isPerformPreRequestFor, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 2]?.isSendingRequestDidFailWithError, true)
         XCTAssertEqual(restClientError?.code, .engine)
         XCTAssertEqual(restClientError?.previous as? URLError, transportEngineError)
     }
@@ -138,11 +138,12 @@ public class RestClientTests: XCTestCase {
         }
 
         // Assert
-        XCTAssertEqual(restClientDelegate.callHistory.count, 4)
+        XCTAssertEqual(restClientDelegate.callHistory.count, 5)
         XCTAssertEqual(restClientDelegate.callHistory[safe: 0]?.isWillSend, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 1]?.isDidSend, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 2]?.isAcceptsResponse, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 3]?.isShouldRescueRequest, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 1]?.isPerformPreRequestFor, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 2]?.isDidSend, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 3]?.isAcceptsResponse, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 4]?.isShouldRescueRequest, true)
         XCTAssertNotNil(catchedError)
     }
 
@@ -165,14 +166,15 @@ public class RestClientTests: XCTestCase {
         }
 
         // Assert
-        XCTAssertEqual(restClientDelegate.callHistory.count, 7)
+        XCTAssertEqual(restClientDelegate.callHistory.count, 8)
         XCTAssertEqual(restClientDelegate.callHistory[safe: 0]?.isWillSend, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 1]?.isDidSend, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 2]?.isAcceptsResponse, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 3]?.isShouldRescueRequest, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 4]?.isRescueRequest, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 5]?.isAcceptsResponse, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 6]?.isShouldRescueRequest, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 1]?.isPerformPreRequestFor, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 2]?.isDidSend, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 3]?.isAcceptsResponse, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 4]?.isShouldRescueRequest, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 5]?.isRescueRequest, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 6]?.isAcceptsResponse, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 7]?.isShouldRescueRequest, true)
         XCTAssertNotNil(catchedError)
     }
 
@@ -194,16 +196,17 @@ public class RestClientTests: XCTestCase {
         }
 
         // Assert
-        XCTAssertEqual(restClientDelegate.callHistory.count, 9)
+        XCTAssertEqual(restClientDelegate.callHistory.count, 10)
         XCTAssertEqual(restClientDelegate.callHistory[safe: 0]?.isWillSend, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 1]?.isDidSend, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 2]?.isAcceptsResponse, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 3]?.isShouldRescueRequest, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 4]?.isRescueRequest, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 5]?.isAcceptsResponse, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 6]?.isShouldRescueRequest, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 7]?.isRescueRequest, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 8]?.isAcceptsResponse, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 1]?.isPerformPreRequestFor, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 2]?.isDidSend, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 3]?.isAcceptsResponse, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 4]?.isShouldRescueRequest, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 5]?.isRescueRequest, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 6]?.isAcceptsResponse, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 7]?.isShouldRescueRequest, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 8]?.isRescueRequest, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 9]?.isAcceptsResponse, true)
         XCTAssertEqual(request.rescueCount, 2)
         XCTAssertNotNil(catchedError)
     }
@@ -220,13 +223,14 @@ public class RestClientTests: XCTestCase {
         let response = try? await restClient.response(forRequest: request, relativeTo: nil)
 
         // Assert
-        XCTAssertEqual(restClientDelegate.callHistory.count, 6)
+        XCTAssertEqual(restClientDelegate.callHistory.count, 7)
         XCTAssertEqual(restClientDelegate.callHistory[safe: 0]?.isWillSend, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 1]?.isDidSend, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 2]?.isAcceptsResponse, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 3]?.isShouldRescueRequest, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 4]?.isRescueRequest, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 5]?.isAcceptsResponse, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 1]?.isPerformPreRequestFor, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 2]?.isDidSend, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 3]?.isAcceptsResponse, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 4]?.isShouldRescueRequest, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 5]?.isRescueRequest, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 6]?.isAcceptsResponse, true)
         XCTAssertEqual(request.rescueCount, 1)
         XCTAssertNotNil(response)
     }
@@ -244,12 +248,13 @@ public class RestClientTests: XCTestCase {
         let response = try? await restClient.response(forRequest: request, relativeTo: nil)
 
         // Assert
-        XCTAssertEqual(restClientDelegate.callHistory.count, 5)
+        XCTAssertEqual(restClientDelegate.callHistory.count, 6)
         XCTAssertEqual(restClientDelegate.callHistory[safe: 0]?.isWillSend, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 1]?.isDidSend, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 2]?.isAcceptsResponse, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 3]?.isShouldRescueRequest, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 4]?.isRescueRequest, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 1]?.isPerformPreRequestFor, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 2]?.isDidSend, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 3]?.isAcceptsResponse, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 4]?.isShouldRescueRequest, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 5]?.isRescueRequest, true)
         XCTAssertEqual(request.rescueCount, 1)
         XCTAssertNotNil(response)
     }
@@ -265,8 +270,9 @@ public class RestClientTests: XCTestCase {
 
         // Assert
         XCTAssertEqual(restClientDelegate.callHistory[safe: 0]?.isWillSend, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 1]?.isDidSend, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 2]?.isAcceptsResponse, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 1]?.isPerformPreRequestFor, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 2]?.isDidSend, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 3]?.isAcceptsResponse, true)
         XCTAssertNotNil(response)
     }
 
@@ -281,7 +287,8 @@ public class RestClientTests: XCTestCase {
 
         // Assert
         XCTAssertEqual(restClientDelegate.callHistory[safe: 0]?.isWillSend, true)
-        XCTAssertEqual(restClientDelegate.callHistory[safe: 1]?.isDidSend, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 1]?.isPerformPreRequestFor, true)
+        XCTAssertEqual(restClientDelegate.callHistory[safe: 2]?.isDidSend, true)
         XCTAssertNotNil(response)
     }
 

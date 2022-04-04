@@ -16,6 +16,10 @@ public protocol RestClientDelegate: AnyObject {
     /// - Parameter request: The request that is about to be sent by the given rest client.
     func restClient (_ restClient: RestClient, willSend request: RestRequest)
 
+    /// Tells the delegate to perform a pre request before sending the actual request.
+    ///
+    func restClient (_ restClient: RestClient, performPreRequestFor request: RestRequest) async throws
+
     /// Tells the delegate that the rest client did fail to send the given request (e.g.: no internet connection).
     ///
     /// - Parameter restClient: The rest client that sent the request
@@ -66,6 +70,7 @@ public protocol RestClientDelegate: AnyObject {
 
 public extension RestClientDelegate {
     func restClient(_ restClient: RestClient, willSend request: RestRequest) {}
+    func restClient(_ restClient: RestClient, performPreRequestFor request: RestRequest) async throws { }
     func restClient(_ restClient: RestClient, sendingRequestDidFailWithError error: Error, forRequest request: RestRequest) {}
     func restClient(_ restClient: RestClient, didSend request: RestRequest) {}
     func restClient(_ restClient: RestClient, acceptsResponse response: RestTransportEngineResponse, forRequest request: RestRequest) -> Bool { true }

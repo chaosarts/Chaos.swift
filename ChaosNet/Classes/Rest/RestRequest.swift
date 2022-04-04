@@ -267,9 +267,9 @@ extension RestRequest: URLRequestConvertible {
         }
 
         if !queryParameters.isEmpty {
-            urlComponents.queryItems = queryParameters.map({
+            urlComponents.queryItems = queryParameters.map {
                 URLQueryItem(name: $0.key, value: $0.value)
-            })
+            }
         }
 
         guard let url = urlComponents.url(relativeTo: baseURL) else {

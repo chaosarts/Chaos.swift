@@ -70,8 +70,12 @@ public class RestClient {
             request.shouldUseHttpCookies.setIfNil(shouldUseHttpCookies)
 
             delegate?.restClient(self, willSend: request)
+
+            try await delegate?.restClient(self, performPreRequestFor: request)
+
             let urlRequest = try request.urlRequest(relativeTo: baseUrl)
             log.info(format: "Sending request %@ to %@", request.id, urlRequest.url?.absoluteString ?? "-")
+            
             var response = try await transportEngine.send(request: urlRequest,
                                                           withIdentifier: request.id)
 

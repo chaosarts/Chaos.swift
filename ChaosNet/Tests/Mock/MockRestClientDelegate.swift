@@ -22,6 +22,10 @@ public class MockRestClientDelegate: RestClientDelegate {
         callHistory.append(.willSend(request))
     }
 
+    public func restClient(_ restClient: RestClient, performPreRequestFor request: RestRequest) async throws {
+        callHistory.append(.performPreRequestFor(request))
+    }
+
     public func restClient(_ restClient: RestClient, sendingRequestDidFailWithError error: Error, forRequest request: RestRequest) {
         callHistory.append(.sendingRequestDidFailWithError(error, request))
     }
@@ -57,6 +61,7 @@ public class MockRestClientDelegate: RestClientDelegate {
 public extension MockRestClientDelegate {
     enum CallHistoryItem {
         case willSend(RestRequest)
+        case performPreRequestFor(RestRequest)
         case sendingRequestDidFailWithError(Error, RestRequest)
         case didSend(RestRequest)
         case acceptsResponse(RestTransportEngineResponse, RestRequest)
@@ -67,7 +72,8 @@ public extension MockRestClientDelegate {
 
         public var restRequest: RestRequest {
             switch self {
-            case .willSend(let request), .sendingRequestDidFailWithError(_, let request), .didSend(let request),
+            case .willSend(let request), .performPreRequestFor(let request),
+                    .sendingRequestDidFailWithError(_, let request), .didSend(let request),
                     .acceptsResponse(_, let request), .shouldRescueRequest(let request, _),
                     .rescueRequest(let request, _), .didProduceRestResponse(let request),
                     .responseProcessingDidFailWithError(_, let request):
@@ -80,7 +86,7 @@ public extension MockRestClientDelegate {
             case .sendingRequestDidFailWithError(let error, _),
                     .responseProcessingDidFailWithError(let error, _):
                 return error
-            case .willSend, .didSend, .acceptsResponse, .shouldRescueRequest, .rescueRequest,
+            case .willSend, .performPreRequestFor, .didSend, .acceptsResponse, .shouldRescueRequest, .rescueRequest,
                     .didProduceRestResponse:
                 return nil
             }
@@ -88,7 +94,7 @@ public extension MockRestClientDelegate {
 
         public var restTransportReponse: RestTransportEngineResponse? {
             switch self {
-            case .willSend, .sendingRequestDidFailWithError, .didSend, .didProduceRestResponse,
+            case .willSend, .performPreRequestFor, .sendingRequestDidFailWithError, .didSend, .didProduceRestResponse,
                     .responseProcessingDidFailWithError:
                 return nil
             case .acceptsResponse(let restTransportEngineResponse, _),
@@ -100,6 +106,12 @@ public extension MockRestClientDelegate {
 
         public var isWillSend: Bool {
             if case .willSend = self { return true }
+            return false
+        }
+
+
+        public var isPerformPreRequestFor: Bool {
+            if case .performPreRequestFor = self { return true }
             return false
         }
 
