@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class RestRequest {
+public class RestRequest: CustomStringConvertible {
 
     // MARK: - Nested Types
 
@@ -21,21 +21,39 @@ public class RestRequest {
     /// The id of the request. This is used by the rest client in order to distinguish requests for cancellation.
     public let id: String = UUID().uuidString
 
-    /// The method to use for this request.
-    public var method: Method
-
     /// The target endpoint to send the request to.
-    public var endpoint: Endpoint
+    public let endpoint: Endpoint
+
+    /// The method to use for this request.
+    public var method: Method {
+        endpoint.method
+    }
+
+    /// Provides a dictionary where key is the placeholder name in the endpoint template and value is the value to set
+    /// in place.
+    public private (set) var parameters: [String: String] = [:]
+
+    /// Returns the endpoint where placeholders are replaced with the values of `parameters`.
+    public var path: String {
+        endpoint.path(parameters: parameters)
+    }
 
     /// Headers to enrich the request. This will be used for the resulting url request.
-    public var headers: [String: String] = [:]
+    private var headersByNames: [String: HttpHeader] = [:]
 
-    public var payload: Data?
-
-    public var queryParameters: [String: String?] {
-        get { endpoint.parameters }
-        set { endpoint.parameters = newValue }
+    ///
+    public var headers: [String: String] {
+        var headers: [String: String] = [:]
+        for (_, header) in headersByNames {
+            headers[header.name] = header.value
+        }
+        return headers
     }
+
+    public private(set) var queryParameters: [String: String?] = [:]
+
+    /// Provides the payload to be sent
+    public private(set) var payload: Data?
 
     /// Indicates, how many retries has been performed on this request.
     public internal(set) var rescueCount: Int = 0
@@ -54,16 +72,90 @@ public class RestRequest {
 
     private let encoder: RestDataEncoder
 
-    public init (_ endpoint: Endpoint, method: Method = .GET, encoder: RestDataEncoder) {
+    public var description: String {
+        var lines: [String] = [method.rawValue]
+        lines += headersByNames.values.map { $0.description }
+
+        var path = path
+        if !queryParameters.isEmpty {
+            path += "?" + queryParameters.map { key, value in
+                var string = key
+                if let value = value {
+                    string += "=\(value)"
+                }
+                return string
+            }.joined(separator: "&")
+        }
+        lines.append(path)
+
+        if let data = payload, let string = String(data: data, encoding: .utf8) {
+            lines.append(string)
+        }
+
+        return lines.joined(separator: "\n")
+    }
+
+    // MARK: Initialization
+
+    public init (_ endpoint: Endpoint, encoder: RestDataEncoder) {
         self.endpoint = endpoint
-        self.method = method
         self.encoder = encoder
     }
 
+    public convenience init (_ method: Method = .GET, at path: String, encoder: RestDataEncoder) {
+        self.init(Endpoint(method, at: path), encoder: encoder)
+    }
+
+
+    // MARK: Manage Headers
+
     @discardableResult
     public func setHeader (_ name: String, value: String) -> Self {
-        headers.updateValue(value, forKey: name)
+        headersByNames.updateValue(HttpHeader(name: name, value: value), forKey: name.lowercased())
         return self
+    }
+
+    @discardableResult
+    public func setHeaders (_ headers: [String: String]) -> Self {
+        headersByNames = [:]
+        headers.forEach { name, value in
+            self.setHeader(name, value: value)
+        }
+        return self
+    }
+
+    @discardableResult
+    public func mergeHeaders (_ headers: [String: String]) -> Self {
+        headers.forEach { name, value in
+            let key = name.lowercased()
+            guard headersByNames[key] == nil else { return }
+            headersByNames[key] = HttpHeader(name: name, value: value)
+        }
+        return self
+    }
+
+    @discardableResult
+    public func overrideHeaders (_ headers: [String: String]) -> Self {
+        headers.forEach { name, value in
+            let key = name.lowercased()
+            headersByNames[key] = HttpHeader(name: name, value: value)
+        }
+        return self
+    }
+
+    @discardableResult
+    public func removeHeader (_ name: String) -> String? {
+        headersByNames.removeValue(forKey: name.lowercased())?.value
+    }
+
+    public func header (forName name: String) -> String? {
+        headersByNames[name.lowercased()]?.value
+    }
+
+    public func containsHeader (_ name: String) -> Bool {
+        headersByNames.contains { key, _ in
+            key == name.lowercased()
+        }
     }
 
     @discardableResult
@@ -71,75 +163,66 @@ public class RestRequest {
         setHeader("Content-Type", value: contentType)
     }
 
-    @discardableResult
-    public func setHeaders (_ headers: [String: String]) -> Self {
-        self.headers = headers
-        return self
+    public func contentType () -> String? {
+        header(forName: "Content-Type")
     }
 
-    @discardableResult
-    public func mergeHeaders (_ headers: [String: String]) -> Self {
-        self.headers.merge(headers, uniquingKeysWith: { current, _ in current })
-        return self
-    }
 
-    @discardableResult
-    public func overrideHeaders (_ headers: [String: String]) -> Self {
-        self.headers.merge(headers, uniquingKeysWith: { _, new in new })
-        return self
-    }
-
-    @discardableResult
-    public func removeHeader (_ name: String) -> String? {
-        headers.removeValue(forKey: name)
-    }
-
-    public func containsHeader (_ name: String) -> Bool {
-        headers.contains(where: { $0.key == name })
-    }
+    // MARK: Managing Query Parameters
 
     @discardableResult
     public func setQueryParameter (_ name: String, value: String?) -> Self {
-        endpoint.setParameter(name, value: value)
+        queryParameters.updateValue(value, forKey: name)
         return self
     }
 
     @discardableResult
     public func setQueryParameters (_ parameters: [String: String?]) -> Self {
-        endpoint.setParameters(parameters)
+        queryParameters = parameters
         return self
     }
 
     @discardableResult
     public func mergeQueryParameters (_ parameters: [String: String?]) -> Self {
-        endpoint.mergeParameters(parameters)
+        queryParameters.merge(parameters) { current, _ in current }
         return self
     }
 
     @discardableResult
     public func overrideQueryParameters (_ parameters: [String: String?]) -> Self {
-        endpoint.overrideParameters(parameters)
+        queryParameters.merge(parameters) { _, new in new }
         return self
     }
 
     @discardableResult
     public func removeQueryParameter (_ name: String) -> Self {
-        endpoint.removeParameter(name)
+        queryParameters.removeValue(forKey: name)
         return self
     }
 
     public func containsQueryParameter (_ name: String) -> Bool {
-        endpoint.containsParameter(name)
+        queryParameters.contains { key, _ in name == key }
     }
 
     @discardableResult
-    public func setPayload<E: Encodable> (_ encodable: E) -> Self {
-        self.payload = try? encoder.encode(encodable)
+    public func setParameter (_ name: String, value: String) -> Self {
+        parameters.updateValue(value, forKey: name)
         return self
     }
 
     @discardableResult
-    public func setPayload (_ payload: Data) -> Self {
+    public func setParameters (_ parameters: [String: String]) -> Self {
+        self.parameters = parameters
+        return self
+    }
+
+    @discardableResult
+    public func setPayload<E: Encodable> (_ encodable: E) -> Self {
+        setPayload(try? encoder.encode(encodable))
+    }
+
+    @discardableResult
+    public func setPayload (_ payload: Data? = nil) -> Self {
         self.payload = payload
         return self
     }
@@ -152,60 +235,34 @@ public class RestRequest {
 
 public extension RestRequest {
 
-    class Endpoint: ExpressibleByStringLiteral {
+    struct Endpoint: ExpressibleByStringLiteral {
 
-        public let path: String
+        public let method: Method
 
-        public var parameters: [String: String?]
+        public let template: String
 
-        public init (_ path: String, parameters: [String: String?] = [:]) {
-            self.path = path
-            self.parameters = parameters
+        public init(_ method: Method = .GET, at template: String) {
+            self.method = method
+            self.template = template
         }
 
-        public required convenience init(stringLiteral value: String) {
-            self.init(value)
+        public init(stringLiteral value: String) {
+            self.init(.GET, at: value)
         }
 
-        @discardableResult
-        public func setParameter (_ name: String, value: String? = nil) -> Self {
-            parameters.updateValue(value, forKey: name)
-            return self
-        }
-
-        @discardableResult
-        public func setParameters (_ parameters: [String: String?]) -> Self {
-            self.parameters = parameters
-            return self
-        }
-
-        @discardableResult
-        public func mergeParameters (_ parameters: [String: String?]) -> Self {
-            self.parameters.merge(parameters) { current, _ in current }
-            return self
-        }
-
-        @discardableResult
-        public func overrideParameters (_ parameters: [String: String?]) -> Self {
-            self.parameters.merge(parameters) { _, new in new }
-            return self
-        }
-
-        @discardableResult
-        public func removeParameter (_ name: String) -> Self {
-            parameters.removeValue(forKey: name)
-            return self
-        }
-
-        public func containsParameter (_ name: String) -> Bool {
-            parameters.contains(where: { $0.key == name })
+        public func path(parameters: [String: String] = [:]) -> String {
+            var template = template
+            parameters.forEach { key, value in
+                template = template.replacingOccurrences(of: "{\(key)}", with: value)
+            }
+            return template
         }
     }
 }
 
 extension RestRequest: URLRequestConvertible {
     public func urlRequest(relativeTo baseURL: URL? = nil) throws -> URLRequest {
-        guard var urlComponents = URLComponents(string: endpoint.path) else {
+        guard var urlComponents = URLComponents(string: path) else {
             throw URLError(.badURL)
         }
 

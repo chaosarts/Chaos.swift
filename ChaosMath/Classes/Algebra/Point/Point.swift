@@ -27,6 +27,10 @@ public protocol Point: Equatable, Codable {
 
     /// Returns the additive inverse of the point.
     @inlinable static prefix func - (_ point: Self) -> Self
+
+    static func *(lhs: Component, rhs: Self) -> Self
+
+    static func *(lhs: Self, rhs: Component) -> Self
 }
 
 
@@ -42,6 +46,20 @@ public extension Point {
 
     @inlinable static func == (_ lhs: Self, _ rhs: Self) -> Bool {
         lhs.components == rhs.components
+    }
+
+    static func * (lhs: Component, rhs: Self) -> Self {
+        Self.init(components: rhs.components.map { $0 * lhs })
+    }
+
+    static func * (lhs: Self, rhs: Component) -> Self {
+        rhs * lhs
+    }
+}
+
+public extension Point where Component: FloatingPoint {
+    static func / (lhs: Self, rhs: Component) -> Self {
+        Self.init(components: lhs.components.map{ $0 / rhs })
     }
 }
 

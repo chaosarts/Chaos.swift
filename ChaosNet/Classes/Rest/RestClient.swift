@@ -51,8 +51,8 @@ public class RestClient {
 
     // MARK: Create Request
 
-    public func makeRequest (endpoint: RestRequest.Endpoint, method: RestRequest.Method = .GET) -> RestRequest {
-        RestRequest(endpoint, method: method, encoder: dataEncoder)
+    public func makeRequest (_ method: RestRequest.Method = .GET, at endpoint: String) -> RestRequest {
+        RestRequest(method, at: endpoint, encoder: dataEncoder)
     }
 
 

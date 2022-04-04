@@ -9,7 +9,7 @@ import Foundation
 
 /// Struct to represent an http header, containing a name and an optional value. Http headers
 /// are build as *name*: *value*.
-public struct HttpHeader {
+public struct HttpHeader: CustomStringConvertible {
 
     // MARK: Properties
 
@@ -19,6 +19,7 @@ public struct HttpHeader {
     /// Provides an optional value of the http header.
     public var value: String
 
+    public var description: String { "\(name): \(value)" }
 
     // MARK: Initialization
 
@@ -26,13 +27,6 @@ public struct HttpHeader {
         self.name = name
         self.value = value
     }
-}
-
-
-// MARK: - CustomStringConvertible
-
-extension HttpHeader {
-    public var description: String { "\(name): \(value)" }
 }
 
 

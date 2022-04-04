@@ -1,22 +1,13 @@
 //
-//  MeshDelegate.swift
-//  ChaosThree
+//  File.swift
+//  
 //
-//  Created by Fu Lam Diep on 12.09.21.
+//  Created by Fu Lam Diep on 15.02.22.
 //
 
 import Foundation
 
 public protocol MeshDelegate: AnyObject {
-    func mesh(_ mesh: Mesh, willReloadVerticesWithPrimitiveType primitiveType: Mesh.PrimitiveType)
-    func mesh(_ mesh: Mesh, didReloadVerticesWithPrimitiveType primitiveType: Mesh.PrimitiveType)
-    func mesh(_ mesh: Mesh, willReloadVerticesAt indices: [Int], withPrimitiveType primitiveType: Mesh.PrimitiveType)
-    func mesh(_ mesh: Mesh, didReloadVerticesAt indices: [Int], withPrimitiveType primitiveType: Mesh.PrimitiveType)
-}
 
-public extension MeshDelegate {
-    func mesh(_ mesh: Mesh, willReloadVerticesWithPrimitiveType primitiveType: Mesh.PrimitiveType) {}
-    func mesh(_ mesh: Mesh, didReloadVerticesWithPrimitiveType primitiveType: Mesh.PrimitiveType) {}
-    func mesh(_ mesh: Mesh, willReloadVerticesAt indices: [Int], withPrimitiveType primitiveType: Mesh.PrimitiveType) {}
-    func mesh(_ mesh: Mesh, didReloadVerticesAt indices: [Int], withPrimitiveType primitiveType: Mesh.PrimitiveType) {}
+    func mesh(_ mesh: Mesh, didMoveVertexAt index: Int)
 }

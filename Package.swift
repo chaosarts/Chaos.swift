@@ -18,6 +18,7 @@ let package = Package(
         .library(name: "ChaosNet", targets: ["ChaosNet"]),
         .library(name: "ChaosThree", targets: ["ChaosThree"]),
         .library(name: "ChaosUi", targets: ["ChaosUi"]),
+        .library(name: "ChaosSwiftUI", targets: ["ChaosSwiftUI"])
     ],
     dependencies: [],
     targets: [
@@ -52,6 +53,11 @@ let package = Package(
                 "ChaosCore"
             ],
             path: "ChaosMath/Classes"
+        ),
+        .testTarget(
+            name: "ChaosMathTests",
+            dependencies: ["ChaosCore", "ChaosMath"],
+            path: "ChaosMath/Tests"
         ),
         .target(
             name: "ChaosMetal",
@@ -101,6 +107,14 @@ let package = Package(
                 "ChaosUi"
             ],
             path: "ChaosKit/Classes"
+        ),
+        .target(
+            name: "ChaosSwiftUI",
+            dependencies: [
+                "ChaosCore",
+                "ChaosGraphics",
+            ],
+            path: "ChaosSwiftUI/Classes"
         )
     ]
 )
