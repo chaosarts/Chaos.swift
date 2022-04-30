@@ -52,6 +52,12 @@ public class RestRequest: CustomStringConvertible {
 
     public private(set) var queryParameters: [String: String?] = [:]
 
+    public var queryString: String? {
+        var components = URLComponents()
+        components.queryItems = queryParameters.map { key, value in URLQueryItem(name: key, value: value) }
+        return components.query
+    }
+
     /// Provides the payload to be sent
     public private(set) var payload: Data?
 
@@ -70,7 +76,9 @@ public class RestRequest: CustomStringConvertible {
     /// rest client sending the request will be used.
     public var timeoutInterval: TimeInterval?
 
-    private let encoder: RestDataEncoder
+    public let encoder: RestDataEncoder
+
+    public var decoder: RestDataDecoder?
 
     public var description: String {
         var lines: [String] = [method.rawValue]
@@ -235,7 +243,7 @@ public class RestRequest: CustomStringConvertible {
 
 public extension RestRequest {
 
-    struct Endpoint: ExpressibleByStringLiteral {
+    struct Endpoint: ExpressibleByStringLiteral, Equatable {
 
         public let method: Method
 
@@ -256,6 +264,10 @@ public extension RestRequest {
                 template = template.replacingOccurrences(of: "{\(key)}", with: value)
             }
             return template
+        }
+
+        public static func ==(lhs: Self, rhs: Self) -> Bool {
+            lhs.method == rhs.method && lhs.template == rhs.template
         }
     }
 }
