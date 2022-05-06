@@ -100,6 +100,10 @@ public class RestClient {
         }
     }
 
+    public func response(relativeTo baseUrl: URL? = nil, @RestRequestBuilder _ build: (RestClient) throws -> RestRequest) async throws -> RestTransportEngineResponse {
+        try await response(forRequest: try build(self), relativeTo: baseUrl)
+    }
+
     public func send<D: Decodable>(request: RestRequest, relativeTo baseUrl: URL? = nil, expecting type: D.Type) async throws -> RestResponse<D> {
         let transportEngineResponse = try await response(forRequest: request, relativeTo:  baseUrl)
 
