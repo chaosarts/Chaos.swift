@@ -47,21 +47,19 @@ public class RestClient {
         self.dataEncoder = dataEncoder
     }
 
-    // MARK: Create Request
-
-    public func createRequest(withEndpoint endpoint: RestRequest.Endpoint) -> RestRequest {
-        RestRequest(endpoint, encoder: dataEncoder)
-    }
-
 
     // MARK: Sending Requests Synchronous
+
+    public func encode<E: Encodable>(_ encodable: E) throws -> Data? {
+        return try dataEncoder.encode(encodable)
+    }
 
     private func acceptsResponse(_ response: RestTransportEngineResponse, for request: RestRequest, relativeTo baseUrl: URL?) -> Bool {
         HttpStatus.isSuccessStatusCode(response.httpURLResponse.statusCode) ||
         delegate?.restClient(self, acceptsResponse: response, forRequest: request, relativeTo: baseUrl) ?? false
     }
 
-    public func response (forRequest request: RestRequest, relativeTo baseUrl: URL? = nil) async throws -> RestTransportEngine.Response {
+    public func response(forRequest request: RestRequest, relativeTo baseUrl: URL? = nil) async throws -> RestTransportEngine.Response {
         do {
             request.timeoutInterval.setIfNil(defaultTimeoutInterval)
             request.cachePolicy.setIfNil(defaultCachePolicy)
@@ -125,12 +123,20 @@ public class RestClient {
         }
     }
 
+    public func send<D: Decodable>(relativeTo baseUrl: URL? = nil, @RestRequestBuilder _ build: (RestClient) throws -> RestRequest) async throws -> RestResponse<D> {
+        try await send(request: try build(self), relativeTo: baseUrl, expecting: D.self)
+    }
+
     public func send(request: RestRequest, relativeTo baseUrl: URL? = nil) async throws -> RestResponse<Void> {
         let transportEngineResponse = try await response(forRequest: request, relativeTo:  baseUrl)
         let headers = headers(fromHttpUrlResponse: transportEngineResponse.httpURLResponse)
         let restResponse = RestResponse(to: request, data: Void(), headers: headers)
         delegate?.restClient(self, didProduceRestResponse: restResponse, forRequest: request, relativeTo: baseUrl)
         return restResponse
+    }
+
+    public func send(relativeTo baseUrl: URL? = nil, @RestRequestBuilder _ build: (RestClient) throws -> RestRequest) async throws -> RestResponse<Void> {
+        try await send(request: try build(self), relativeTo: baseUrl)
     }
 
     public func cancelRequest(_ request: RestRequest) {

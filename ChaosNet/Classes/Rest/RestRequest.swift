@@ -13,19 +13,16 @@ public class RestRequest: CustomStringConvertible {
 
     public typealias CachePolicy = URLRequest.CachePolicy
 
-    public typealias Method = HttpMethod
-
-
     // MARK: - Properties
 
     /// The id of the request. This is used by the rest client in order to distinguish requests for cancellation.
     public let id: String = UUID().uuidString
 
     /// The target endpoint to send the request to.
-    public let endpoint: Endpoint
+    public let endpoint: RestEndpoint
 
     /// The method to use for this request.
-    public var method: Method {
+    public var method: RestMethod {
         endpoint.method
     }
 
@@ -76,8 +73,6 @@ public class RestRequest: CustomStringConvertible {
     /// rest client sending the request will be used.
     public var timeoutInterval: TimeInterval?
 
-    public let encoder: RestDataEncoder
-
     public var decoder: RestDataDecoder?
 
     public var description: String {
@@ -105,13 +100,12 @@ public class RestRequest: CustomStringConvertible {
 
     // MARK: Initialization
 
-    public init (_ endpoint: Endpoint, encoder: RestDataEncoder) {
+    public init (_ endpoint: RestEndpoint) {
         self.endpoint = endpoint
-        self.encoder = encoder
     }
 
-    public convenience init (_ method: Method = .GET, at path: String, encoder: RestDataEncoder) {
-        self.init(Endpoint(method, at: path), encoder: encoder)
+    public convenience init (_ method: RestMethod = .GET, at path: String) {
+        self.init(RestEndpoint(method, at: path))
     }
 
 
@@ -225,50 +219,9 @@ public class RestRequest: CustomStringConvertible {
     }
 
     @discardableResult
-    public func setPayload<E: Encodable> (_ encodable: E) -> Self {
-        setPayload(try? encoder.encode(encodable))
-    }
-
-    @discardableResult
     public func setPayload (_ payload: Data? = nil) -> Self {
         self.payload = payload
         return self
-    }
-
-    public func setPayload(withParameters parameters: [String: String], files: [String]) {
-        
-    }
-}
-
-
-public extension RestRequest {
-
-    struct Endpoint: ExpressibleByStringLiteral, Equatable {
-
-        public let method: Method
-
-        public let template: String
-
-        public init(_ method: Method = .GET, at template: String) {
-            self.method = method
-            self.template = template
-        }
-
-        public init(stringLiteral value: String) {
-            self.init(.GET, at: value)
-        }
-
-        public func path(parameters: [String: String] = [:]) -> String {
-            var template = template
-            parameters.forEach { key, value in
-                template = template.replacingOccurrences(of: "{\(key)}", with: value)
-            }
-            return template
-        }
-
-        public static func ==(lhs: Self, rhs: Self) -> Bool {
-            lhs.method == rhs.method && lhs.template == rhs.template
-        }
     }
 }
 
