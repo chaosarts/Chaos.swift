@@ -383,13 +383,39 @@ public class RestClientTests: XCTestCase {
             Path("/user/data")
             Query(name: "q", value: "Blabla")
             Query(name: "lang", value: "de")
-            Query(name: "page", value: nil, ignoreWhenNil: true)
-            Header(name: "Content-Type", value: "json")
+            Query(name: "page")
+            Query(name: "nil", value: nil, ignoreWhenNil: true)
+            Header(name: "Content-Type", value: "application/json")
             Header(name: "AppTag", value: nil)
             Body(try restClient.encode(user))
         }
 
-        XCTAssertNotNil(restTransportEngine.lastRequest)
+        let lastRequest = restTransportEngine.lastRequest
+
+        let components = URLComponents(string: lastRequest?.url?.absoluteString ?? "")
+        let qQuery = components?.queryItems?.first(where: { $0.name == "q" })
+        let langQuery = components?.queryItems?.first(where: { $0.name == "lang" })
+        let pageQuery = components?.queryItems?.first(where: { $0.name == "page" })
+        let nilQuery = components?.queryItems?.first(where: { $0.name == "nil" })
+
+        let headers = lastRequest?.allHTTPHeaderFields
+        let contentTypeHeader = headers?.first { key, _ in key == "Content-Type" }
+        let appTagHeader = headers?.first { key, _ in key == "AppTag" }
+
+        XCTAssertNotNil(lastRequest)
+        XCTAssertEqual(lastRequest?.httpMethod?.lowercased(), HttpMethod.DELETE.rawValue.lowercased())
+        XCTAssertTrue(lastRequest?.url?.path.contains("/user/data") ?? false)
+
+        XCTAssertNotNil(pageQuery)
+        XCTAssertNil(nilQuery)
+        XCTAssertEqual(qQuery?.value, "Blabla")
+        XCTAssertEqual(langQuery?.value, "de")
+        XCTAssertEqual(pageQuery?.value, nil)
+
+        XCTAssertNil(appTagHeader)
+        XCTAssertEqual(contentTypeHeader?.value, "application/json")
+
+        XCTAssertNotNil(lastRequest?.httpBody)
     }
 
     // MARK: - Helper Methods

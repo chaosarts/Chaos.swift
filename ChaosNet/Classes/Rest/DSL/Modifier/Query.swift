@@ -15,7 +15,7 @@ public struct Query: RestRequestModifier {
 
     private let ignoreWhenNil: Bool
 
-    public init(name: String, value: Any?, ignoreWhenNil: Bool = false) {
+    public init(name: String, value: Any? = nil, ignoreWhenNil: Bool = false) {
         self.name = name
         self.value = value
         self.ignoreWhenNil = ignoreWhenNil
