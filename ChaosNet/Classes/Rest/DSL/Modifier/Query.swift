@@ -7,18 +7,24 @@
 
 import Foundation
 
-public struct QueryItem: RestRequestModifier {
+public struct Query: RestRequestModifier {
 
     private let name: String
 
     private let value: Any?
 
-    public init(name: String, value: Any?) {
+    private let ignoreWhenNil: Bool
+
+    public init(name: String, value: Any?, ignoreWhenNil: Bool = false) {
         self.name = name
         self.value = value
+        self.ignoreWhenNil = ignoreWhenNil
     }
 
     public func apply(to request: RestRequest) {
+        guard !ignoreWhenNil || value != nil else {
+            return
+        }
         request.setQueryParameter(name, value: value.map({ "\($0)"}))
     }
 }

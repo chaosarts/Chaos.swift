@@ -9,15 +9,27 @@ import Foundation
 
 @resultBuilder public enum RestRequestBuilder {
 
-    public static func buildBlock(_ method: RestMethod, _ path: String, _ components: RestRequestSection...) -> RestRequest {
-        let restRequest = RestRequest(RestEndpoint(method, at: path))
-        components.forEach { $0.apply(to: restRequest) }
-        return restRequest
+    public static func buildBlock(_ components: [RestRequestModifier]...) -> [RestRequestModifier] {
+        components.flatMap { $0 }
     }
 
-    public static func buildBlock(_ endpoint: RestEndpoint, _ components: RestRequestSection...) -> RestRequest {
-        let restRequest = RestRequest(endpoint)
-        components.forEach { $0.apply(to: restRequest) }
-        return restRequest
+    public static func buildOptional(_ component: [RestRequestModifier]?) -> [RestRequestModifier] {
+        component ?? []
+    }
+
+    public static func buildEither(first component: [RestRequestModifier]) -> [RestRequestModifier] {
+        component
+    }
+
+    public static func buildEither(second component: [RestRequestModifier]) -> [RestRequestModifier] {
+        component
+    }
+
+    public static func buildExpression(_ expression: RestRequestModifier) -> [RestRequestModifier] {
+        [expression]
+    }
+
+    public static func buildExpression(_ expression: Void) -> [RestRequestModifier] {
+        []
     }
 }

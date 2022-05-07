@@ -19,7 +19,7 @@ public class RestRequest: CustomStringConvertible {
     public let id: String = UUID().uuidString
 
     /// The target endpoint to send the request to.
-    public let endpoint: RestEndpoint
+    public internal(set) var endpoint: RestEndpoint
 
     /// The method to use for this request.
     public var method: RestMethod {
@@ -108,6 +108,10 @@ public class RestRequest: CustomStringConvertible {
         self.init(RestEndpoint(method, at: path))
     }
 
+    /// An internal initializer used for the RestRequestBuilder
+    internal convenience init() {
+        self.init(RestEndpoint(.GET, at: ""))
+    }
 
     // MARK: Manage Headers
 

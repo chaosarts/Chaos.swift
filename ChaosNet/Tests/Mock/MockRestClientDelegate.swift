@@ -18,42 +18,42 @@ public class MockRestClientDelegate: RestClientDelegate {
 
     public var rescueRequest: ((RestRequest, RestTransportEngineResponse) async throws -> RestTransportEngineResponse)?
 
-    public func restClient(_ restClient: RestClient, willSend request: RestRequest) {
+    public func restClient(_ restClient: RestClient, willSend request: RestRequest, relativeTo url: URL?) {
         callHistory.append(.willSend(request))
     }
 
-    public func restClient(_ restClient: RestClient, performPreRequestFor request: RestRequest) async throws {
+    public func restClient(_ restClient: RestClient, performPreRequestFor request: RestRequest, relativeTo url: URL?) async throws {
         callHistory.append(.performPreRequestFor(request))
     }
 
-    public func restClient(_ restClient: RestClient, sendingRequestDidFailWithError error: Error, forRequest request: RestRequest) {
+    public func restClient(_ restClient: RestClient, sendingRequestDidFailWithError error: Error, forRequest request: RestRequest, relativeTo url: URL?) {
         callHistory.append(.sendingRequestDidFailWithError(error, request))
     }
 
-    public func restClient(_ restClient: RestClient, didSend request: RestRequest) {
+    public func restClient(_ restClient: RestClient, didSend request: RestRequest, relativeTo url: URL?) {
         callHistory.append(.didSend(request))
     }
 
-    public func restClient(_ restClient: RestClient, acceptsResponse response: RestTransportEngineResponse, forRequest request: RestRequest) -> Bool {
+    public func restClient(_ restClient: RestClient, acceptsResponse response: RestTransportEngineResponse, forRequest request: RestRequest, relativeTo url: URL?) -> Bool {
         callHistory.append(.acceptsResponse(response, request))
         return acceptsResponse?(response, request) ?? false
     }
 
-    public func restClient(_ restClient: RestClient, shouldRescueRequest request: RestRequest, withResponse response: RestTransportEngineResponse) -> Bool {
+    public func restClient(_ restClient: RestClient, shouldRescueRequest request: RestRequest, withResponse response: RestTransportEngineResponse, relativeTo url: URL?) -> Bool {
         callHistory.append(.shouldRescueRequest(request, response))
         return shouldRescueRequest?(request, response) ?? false
     }
 
-    public func restClient(_ restClient: RestClient, rescueRequest request: RestRequest, withResponse response: RestTransportEngineResponse) async throws -> RestTransportEngineResponse {
+    public func restClient(_ restClient: RestClient, rescueRequest request: RestRequest, withResponse response: RestTransportEngineResponse, relativeTo url: URL?) async throws -> RestTransportEngineResponse {
         callHistory.append(.rescueRequest(request, response))
         return try await rescueRequest?(request, response) ?? response
     }
 
-    public func restClient<D>(_ restClient: RestClient, didProduceRestResponse restReponse: RestResponse<D>, forRequest request: RestRequest) {
+    public func restClient<D>(_ restClient: RestClient, didProduceRestResponse restReponse: RestResponse<D>, forRequest request: RestRequest, relativeTo url: URL?) {
         callHistory.append(.didProduceRestResponse(request))
     }
 
-    public func restClient(_ restClient: RestClient, responseProcessingDidFailWithError error: Error, forRequest request: RestRequest) {
+    public func restClient(_ restClient: RestClient, responseProcessingDidFailWithError error: Error, forRequest request: RestRequest, relativeTo url: URL?) {
         callHistory.append(.responseProcessingDidFailWithError(error, request))
     }
 }

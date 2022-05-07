@@ -10,7 +10,7 @@ import XCTest
 
 public class Mat2Tests: XCTestCase {
 
-    public testInit_isZeroMatrix_whenNoArgumentsPassed() {
+    public func testInit_isZeroMatrix_whenNoArgumentsPassed() {
         // Act
         let matrix = Mat2()
     }

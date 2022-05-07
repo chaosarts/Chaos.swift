@@ -100,11 +100,7 @@ public class RestClient {
         }
     }
 
-    public func response(relativeTo baseUrl: URL? = nil, @RestRequestBuilder _ build: (RestClient) throws -> RestRequest) async throws -> RestTransportEngineResponse {
-        try await response(forRequest: try build(self), relativeTo: baseUrl)
-    }
-
-    public func send<D: Decodable>(request: RestRequest, relativeTo baseUrl: URL? = nil, expecting type: D.Type) async throws -> RestResponse<D> {
+    public func send<D: Decodable>(request: RestRequest, relativeTo baseUrl: URL? = nil, expecting type: D.Type = D.self) async throws -> RestResponse<D> {
         let transportEngineResponse = try await response(forRequest: request, relativeTo:  baseUrl)
 
         guard let data = transportEngineResponse.data else {
@@ -127,10 +123,6 @@ public class RestClient {
         }
     }
 
-    public func send<D: Decodable>(relativeTo baseUrl: URL? = nil, @RestRequestBuilder _ build: (RestClient) throws -> RestRequest) async throws -> RestResponse<D> {
-        try await send(request: try build(self), relativeTo: baseUrl, expecting: D.self)
-    }
-
     public func send(request: RestRequest, relativeTo baseUrl: URL? = nil) async throws -> RestResponse<Void> {
         let transportEngineResponse = try await response(forRequest: request, relativeTo:  baseUrl)
         let headers = headers(fromHttpUrlResponse: transportEngineResponse.httpURLResponse)
@@ -139,9 +131,29 @@ public class RestClient {
         return restResponse
     }
 
-    public func send(relativeTo baseUrl: URL? = nil, @RestRequestBuilder _ build: (RestClient) throws -> RestRequest) async throws -> RestResponse<Void> {
-        try await send(request: try build(self), relativeTo: baseUrl)
+
+    // MARK: Sending Request with RestRequestBuilder
+
+    public func response(relativeTo baseUrl: URL? = nil, @RestRequestBuilder _ build: () throws -> [RestRequestModifier]) async throws -> RestTransportEngineResponse {
+        let request = RestRequest()
+        try build().apply(to: request)
+        return try await response(forRequest: request, relativeTo: baseUrl)
     }
+
+    public func send<D: Decodable>(relativeTo baseUrl: URL? = nil, expecting: D.Type = D.self, @RestRequestBuilder _ build: () throws -> [RestRequestModifier]) async throws -> RestResponse<D> {
+        let request = RestRequest()
+        try build().apply(to: request)
+        return try await send(request: request, relativeTo: baseUrl, expecting: D.self)
+    }
+
+    public func send(relativeTo baseUrl: URL? = nil, @RestRequestBuilder _ build: () throws -> [RestRequestModifier]) async throws -> RestResponse<Void> {
+        let request = RestRequest()
+        try build().apply(to: request)
+        return try await send(request: request, relativeTo: baseUrl)
+    }
+
+
+    // MARK: Request Cancellation
 
     public func cancelRequest(_ request: RestRequest) {
         cancelRequest(withIdentifier: request.id)
