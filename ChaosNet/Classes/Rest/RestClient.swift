@@ -8,8 +8,9 @@
 import Foundation
 import ChaosCore
 
-/// Client class for rest calls, that is intended to be positioned on top of the network transport layer (e.g.: http). The class attempts
-/// to simplify the process of sending requests and receiving responses. For example does it evaluate the http status
+/// Client class for rest calls, that is intended to be positioned on top of the network transport layer (e.g.: http).
+/// The class attempts to simplify the process of sending requests and receiving responses. For example does it evaluate
+/// the http status.
 public class RestClient {
 
     /// An optional delegate object that is notified or asked at certain events of a request.
@@ -134,22 +135,16 @@ public class RestClient {
 
     // MARK: Sending Request with RestRequestBuilder
 
-    public func response(relativeTo baseUrl: URL? = nil, @RestRequestBuilder _ build: () throws -> [RestRequestModifier]) async throws -> RestTransportEngineResponse {
-        let request = RestRequest()
-        try build().apply(to: request)
-        return try await response(forRequest: request, relativeTo: baseUrl)
+    public func response(relativeTo baseUrl: URL? = nil, @RestRequestBuilder _ build: () throws -> RestRequest) async throws -> RestTransportEngineResponse {
+        return try await response(forRequest: try build(), relativeTo: baseUrl)
     }
 
-    public func send<D: Decodable>(relativeTo baseUrl: URL? = nil, expecting: D.Type = D.self, @RestRequestBuilder _ build: () throws -> [RestRequestModifier]) async throws -> RestResponse<D> {
-        let request = RestRequest()
-        try build().apply(to: request)
-        return try await send(request: request, relativeTo: baseUrl, expecting: D.self)
+    public func send<D: Decodable>(relativeTo baseUrl: URL? = nil, expecting: D.Type = D.self, @RestRequestBuilder _ build: () throws -> RestRequest) async throws -> RestResponse<D> {
+        return try await send(request: try build(), relativeTo: baseUrl, expecting: D.self)
     }
 
-    public func send(relativeTo baseUrl: URL? = nil, @RestRequestBuilder _ build: () throws -> [RestRequestModifier]) async throws -> RestResponse<Void> {
-        let request = RestRequest()
-        try build().apply(to: request)
-        return try await send(request: request, relativeTo: baseUrl)
+    public func send(relativeTo baseUrl: URL? = nil, @RestRequestBuilder _ build: () throws -> RestRequest) async throws -> RestResponse<Void> {
+        return try await send(request: try build(), relativeTo: baseUrl)
     }
 
 

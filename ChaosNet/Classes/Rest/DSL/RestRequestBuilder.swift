@@ -13,16 +13,20 @@ import Foundation
         components.flatMap { $0 }
     }
 
-    public static func buildOptional(_ component: [RestRequestModifier]?) -> [RestRequestModifier] {
-        component ?? []
+    public static func buildArray(_ components: [[RestRequestModifier]]) -> [RestRequestModifier] {
+        components.flatMap { $0 }
     }
 
-    public static func buildEither(first component: [RestRequestModifier]) -> [RestRequestModifier] {
-        component
+    public static func buildOptional(_ components: [RestRequestModifier]?) -> [RestRequestModifier] {
+        components ?? []
     }
 
-    public static func buildEither(second component: [RestRequestModifier]) -> [RestRequestModifier] {
-        component
+    public static func buildEither(first components: [RestRequestModifier]) -> [RestRequestModifier] {
+        components
+    }
+
+    public static func buildEither(second components: [RestRequestModifier]) -> [RestRequestModifier] {
+        components
     }
 
     public static func buildExpression(_ expression: RestRequestModifier) -> [RestRequestModifier] {
@@ -31,5 +35,11 @@ import Foundation
 
     public static func buildExpression(_ expression: Void) -> [RestRequestModifier] {
         []
+    }
+
+    public static func buildFinalResult(_ components: [RestRequestModifier]) -> RestRequest {
+        let restRequest = RestRequest()
+        components.apply(to: restRequest)
+        return restRequest
     }
 }
