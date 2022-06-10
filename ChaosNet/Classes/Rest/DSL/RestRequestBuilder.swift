@@ -9,35 +9,35 @@ import Foundation
 
 @resultBuilder public enum RestRequestBuilder {
 
-    public static func buildBlock(_ components: [RestRequestModifier]...) -> [RestRequestModifier] {
+    public static func buildBlock(_ components: [RestRequestDSLComponent]...) -> [RestRequestDSLComponent] {
         components.flatMap { $0 }
     }
 
-    public static func buildArray(_ components: [[RestRequestModifier]]) -> [RestRequestModifier] {
+    public static func buildArray(_ components: [[RestRequestDSLComponent]]) -> [RestRequestDSLComponent] {
         components.flatMap { $0 }
     }
 
-    public static func buildOptional(_ components: [RestRequestModifier]?) -> [RestRequestModifier] {
+    public static func buildOptional(_ components: [RestRequestDSLComponent]?) -> [RestRequestDSLComponent] {
         components ?? []
     }
 
-    public static func buildEither(first components: [RestRequestModifier]) -> [RestRequestModifier] {
+    public static func buildEither(first components: [RestRequestDSLComponent]) -> [RestRequestDSLComponent] {
         components
     }
 
-    public static func buildEither(second components: [RestRequestModifier]) -> [RestRequestModifier] {
+    public static func buildEither(second components: [RestRequestDSLComponent]) -> [RestRequestDSLComponent] {
         components
     }
 
-    public static func buildExpression(_ expression: RestRequestModifier) -> [RestRequestModifier] {
+    public static func buildExpression(_ expression: RestRequestDSLComponent) -> [RestRequestDSLComponent] {
         [expression]
     }
 
-    public static func buildExpression(_ expression: Void) -> [RestRequestModifier] {
+    public static func buildExpression(_ expression: Void) -> [RestRequestDSLComponent] {
         []
     }
 
-    public static func buildFinalResult(_ components: [RestRequestModifier]) -> RestRequest {
+    public static func buildFinalResult(_ components: [RestRequestDSLComponent]) -> RestRequest {
         let restRequest = RestRequest()
         components.apply(to: restRequest)
         return restRequest

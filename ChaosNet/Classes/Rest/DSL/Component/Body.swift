@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Body: RestRequestModifier {
+public struct Body: RestRequestDSLComponent {
 
     private let content: Data?
 

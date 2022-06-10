@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Endpoint: RestRequestModifier {
+public struct Endpoint: RestRequestDSLComponent {
 
     private let endpoint: RestEndpoint
 

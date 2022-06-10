@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Query: RestRequestModifier {
+public struct Query: RestRequestDSLComponent {
 
     private let name: String
 

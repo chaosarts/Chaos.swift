@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Header: RestRequestModifier {
+public struct Header: RestRequestDSLComponent {
 
     private let name: String
 

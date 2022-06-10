@@ -7,11 +7,11 @@
 
 import Foundation
 
-public protocol RestRequestModifier {
+public protocol RestRequestDSLComponent {
     func apply(to request: RestRequest)
 }
 
-extension Array: RestRequestModifier where Element == RestRequestModifier {
+extension Array: RestRequestDSLComponent where Element == RestRequestDSLComponent {
     public func apply(to request: RestRequest) {
         forEach { $0.apply(to: request) }
     }

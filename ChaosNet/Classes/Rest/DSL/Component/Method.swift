@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Method: RestRequestModifier {
+public struct Method: RestRequestDSLComponent {
 
     private let value: RestMethod
 

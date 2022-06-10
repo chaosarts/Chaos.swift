@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Path: RestRequestModifier, ExpressibleByStringLiteral {
+public struct Path: RestRequestDSLComponent, ExpressibleByStringLiteral {
 
     private let value: String
 
