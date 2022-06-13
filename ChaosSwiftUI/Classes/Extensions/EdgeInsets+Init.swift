@@ -9,6 +9,9 @@ import Foundation
 import SwiftUI
 
 public extension EdgeInsets {
+
+    static let zero: EdgeInsets = EdgeInsets(0)
+
     init(horizontal: CGFloat = 0, vertical: CGFloat = 0) {
         self.init(top: vertical, leading: horizontal, bottom: vertical, trailing: horizontal)
     }
