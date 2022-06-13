@@ -16,7 +16,7 @@ public enum ScrollEvent: Equatable {
     case scrollEnd
 }
 
-public struct ScrollEventPreferenceKey: PreferenceKey {
+struct ScrollEventPreferenceKey: PreferenceKey {
 
     public static var defaultValue: ScrollEvent = .scrollIdle
 
