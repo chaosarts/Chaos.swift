@@ -19,6 +19,20 @@ struct OffsetPreferenceKey: PreferenceKey {
 
 /// A view that wraps a content in order to get information about the offset changes within the parent view. This View
 /// is primarily as direct child for scroll views.
+///
+/// ```
+/// ScrollView {
+///     OffsetReader(coordinateSpaceName: "Foo") { offset in
+///         Text("Hallo")
+///     }
+/// }
+/// .onOffsetChanged(coordinateSpaceName: "Foo") { offset in
+///     print(offset)
+/// }
+/// .onScrollEvent { event in
+///     print(event)
+/// }
+/// ```
 public struct OffsetReader<Content: View>: View {
 
     /// Holds the offset to publish on changes
