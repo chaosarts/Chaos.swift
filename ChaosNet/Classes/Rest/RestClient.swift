@@ -166,7 +166,7 @@ public class RestClient {
                                                      relativeTo: baseUrl)
             }
 
-            log.info(format: "Rest request %@ returned with status %@", request.id, response.httpURLResponse.statusCode)
+            log.info(format: "Rest request %@ returned with status %i", request.id, response.httpURLResponse.statusCode)
             log.debug(format: "%@", response.debugDescription)
 
             while !acceptsResponse(response, for: request, relativeTo: baseUrl) {
