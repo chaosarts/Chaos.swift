@@ -84,6 +84,7 @@ public class Log {
         let message = String(format: "%@ %@ [%@]: %@",
                              Date() as NSDate,
                              type.map({ String(describing: $0) }) ?? "Global",
+                             level.string,
                              args.map({ String(describing: $0) }).joined(separator: "\n"))
         Log.delegate?.log(self, willPrintMessage: message, onLevel: level)
         Log.output.write(message: message)
@@ -96,6 +97,7 @@ public class Log {
         let message = String(format: "%@ %@ [%@]: %@",
                              Date() as NSDate,
                              type.map({ String(describing: $0) }) ?? "Global",
+                             level.string,
                              String(format: format, arguments: args))
         Log.delegate?.log(self, willPrintMessage: message, onLevel: level)
         Log.output.write(message: message)
