@@ -18,10 +18,18 @@ public struct PrintLogOutput: LogOutput {
     }
 }
 
+public extension LogOutput where Self = PrintLogOutput {
+    static var print = PrintLogOutput()
+}
+
 public struct OSLogOutput: LogOutput {
     public func write(message: String) {
         os_log("\(message)")
     }
+}
+
+public extension LogOutput where Self = OSLogOutput {
+    static var os = OSLogOutput()
 }
 
 public struct CombinedLogOutput: LogOutput {
@@ -29,5 +37,15 @@ public struct CombinedLogOutput: LogOutput {
 
     public func write(message: String) {
         logOutputs.forEach({ $0.write(message: message) })
+    }
+}
+
+public extension LogOutput where Self = CombinedLogOutput {
+    static func combined(outputs: [LogOutput]) -> LogOutput {
+        CombinedLogOutput(logOutputs: outputs)
+    }
+
+    static func combined(_ outputs: LogOutput...) -> LogOutput {
+        combined(outputs: outputs)
     }
 }
