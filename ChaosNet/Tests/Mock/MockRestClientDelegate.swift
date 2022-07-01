@@ -12,45 +12,29 @@ public class MockRestClientDelegate: RestClientDelegate {
 
     public var callHistory: [CallHistoryItem] = []
 
-    public var acceptsResponse: ((RestTransportEngineResponse, RestRequest) -> Bool)?
+    public var acceptsResponse: ((RestRawResponse, RestRequest) -> Bool)?
 
-    public var shouldRescueRequest: ((RestRequest, RestTransportEngineResponse) -> Bool)?
+    public var shouldRescueRequest: ((RestRequest, RestRawResponse) -> Bool)?
 
-    public var rescueRequest: ((RestRequest, RestTransportEngineResponse) async throws -> RestTransportEngineResponse)?
-
-    public func restClient(_ restClient: RestClient, willSend request: RestRequest, relativeTo url: URL?) {
-        callHistory.append(.willSend(request))
-    }
-
-    public func restClient(_ restClient: RestClient, performPreRequestFor request: RestRequest, relativeTo url: URL?) async throws {
-        callHistory.append(.performPreRequestFor(request))
-    }
+    public var rescueRequest: ((RestRequest, RestRawResponse) async throws -> RestRawResponse)?
 
     public func restClient(_ restClient: RestClient, sendingRequestDidFailWithError error: Error, forRequest request: RestRequest, relativeTo url: URL?) {
         callHistory.append(.sendingRequestDidFailWithError(error, request))
     }
 
-    public func restClient(_ restClient: RestClient, didSend request: RestRequest, relativeTo url: URL?) {
-        callHistory.append(.didSend(request))
-    }
-
-    public func restClient(_ restClient: RestClient, acceptsResponse response: RestTransportEngineResponse, forRequest request: RestRequest, relativeTo url: URL?) -> Bool {
+    public func restClient(_ restClient: RestClient, acceptsResponse response: RestRawResponse, forRequest request: RestRequest, relativeTo url: URL?) -> Bool {
         callHistory.append(.acceptsResponse(response, request))
         return acceptsResponse?(response, request) ?? false
     }
 
-    public func restClient(_ restClient: RestClient, shouldRescueRequest request: RestRequest, withResponse response: RestTransportEngineResponse, relativeTo url: URL?) -> Bool {
+    public func restClient(_ restClient: RestClient, shouldRescueRequest request: RestRequest, withResponse response: RestRawResponse, relativeTo url: URL?) -> Bool {
         callHistory.append(.shouldRescueRequest(request, response))
         return shouldRescueRequest?(request, response) ?? false
     }
 
-    public func restClient(_ restClient: RestClient, rescueRequest request: RestRequest, withResponse response: RestTransportEngineResponse, relativeTo url: URL?) async throws -> RestTransportEngineResponse {
+    public func restClient(_ restClient: RestClient, rescueRequest request: RestRequest, withResponse response: RestRawResponse, relativeTo url: URL?) async throws -> RestRawResponse {
         callHistory.append(.rescueRequest(request, response))
         return try await rescueRequest?(request, response) ?? response
-    }
-
-    public func restClient<D>(_ restClient: RestClient, didProduceRestResponse restReponse: RestResponse<D>, forRequest request: RestRequest, relativeTo url: URL?) {
-        callHistory.append(.didProduceRestResponse(request))
     }
 
     public func restClient(_ restClient: RestClient, responseProcessingDidFailWithError error: Error, forRequest request: RestRequest, relativeTo url: URL?) {
@@ -60,22 +44,16 @@ public class MockRestClientDelegate: RestClientDelegate {
 
 public extension MockRestClientDelegate {
     enum CallHistoryItem {
-        case willSend(RestRequest)
-        case performPreRequestFor(RestRequest)
         case sendingRequestDidFailWithError(Error, RestRequest)
-        case didSend(RestRequest)
-        case acceptsResponse(RestTransportEngineResponse, RestRequest)
-        case shouldRescueRequest(RestRequest, RestTransportEngineResponse)
-        case rescueRequest(RestRequest, RestTransportEngineResponse)
-        case didProduceRestResponse(RestRequest)
+        case acceptsResponse(RestRawResponse, RestRequest)
+        case shouldRescueRequest(RestRequest, RestRawResponse)
+        case rescueRequest(RestRequest, RestRawResponse)
         case responseProcessingDidFailWithError(Error, RestRequest)
 
         public var restRequest: RestRequest {
             switch self {
-            case .willSend(let request), .performPreRequestFor(let request),
-                    .sendingRequestDidFailWithError(_, let request), .didSend(let request),
-                    .acceptsResponse(_, let request), .shouldRescueRequest(let request, _),
-                    .rescueRequest(let request, _), .didProduceRestResponse(let request),
+            case .sendingRequestDidFailWithError(_, let request), .acceptsResponse(_, let request),
+                    .shouldRescueRequest(let request, _), .rescueRequest(let request, _),
                     .responseProcessingDidFailWithError(_, let request):
                 return request
             }
@@ -86,16 +64,14 @@ public extension MockRestClientDelegate {
             case .sendingRequestDidFailWithError(let error, _),
                     .responseProcessingDidFailWithError(let error, _):
                 return error
-            case .willSend, .performPreRequestFor, .didSend, .acceptsResponse, .shouldRescueRequest, .rescueRequest,
-                    .didProduceRestResponse:
+            case .acceptsResponse, .shouldRescueRequest, .rescueRequest:
                 return nil
             }
         }
 
-        public var restTransportReponse: RestTransportEngineResponse? {
+        public var restTransportReponse: RestRawResponse? {
             switch self {
-            case .willSend, .performPreRequestFor, .sendingRequestDidFailWithError, .didSend, .didProduceRestResponse,
-                    .responseProcessingDidFailWithError:
+            case .sendingRequestDidFailWithError, .responseProcessingDidFailWithError:
                 return nil
             case .acceptsResponse(let restTransportEngineResponse, _),
                     .shouldRescueRequest(_, let restTransportEngineResponse),
@@ -104,24 +80,8 @@ public extension MockRestClientDelegate {
             }
         }
 
-        public var isWillSend: Bool {
-            if case .willSend = self { return true }
-            return false
-        }
-
-
-        public var isPerformPreRequestFor: Bool {
-            if case .performPreRequestFor = self { return true }
-            return false
-        }
-
         public var isSendingRequestDidFailWithError: Bool {
             if case .sendingRequestDidFailWithError = self { return true }
-            return false
-        }
-
-        public var isDidSend: Bool {
-            if case .didSend = self { return true }
             return false
         }
 
@@ -137,11 +97,6 @@ public extension MockRestClientDelegate {
 
         public var isRescueRequest: Bool {
             if case .rescueRequest = self { return true }
-            return false
-        }
-
-        public var isDidProduceRestResponse: Bool {
-            if case .didProduceRestResponse = self { return true }
             return false
         }
         

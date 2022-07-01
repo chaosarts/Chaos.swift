@@ -24,6 +24,7 @@ extension RestInternalError: RestError {
         case engine
         case noData
         case decoding
+        case hook
         case unknown
     }
 }
