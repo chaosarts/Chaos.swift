@@ -93,15 +93,54 @@ public class RestClient {
     }
 
 
-    // MARK: Sending Requests Synchronous
+    // MARK: Data Helper
 
     public func encode<E: Encodable>(_ encodable: E) throws -> Data? {
         return try dataEncoder.encode(encodable)
     }
 
+    public func encode(_ encode: @escaping (Encoder) throws -> Void) throws -> Data? {
+        let encoder = DeferredEncoder(callback: encode)
+        return try dataEncoder.encode(encoder)
+    }
+
+    // MARK: Sending requests and handling responses
+
     private func acceptsResponse(_ response: RestRawResponse, for request: RestRequest, relativeTo baseUrl: URL?) -> Bool {
         HttpStatus.isSuccessStatusCode(response.httpURLResponse.statusCode) ||
         delegate?.restClient(self, acceptsResponse: response, forRequest: request, relativeTo: baseUrl) ?? false
+    }
+
+    private func processRawResponse(_ rawResponse: RestRawResponse, for request: RestRequest, relativeTo baseUrl: URL?) async throws -> RestRawResponse {
+        do {
+            var rawResponse = rawResponse
+            for hook in preRawResponseProcessHooks {
+                rawResponse = try await hook.restClient(self,
+                                                        willProcessRawResponse: rawResponse,
+                                                        for: request,
+                                                        relativeTo: baseUrl)
+            }
+            return rawResponse
+        } catch {
+            let restError = RestInternalError(code: .hook, previous: error)
+            delegate?.restClient(self, responseProcessingDidFailWithError: restError, forRequest: request, relativeTo: baseUrl)
+            throw restError
+        }
+    }
+
+
+    private func processRestResponse<D>(_ restResponse: RestResponse<D>, for request: RestRequest, relativeTo baseUrl: URL?) async throws -> RestResponse<D> {
+        do {
+            var restResponse = restResponse
+            for hook in postRawResponseProcessHooks {
+                restResponse = try await hook.restClient(self, didProcessRawResponseTo: restResponse, for: request, relativeTo: baseUrl)
+            }
+            return restResponse
+        } catch {
+            let restError = RestInternalError(code: .hook, previous: error)
+            delegate?.restClient(self, responseProcessingDidFailWithError: restError, forRequest: request, relativeTo: baseUrl)
+            throw restError
+        }
     }
 
     public func response(forRequest request: RestRequest, relativeTo baseUrl: URL? = nil) async throws -> RestTransportEngine.Response {
@@ -152,39 +191,6 @@ public class RestClient {
     }
 
 
-    private func processRawResponse(_ rawResponse: RestRawResponse, for request: RestRequest, relativeTo baseUrl: URL?) async throws -> RestRawResponse {
-        do {
-            var rawResponse = rawResponse
-            for hook in preRawResponseProcessHooks {
-                rawResponse = try await hook.restClient(self,
-                                                        willProcessRawResponse: rawResponse,
-                                                        for: request,
-                                                        relativeTo: baseUrl)
-            }
-            return rawResponse
-        } catch {
-            let restError = RestInternalError(code: .hook, previous: error)
-            delegate?.restClient(self, responseProcessingDidFailWithError: restError, forRequest: request, relativeTo: baseUrl)
-            throw restError
-        }
-    }
-
-
-    private func processRestResponse<D>(_ restResponse: RestResponse<D>, for request: RestRequest, relativeTo baseUrl: URL?) async throws -> RestResponse<D> {
-        do {
-            var restResponse = restResponse
-            for hook in postRawResponseProcessHooks {
-                restResponse = try await hook.restClient(self, didProcessRawResponseTo: restResponse, for: request, relativeTo: baseUrl)
-            }
-            return restResponse
-        } catch {
-            let restError = RestInternalError(code: .hook, previous: error)
-            delegate?.restClient(self, responseProcessingDidFailWithError: restError, forRequest: request, relativeTo: baseUrl)
-            throw restError
-        }
-    }
-
-
     public func send<D: Decodable>(request: RestRequest, relativeTo baseUrl: URL? = nil, expecting type: D.Type = D.self) async throws -> RestResponse<D> {
         var rawResponse = try await response(forRequest: request, relativeTo:  baseUrl)
         rawResponse = try await processRawResponse(rawResponse, for: request, relativeTo: baseUrl)
@@ -219,7 +225,9 @@ public class RestClient {
     }
 
 
-    // MARK: Sending Request with RestRequestBuilder
+    public func request(@RestRequestBuilder _ build: () throws -> RestRequest) rethrows -> RestRequest {
+        try build()
+    }
 
     public func response(relativeTo baseUrl: URL? = nil, @RestRequestBuilder _ build: () throws -> RestRequest) async throws -> RestRawResponse {
         return try await response(forRequest: try build(), relativeTo: baseUrl)
@@ -243,6 +251,7 @@ public class RestClient {
     public func cancelRequest(withIdentifier id: String) {
         transportEngine.cancelRequest(withIdentifier: id)
     }
+
 
     // MARK: HTTPURLResponse Helper
 
