@@ -18,8 +18,8 @@ public struct PrintLogOutput: LogOutput {
     }
 }
 
-public extension LogOutput where Self = PrintLogOutput {
-    static var print = PrintLogOutput()
+public extension LogOutput where Self == PrintLogOutput {
+    static var print: LogOutput { PrintLogOutput() }
 }
 
 public struct OSLogOutput: LogOutput {
@@ -28,8 +28,8 @@ public struct OSLogOutput: LogOutput {
     }
 }
 
-public extension LogOutput where Self = OSLogOutput {
-    static var os = OSLogOutput()
+public extension LogOutput where Self == OSLogOutput {
+    static var os: LogOutput { OSLogOutput() }
 }
 
 public struct CombinedLogOutput: LogOutput {
@@ -40,7 +40,7 @@ public struct CombinedLogOutput: LogOutput {
     }
 }
 
-public extension LogOutput where Self = CombinedLogOutput {
+public extension LogOutput where Self == CombinedLogOutput {
     static func combined(outputs: [LogOutput]) -> LogOutput {
         CombinedLogOutput(logOutputs: outputs)
     }
