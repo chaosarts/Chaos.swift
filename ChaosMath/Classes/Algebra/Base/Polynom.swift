@@ -9,9 +9,9 @@ public struct Polynom<Coefficient: FloatingPoint> {
 
     private var monomsByPower: [Int: Coefficient]
 
-    public subscript(_ power: Int) -> Coefficient? {
-        get { monomsByPower[power] }
-        set { monomsByPower[power] = newValue }
+    public subscript(_ power: Int) -> Coefficient {
+        get { monomsByPower[power] ?? 0 }
+        set { monomsByPower[power] = newValue == 0 ? nil : newValue }
     }
 
     public init(monomsByPower: [Int: Coefficient] = [:]) {

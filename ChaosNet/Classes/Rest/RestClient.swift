@@ -242,17 +242,6 @@ public class RestClient {
     }
 
 
-    // MARK: Request Cancellation
-
-    public func cancelRequest(_ request: RestRequest) {
-        cancelRequest(withIdentifier: request.id)
-    }
-
-    public func cancelRequest(withIdentifier id: String) {
-        transportEngine.cancelRequest(withIdentifier: id)
-    }
-
-
     // MARK: HTTPURLResponse Helper
 
     private func headers(fromHttpUrlResponse response: HTTPURLResponse) -> [String: String] {

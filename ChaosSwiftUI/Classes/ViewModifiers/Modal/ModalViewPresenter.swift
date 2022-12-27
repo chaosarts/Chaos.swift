@@ -4,7 +4,6 @@
 //
 //  Created by Fu Lam Diep on 02.03.22.
 //
-
 import SwiftUI
 
 public struct ModalViewPresenter<Content: View>: UIViewControllerRepresentable {

@@ -37,7 +37,7 @@ public class Mesh: NSObject {
     /// Provides the buffer representation of the vertices. This can be used as an intermediate state to pass to lower
     /// levels of 3d programming.
     public var vertexBuffer: [Point3.Component] {
-        vertices.reduce([]) { $0 + $1.components }
+        vertices.flatMap { $0.components }
     }
 
     // MARK: Triangle Properties

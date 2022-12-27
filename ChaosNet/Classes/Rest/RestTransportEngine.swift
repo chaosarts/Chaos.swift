@@ -14,6 +14,4 @@ public protocol RestTransportEngine {
     /// responses regardless of the status code. For all other error cases, in which the engine is unable to reach the
     /// rest system it should throw an error.
     func send (request: URLRequest, withIdentifier identifier: String) async throws -> Response
-
-    func cancelRequest(withIdentifier identifier: String)
 }

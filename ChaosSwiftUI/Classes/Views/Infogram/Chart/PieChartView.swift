@@ -13,12 +13,12 @@ public struct PieChartView: View {
 
     public struct Segment: Identifiable {
         public var id = UUID().uuidString
-        public var value: CGFloat
+        public var value: Double
         public var visible: Bool = true
         public var color: Color = .black
 
         public init (id: String = UUID().uuidString,
-                     value: CGFloat,
+                     value: Double,
                      visible: Bool = true,
                      color: Color = .black) {
             self.id = id
@@ -36,13 +36,13 @@ public struct PieChartView: View {
 
     private var innerRadius: CGFloat = 0
 
-    private var startAngle: CGFloat = .circleTopAngle
+    private var startAngle: Double = .circleTopAngle
 
     private var clockwise: Bool = true
 
     private var totalValue: CGFloat { segments.map({ $0.value }).sum }
 
-    private var angles: [CGFloat] {
+    private var angles: [Double] {
         let totalValue = totalValue
 
         guard totalValue > 0 else { return [] }
@@ -51,7 +51,7 @@ public struct PieChartView: View {
         let radiansPerPercent = 1 / totalValue * doublePi
 
         var angle = startAngle
-        var angles: [CGFloat] = [angle]
+        var angles: [Double] = [angle]
 
         for segment in segments.filter({ $0.visible }) {
             angle += segment.value * radiansPerPercent

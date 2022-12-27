@@ -9,19 +9,19 @@ import SwiftUI
 
 public struct WedgeShape: Shape {
 
-    public var center: CGPoint = .zero
+    public let center: CGPoint
 
-    public var startAngle: CGFloat = .zero
+    public var startAngle: Double
 
-    public var endAngle: CGFloat = .zero
+    public var endAngle: Double
 
-    public var radius: CGFloat = 50
+    public var radius: CGFloat
 
-    public var innerRadius: CGFloat = 0
+    public var innerRadius: CGFloat
 
-    public var clockwise: Bool = true
+    public let clockwise: Bool
 
-    public var animatableData: AnimatablePair<AnimatablePair<CGFloat, CGFloat>, AnimatablePair<CGFloat, CGFloat>> {
+    public var animatableData: AnimatablePair<AnimatablePair<Double, Double>, AnimatablePair<CGFloat, CGFloat>> {
         get {
             AnimatablePair(AnimatablePair(startAngle, endAngle), AnimatablePair(radius, innerRadius))
         }
@@ -33,18 +33,32 @@ public struct WedgeShape: Shape {
         }
     }
 
+    public init(center: CGPoint = .zero,
+                startAngle: Double = .zero,
+                endAngle: Double = .zero,
+                radius: CGFloat = 50,
+                innerRadius: CGFloat = 0,
+                clockwise: Bool = true) {
+        self.center = center
+        self.startAngle = startAngle
+        self.endAngle = endAngle
+        self.radius = radius
+        self.innerRadius = innerRadius
+        self.clockwise = clockwise
+    }
+
     public func path(in rect: CGRect) -> Path {
         return Path { path in
             path.addArc(center: center,
                         radius: radius,
-                        startAngle: Angle(radians: Double(startAngle)),
-                        endAngle: Angle(radians: Double(endAngle)),
+                        startAngle: Angle(radians: startAngle),
+                        endAngle: Angle(radians: endAngle),
                         clockwise: !clockwise)
 
             path.addArc(center: center,
                         radius: innerRadius,
-                        startAngle: Angle(radians: Double(endAngle)),
-                        endAngle: Angle(radians: Double(startAngle)),
+                        startAngle: Angle(radians: endAngle),
+                        endAngle: Angle(radians: startAngle),
                         clockwise: clockwise)
             path.closeSubpath()
         }

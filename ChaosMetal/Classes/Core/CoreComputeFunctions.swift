@@ -23,6 +23,7 @@ public func command(forFunction functionName: String, inQueue commandQueue: MTLC
 
     do {
         let computePipelineState = try commandQueue.device.makeComputePipelineState(function: function)
+        
         commandEncoder.setComputePipelineState(computePipelineState)
         return (commandBuffer, commandEncoder)
     } catch {
@@ -30,35 +31,35 @@ public func command(forFunction functionName: String, inQueue commandQueue: MTLC
     }
 }
 
-public func threadgroupSizeToFit<T>(size: MTLSize, ofType type: T.Type, for device: MTLDevice, reduce: (MTLSize) -> MTLSize) -> MTLSize {
+public func sizeToFit<T>(preferredSize size: MTLSize, type: T.Type, for device: MTLDevice, reduce: (MTLSize) -> MTLSize) -> MTLSize {
+    var threadgroupSize = MTLSize(width: min(size.width, device.maxThreadsPerThreadgroup.width),
+                                  height: min(size.height, device.maxThreadsPerThreadgroup.height),
+                                  depth: min(size.depth, device.maxThreadsPerThreadgroup.depth))
 
-    let elementMemoryLength = MemoryLayout<T>.stride
-
-    let maxThreadsPerThreadgroupByDevice = device.maxThreadsPerThreadgroup
-
-    var threadgroupSize = MTLSize(width: min(size.width, maxThreadsPerThreadgroupByDevice.width),
-                                  height: min(size.height, maxThreadsPerThreadgroupByDevice.height),
-                                  depth: min(size.depth, maxThreadsPerThreadgroupByDevice.depth))
-
-    let maxThreadgroupMemoryLength = device.maxThreadgroupMemoryLength
-    var memoryLength = threadgroupSize.width
-        * threadgroupSize.height
-        * threadgroupSize.depth
-        * elementMemoryLength
-
-    while memoryLength > maxThreadgroupMemoryLength {
+    while threadgroupSize.memoryLength(forType: T.self) > device.maxThreadgroupMemoryLength {
         let newThreadgroupSize = reduce(threadgroupSize)
-        if newThreadgroupSize.width == threadgroupSize.width,
-           newThreadgroupSize.height == threadgroupSize.height,
-           newThreadgroupSize.depth == threadgroupSize.depth {
+        if newThreadgroupSize == threadgroupSize {
             fatalError("Reduce callback closure does not reduce the size.")
         }
 
         threadgroupSize = newThreadgroupSize
-        memoryLength = threadgroupSize.width
-            * threadgroupSize.height
-            * threadgroupSize.depth
-            * elementMemoryLength
+    }
+
+    return threadgroupSize
+}
+
+public func sizeToFit(preferredSize size: MTLSize, sizePerElement: Int, for device: MTLDevice, reduce: (MTLSize) -> MTLSize) -> MTLSize {
+    var threadgroupSize = MTLSize(width: min(size.width, device.maxThreadsPerThreadgroup.width),
+                                  height: min(size.height, device.maxThreadsPerThreadgroup.height),
+                                  depth: min(size.depth, device.maxThreadsPerThreadgroup.depth))
+    
+    while threadgroupSize.volume * sizePerElement > device.maxThreadgroupMemoryLength {
+        let newThreadgroupSize = reduce(threadgroupSize)
+        if newThreadgroupSize == threadgroupSize {
+            fatalError("Reduce callback closure does not reduce the size.")
+        }
+
+        threadgroupSize = newThreadgroupSize
     }
 
     return threadgroupSize

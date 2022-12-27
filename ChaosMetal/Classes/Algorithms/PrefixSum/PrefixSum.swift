@@ -7,7 +7,7 @@
 
 import Metal
 
-public func gpu_prefix_sum(matrix: [Float], width: Int, height: Int, inCommandQueue commandQueue: MTLCommandQueue, completion: ([Float]) -> Void) throws {
+public func gpu_prefix_sum(matrix: [Float], width: Int, height: Int, inCommandQueue commandQueue: MTLCommandQueue, completion: ([Float]) -> Void) async throws -> [Float] {
     guard matrix.count == width * height else {
         throw AlgorithmError(code: .matrixSizeMismatch)
     }
@@ -16,35 +16,44 @@ public func gpu_prefix_sum(matrix: [Float], width: Int, height: Int, inCommandQu
         throw ChaosMetalError(code: .noBuffer)
     }
 
-    try gpu_prefix_sum(matrix: matrixBuffer, width: width, height: height, inCommandQueue: commandQueue, completion: {
-        completion($0.contents().load(as: [Float].self))
-    })
+    let output = try await gpu_prefix_sum(matrix: matrixBuffer, width: width, height: height, in: commandQueue)
+    return output.contents().load(as: [Float].self)
 }
 
-public func gpu_prefix_sum(matrix: MTLBuffer, width: Int, height: Int, inCommandQueue commandQueue: MTLCommandQueue, completion: (MTLBuffer) -> Void) throws {
-    let command = try command(forFunction: "prefix_sum", inQueue: commandQueue)
+public func gpu_prefix_sum(matrix: MTLBuffer, width: Int, height: Int, in commandQueue: MTLCommandQueue) async throws -> MTLBuffer {
+    guard let commandBuffer = commandQueue.makeCommandBuffer() else {
+        throw ChaosMetalError(code: .noCommandBuffer)
+    }
 
-    let next16Bytes = max(width - width % 16, 16)
-    var threadgroupSizeByMemory = threadgroupSizeToFit(size: MTLSize(width: next16Bytes, height: next16Bytes, depth: 1),
-                                                       ofType: Float.self,
-                                                       for: commandQueue.device) { size in
+    guard let commandEncoder = commandBuffer.makeComputeCommandEncoder() else {
+        throw ChaosMetalError(code: .noCommandEncoder)
+    }
+
+    let library = try commandQueue.device.makeChaosMetalDefaultLibrary()
+    guard let function = library.makeFunction(name: "prefix_sum") else {
+        throw ChaosMetalError(code: .functionNotFound)
+    }
+    let elementsPerWarp = 32
+    let nextDivisableWidth = max(width - width % elementsPerWarp + elementsPerWarp, elementsPerWarp)
+    var threadgroupMatrixSize = sizeToFit(preferredSize: MTLSize(width: nextDivisableWidth, height: height, depth: 1),
+                                          type: Float.self,
+                                          for: commandQueue.device) { size in
+        // First try to reduce size by height, otherwise try to reduce by width. If the sizes doesn't change,
+        // `sizeToFit` will raise a fatal error.
         var size = size
-        if size.height > 16 {
-            size.height = max(1, height - 16)
+        if size.height > 1 {
+            size.height = height - 1
+        } else if size.width > 1 {
+            size.width = max(1, width - elementsPerWarp)
         }
-
-        if size.height == 1 {
-            size.width = max(1, width - 16)
-        }
-
         return size
     }
 
-    let threadgroupMemoryLength = threadgroupSizeByMemory.memoryLength(forType: Float.self)
-    let N = Int(ceil(log(Float(width)) / log(Float(threadgroupSizeByMemory.width))))
-    threadgroupSizeByMemory.width /= 2
+    let threadgroupMemoryLength = threadgroupMatrixSize.memoryLength(forType: Float.self)
+    let N = Int(ceil(log(Float(width)) / log(Float(threadgroupMatrixSize.width))))
 
     var width = width
     var height = height
 
+    return commandQueue.device.makeBuffer(length: matrix.length)!
 }

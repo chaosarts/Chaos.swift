@@ -366,7 +366,7 @@ public class RestClientTests: XCTestCase {
             Query(name: "nil", value: nil, ignoreWhenNil: true)
             Header(name: "Content-Type", value: "application/json")
             Header(name: "AppTag", value: nil)
-            Body(try restClient.encode(user))
+            try Body(try restClient.encode(user))
         }
 
         let lastRequest = restTransportEngine.lastRequest

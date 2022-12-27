@@ -11,6 +11,7 @@ let package = Package(
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(name: "ChaosAnimation", targets: ["ChaosAnimation"]),
         .library(name: "ChaosCore", targets: ["ChaosCore"]),
+        .library(name: "ChaosCombine", targets: ["ChaosCombine"]),
         .library(name: "ChaosGraphics", targets: ["ChaosGraphics"]),
         .library(name: "ChaosKit", targets: ["ChaosKit"]),
         .library(name: "ChaosMath", targets: ["ChaosMath"]),
@@ -20,7 +21,8 @@ let package = Package(
         .library(name: "ChaosUi", targets: ["ChaosUi"]),
         .library(name: "ChaosSwiftUI", targets: ["ChaosSwiftUI"])
     ],
-    dependencies: [],
+    dependencies: [
+    ],
     targets: [
         .target(
             name: "ChaosAnimation",
@@ -38,6 +40,15 @@ let package = Package(
             name: "ChaosCoreTests",
             dependencies: ["ChaosCore"],
             path: "ChaosCore/Tests"
+        ),
+        .target(
+            name: "ChaosCombine",
+            path: "ChaosCombine/Classes"
+        ),
+        .testTarget(
+            name: "ChaosCombineTests",
+            dependencies: ["ChaosCombine"],
+            path: "ChaosCombine/Tests"
         ),
         .target(
             name: "ChaosGraphics",
