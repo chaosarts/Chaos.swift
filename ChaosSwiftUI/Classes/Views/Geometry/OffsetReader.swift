@@ -68,12 +68,12 @@ public struct OffsetReader<Content: View>: View {
         Group {
             content(offset)
         }
-        .background {
+        .background(
             GeometryReader { proxy in
                 let offset = proxy.frame(in: coordinateSpace).origin
                 Color.clear.preference(key: OffsetPreferenceKey.self, value: offset)
             }
-        }
+        )
         .onPreferenceChange(OffsetPreferenceKey.self) { offset in
             self.offset = offset
         }
