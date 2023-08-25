@@ -9,123 +9,37 @@ let package = Package(
     platforms: [.iOS(.v14), .macOS(.v11)],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
-        .library(name: "ChaosAnimation", targets: ["ChaosAnimation"]),
-        .library(name: "ChaosCore", targets: ["ChaosCore"]),
-        .library(name: "ChaosCombine", targets: ["ChaosCombine"]),
-        .library(name: "ChaosGraphics", targets: ["ChaosGraphics"]),
-        .library(name: "ChaosKit", targets: ["ChaosKit"]),
-        .library(name: "ChaosMath", targets: ["ChaosMath"]),
-        .library(name: "ChaosMetal", targets: ["ChaosMetal"]),
-        .library(name: "ChaosNet", targets: ["ChaosNet"]),
-        .library(name: "ChaosThree", targets: ["ChaosThree"]),
-        .library(name: "ChaosUi", targets: ["ChaosUi"]),
-        .library(name: "ChaosSwiftUI", targets: ["ChaosSwiftUI"])
+        .library(name: "Chaos", targets: ["Chaos"])
     ],
     dependencies: [
+        .package(path: "ChaosAnimation"),
+        .package(path: "ChaosCore"),
+        .package(path: "ChaosCombine"),
+        .package(path: "ChaosGraphics"),
+        .package(path: "ChaosKit"),
+        .package(path: "ChaosMath"),
+        .package(path: "ChaosMetal"),
+        .package(path: "ChaosNet"),
+        .package(path: "ChaosThree"),
+        .package(path: "ChaosUi"),
+        .package(path: "ChaosSwiftUI")
     ],
     targets: [
         .target(
-            name: "ChaosAnimation",
+            name: "Chaos",
             dependencies: [
+                "ChaosAnimation",
                 "ChaosCore",
-                "ChaosGraphics"
-            ],
-            path: "ChaosAnimation/Classes"
-        ),
-        .target(
-            name: "ChaosCore",
-            path: "ChaosCore/Classes"
-        ),
-        .testTarget(
-            name: "ChaosCoreTests",
-            dependencies: ["ChaosCore"],
-            path: "ChaosCore/Tests"
-        ),
-        .target(
-            name: "ChaosCombine",
-            path: "ChaosCombine/Classes"
-        ),
-        .testTarget(
-            name: "ChaosCombineTests",
-            dependencies: ["ChaosCombine"],
-            path: "ChaosCombine/Tests"
-        ),
-        .target(
-            name: "ChaosGraphics",
-            dependencies: [
-                "ChaosCore",
-                "ChaosMath"
-            ],
-            path: "ChaosGraphics/Classes"
-        ),
-        .target(
-            name: "ChaosMath",
-            dependencies: [
-                "ChaosCore"
-            ],
-            path: "ChaosMath/Classes"
-        ),
-        .testTarget(
-            name: "ChaosMathTests",
-            dependencies: ["ChaosCore", "ChaosMath"],
-            path: "ChaosMath/Tests"
-        ),
-        .target(
-            name: "ChaosMetal",
-            dependencies: [
-                "ChaosCore",
-                "ChaosMath"
-            ],
-            path: "ChaosMetal/Classes"
-        ),
-        .target(
-            name: "ChaosNet",
-            dependencies: [
-                "ChaosCore"
-            ],
-            path: "ChaosNet/Classes"
-        ),
-        .testTarget(
-            name: "ChaosNetTests",
-            dependencies: ["ChaosNet"],
-            path: "ChaosNet/Tests",
-            resources: [
-                .process("Resources", localization: nil)
-            ]
-        ),
-        .target(
-            name: "ChaosThree",
-            dependencies: [
-                "ChaosCore",
-                "ChaosMath"
-            ],
-            path: "ChaosThree/Classes"
-        ),
-        .target(
-            name: "ChaosUi",
-            dependencies: [
-                "ChaosCore",
+                "ChaosCombine",
                 "ChaosGraphics",
-                "ChaosAnimation"
-            ],
-            path: "ChaosUi/Classes"
-        ),
-        .target(
-            name: "ChaosKit",
-            dependencies: [
-                "ChaosCore",
+                "ChaosKit",
+                "ChaosMath",
+                "ChaosMetal",
                 "ChaosNet",
-                "ChaosUi"
-            ],
-            path: "ChaosKit/Classes"
-        ),
-        .target(
-            name: "ChaosSwiftUI",
-            dependencies: [
-                "ChaosCore",
-                "ChaosGraphics",
-            ],
-            path: "ChaosSwiftUI/Classes"
+                "ChaosThree",
+                "ChaosUi",
+                "ChaosSwiftUI"
+            ]
         )
     ]
 )
