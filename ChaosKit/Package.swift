@@ -15,8 +15,6 @@ let package = Package(
     ],
     targets: [
         .target(name: "ChaosKit"),
-        .testTarget(name: "ChaosKitTests",
-                    dependencies: ["ChaosKit"])
     ]
 )
 	

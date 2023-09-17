@@ -13,5 +13,6 @@ public class Mat2Tests: XCTestCase {
     public func testInit_isZeroMatrix_whenNoArgumentsPassed() {
         // Act
         let matrix = Mat2()
+        XCTAssertEqual(matrix, .zero)
     }
 }

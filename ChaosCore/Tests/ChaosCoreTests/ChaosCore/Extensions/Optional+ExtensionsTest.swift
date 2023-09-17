@@ -10,7 +10,7 @@ import XCTest
 
 public class OptionalExtensionsTests: XCTestCase {
 
-    public func testExecute_setsValue_whenOptionalIsNil () {
+    public func testSetIfNil_setsValue_whenOptionalIsNil () {
         // Act
         var optional: String?
         optional.setIfNil("Mom")
@@ -19,7 +19,7 @@ public class OptionalExtensionsTests: XCTestCase {
         XCTAssertEqual(optional, "Mom")
     }
 
-    public func testExecute_setsNotValue_whenOptionalIsNotNil () {
+    public func testSetIfNil_setsNotValue_whenOptionalIsNotNil () {
         // Act
         var optional: String? = "Dad"
         optional.setIfNil("Mom")

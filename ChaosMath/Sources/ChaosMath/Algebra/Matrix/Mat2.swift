@@ -83,6 +83,10 @@ public struct t_mat2<Component: CodableSignedNumeric>: StaticSquareMatrix {
     }
 }
 
+extension t_mat2 {
+    static var zero: Self { Self.init() }
+}
+
 extension t_mat2: FloatingPointMatrix where Component: FloatingPoint {
 
 }

@@ -8,10 +8,10 @@
 import Foundation
 
 public extension String {
-
-    func extract (withRegExp regex: NSRegularExpression) -> [[String]] {
+    
+    func extract(withRegExp regex: NSRegularExpression) -> [[String]] {
         let range = NSRange(location: 0, length: self.count)
-
+        
         let matches = regex.matches(in: self, options: [], range: range).map({ match -> [String] in
             var output: [String] = []
             for i in 0..<match.numberOfRanges {
@@ -23,27 +23,27 @@ public extension String {
             }
             return output
         })
-
+        
         return matches
     }
-
-
-    func extract (withPattern pattern: String, options: NSRegularExpression.Options = []) throws -> [[String]] {
+    
+    
+    func extract(withPattern pattern: String, options: NSRegularExpression.Options = []) throws -> [[String]] {
         let regex = try NSRegularExpression(pattern: pattern, options: options)
         return extract(withRegExp: regex)
     }
-
-    func replacing (regex: NSRegularExpression,
-                    withString replacement: String = "",
-                    options: NSRegularExpression.MatchingOptions = []) -> String {
+    
+    func replacing(regex: NSRegularExpression,
+                   withString replacement: String = "",
+                   options: NSRegularExpression.MatchingOptions = []) -> String {
         let range = NSRange(location: 0, length: self.count)
         return regex.stringByReplacingMatches(in: self, options: options, range: range, withTemplate: replacement)
     }
-
-    func replacing (pattern: String,
-                  withString replacement: String = "",
-                  options: NSRegularExpression.Options = [],
-                  matchingOptions: NSRegularExpression.MatchingOptions = []) throws -> String {
+    
+    func replacing(pattern: String,
+                   withString replacement: String = "",
+                   options: NSRegularExpression.Options = [],
+                   matchingOptions: NSRegularExpression.MatchingOptions = []) throws -> String {
         replacing(regex: try NSRegularExpression(pattern: pattern, options: options),
                   withString: replacement,
                   options: matchingOptions)

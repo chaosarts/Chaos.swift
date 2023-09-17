@@ -13,3 +13,8 @@ public func moduleName<T: AnyObject> (_ any: T.Type) -> String {
     guard let moduleName = NSStringFromClass(any).split(separator: ".").first else { fatalError("Module name cannot be extracted from type '\(any)'") }
     return String(moduleName)
 }
+
+@freestanding(expression)
+public macro stringify<T>(_ value: T) -> (T, String) = #externalMacro(module: "ChaosCoreMacros", type: "StringifyMacro")
+
+
