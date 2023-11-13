@@ -21,4 +21,4 @@ let package = Package(
                     dependencies: ["ChaosMath"])
     ]
 )
-	
+

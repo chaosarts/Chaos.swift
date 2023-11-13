@@ -13,6 +13,5 @@ import SwiftSyntaxMacros
 @main
 struct ChaosCoreMacroPlugin: CompilerPlugin {
     var providingMacros: [Macro.Type] = [
-        StringifyMacro.self
     ]
 }

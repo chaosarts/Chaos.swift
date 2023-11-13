@@ -12,9 +12,15 @@ let package = Package(
         .library(name: "ChaosSwiftUI", targets: ["ChaosSwiftUI"]),
     ],
     dependencies: [
+        .package(path: "../ChaosMath")
     ],
     targets: [
-        .target(name: "ChaosSwiftUI")
+        .target(
+            name: "ChaosSwiftUI",
+            dependencies: [
+                "ChaosMath"
+            ]
+        )
     ]
 )
 	
