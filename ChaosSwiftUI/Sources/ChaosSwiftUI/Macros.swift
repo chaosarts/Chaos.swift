@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-@attached(peer, names: suffixed(EnvironmentKey))
+@attached(peer, names: arbitrary)
 @attached(accessor, names: named(get), named(set))
 public macro EnvironmentValue() = #externalMacro(module: "ChaosSwiftUIMacros", type: "EnvironmentValueMacro")
 
