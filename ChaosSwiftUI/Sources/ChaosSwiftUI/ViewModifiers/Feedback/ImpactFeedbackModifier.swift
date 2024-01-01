@@ -28,16 +28,16 @@ public struct ImpactFeedbackModifier: ViewModifier {
         self.intensity = intensity
     }
 
-    public func body(content: Content) -> some View {
+    @ViewBuilder public func body(content: Content) -> some View {
         switch event {
         case .onTap:
-            return AnyView(content.onTapGesture {
+            content.simultaneousGesture(TapGesture().onEnded({
                 generator.impactOccurred(intensity: intensity)
-            })
+            }))
         case .onAppear:
-            return AnyView(content.onAppear {
+            content.onAppear {
                 generator.impactOccurred(intensity: intensity)
-            })
+            }
         }
     }
 }
