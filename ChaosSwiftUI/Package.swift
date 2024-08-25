@@ -7,7 +7,7 @@ import CompilerPluginSupport
 let package = Package(
     name: "ChaosSwiftUI",
     defaultLocalization: "en",
-    platforms: [.iOS(.v15), .macOS(.v14)],
+    platforms: [.iOS(.v16), .macOS(.v14)],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(name: "ChaosSwiftUI", targets: ["ChaosSwiftUI"]),

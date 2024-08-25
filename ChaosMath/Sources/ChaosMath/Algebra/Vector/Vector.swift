@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - Vector
 
-public protocol Vector: CustomStringConvertible, Hashable, Codable {
+public protocol Vector: CustomStringConvertible, Hashable, Codable, ExpressibleByArrayLiteral {
 
     /// Describes the data type of the components of this vector
     associatedtype Component: SignedNumeric & Codable
@@ -71,6 +71,14 @@ public extension Vector {
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(components.map({ "\($0)" }).joined(separator: ","))
+    }
+
+    public init(_ components: Component...) {
+        self.init(components: components)
+    }
+
+    public init(arrayLiteral elements: Component...) {
+        self.init(components: elements)
     }
 
     @inlinable static func - (_ lhs: Self, rhs: Self) -> Self {
