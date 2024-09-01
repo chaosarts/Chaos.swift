@@ -1,4 +1,4 @@
-// swift-tools-version:5.9
+// swift-tools-version:5.10
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -16,7 +16,8 @@ let package = Package(
         .package(path: "../ChaosCore"),
         .package(path: "../ChaosMath"),
         .package(path: "../ChaosMacroKit"),
-        .package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.2"),
+        .package(path: "../ChaosUi"),
+        .package(url: "https://github.com/apple/swift-syntax.git", from: "510.0.3"),
     ],
     targets: [
         .macro(
@@ -24,6 +25,7 @@ let package = Package(
             dependencies: [
                 "ChaosCore",
                 "ChaosMacroKit",
+                "ChaosUi",
                 .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
                 .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
             ]
@@ -31,7 +33,7 @@ let package = Package(
         .target(
             name: "ChaosSwiftUI",
             dependencies: [
-                "ChaosMath", "ChaosSwiftUIMacros"
+                "ChaosMath", "ChaosSwiftUIMacros", "ChaosUi"
             ]
         )
     ]

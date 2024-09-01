@@ -9,11 +9,11 @@ import SwiftUI
 
 public struct CaptureSession<Proxy, Content>: View where Proxy: CaptureSessionProxy, Content: View {
 
-    @StateObject private let proxy: Proxy = Proxy()
+    @StateObject private var proxy: Proxy = Proxy()
 
     private let content: (Proxy) -> Content
 
-    public init(content: @escaping (Proxy) -> View) {
+    public init(content: @escaping (Proxy) -> Content) {
         self.content = content
     }
 
