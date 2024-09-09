@@ -9,64 +9,80 @@ import SwiftUI
 
 public struct WedgeShape: Shape {
 
-    public let center: CGPoint
+    public typealias AnimatableData = AnimatablePair<AnimatablePair<Angle, Angle>, CGFloat>
 
-    public var startAngle: Double
+    public var startAngle: Angle
 
-    public var endAngle: Double
-
-    public var radius: CGFloat
+    public var endAngle: Angle
 
     public var innerRadius: CGFloat
 
     public let clockwise: Bool
 
-    public var animatableData: AnimatablePair<AnimatablePair<Double, Double>, AnimatablePair<CGFloat, CGFloat>> {
-        get {
-            AnimatablePair(AnimatablePair(startAngle, endAngle), AnimatablePair(radius, innerRadius))
+    public var animatableData: AnimatableData {
+        get { 
+            AnimatablePair(
+                AnimatablePair(startAngle, endAngle),
+                innerRadius
+            )
         }
         set {
             startAngle = newValue.first.first
             endAngle = newValue.first.second
-            radius = newValue.second.first
-            innerRadius = newValue.second.second
+            innerRadius = newValue.second
         }
     }
 
-    public init(center: CGPoint = .zero,
-                startAngle: Double = .zero,
-                endAngle: Double = .zero,
-                radius: CGFloat = 50,
+    public init(from startAngle: Angle = .zero,
+                to endAngle: Angle = .zero,
                 innerRadius: CGFloat = 0,
                 clockwise: Bool = true) {
-        self.center = center
         self.startAngle = startAngle
         self.endAngle = endAngle
-        self.radius = radius
         self.innerRadius = innerRadius
         self.clockwise = clockwise
     }
 
     public func path(in rect: CGRect) -> Path {
         return Path { path in
+            let radius = min(rect.width, rect.height) / 2
+            let center = CGPoint(x: rect.minX + rect.width / 2,
+                                 y: rect.minY + rect.height / 2)
             path.addArc(center: center,
                         radius: radius,
-                        startAngle: Angle(radians: startAngle),
-                        endAngle: Angle(radians: endAngle),
+                        startAngle: startAngle,
+                        endAngle: endAngle,
                         clockwise: !clockwise)
 
-            path.addArc(center: center,
-                        radius: innerRadius,
-                        startAngle: Angle(radians: endAngle),
-                        endAngle: Angle(radians: startAngle),
-                        clockwise: clockwise)
+            if innerRadius > 0 {
+                path.addArc(center: center,
+                            radius: innerRadius,
+                            startAngle: endAngle,
+                            endAngle: startAngle,
+                            clockwise: clockwise)
+            }
+            path.addLine(to: center)
             path.closeSubpath()
         }
     }
 }
 
-struct WedgeShape_Previews: PreviewProvider {
-    static var previews: some View {
-        WedgeShape(endAngle: .pi)
+#Preview {
+    struct ExampleView: View {
+        @State var isExpanded = false
+
+        var body: some View {
+            ZStack {
+                Button("Press me") {
+                    isExpanded.toggle()
+                }
+                WedgeShape(from: .east,
+                           to: isExpanded ? .east + .degrees(360) : .south,
+                           innerRadius: isExpanded ? 150 : 50)
+                    .animation(.easeInOut, value: isExpanded)
+            }
+        }
     }
+
+    return ExampleView()
 }

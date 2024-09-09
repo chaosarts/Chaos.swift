@@ -7,16 +7,20 @@
 
 import SwiftUI
 
-fileprivate struct GenericLabelStyle<Body>: LabelStyle where Body: View {
+public struct GenericLabelStyle<Body>: LabelStyle where Body: View {
 
     let content: (Configuration) -> Body
 
-    func makeBody(configuration: Configuration) -> Body {
+    public init(content: @escaping (Configuration) -> Body) {
+        self.content = content
+    }
+
+    public func makeBody(configuration: Configuration) -> Body {
         content(configuration)
     }
 }
 
-extension LabelStyle {
+extension LabelStyle where Self == GenericLabelStyle<LabelStyleConfiguration.Title> {
     public static func iconTitle(alignment: VerticalAlignment = .center, spacing: CGFloat? = nil) -> some LabelStyle {
         GenericLabelStyle { configuration in
             HStack(alignment: alignment, spacing: spacing) {
@@ -26,6 +30,10 @@ extension LabelStyle {
         }
     }
 
+    public static var iconTitle: some LabelStyle {
+        iconTitle()
+    }
+
     public static func titleIcon(alignment: VerticalAlignment = .center, spacing: CGFloat? = nil) -> some LabelStyle {
         GenericLabelStyle { configuration in
             HStack(alignment: alignment, spacing: spacing) {
@@ -33,5 +41,9 @@ extension LabelStyle {
                 configuration.icon
             }
         }
+    }
+
+    public static var titleIcon: some LabelStyle {
+        titleIcon()
     }
 }

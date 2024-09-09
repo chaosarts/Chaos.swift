@@ -29,4 +29,5 @@ extension TextFieldStyle where Self == BorderedTextInputStyle {
         TextField("Hello", text: .constant(""))
             .textFieldStyle(.bordered)
     }
+    .formStyle(.columns)
 }

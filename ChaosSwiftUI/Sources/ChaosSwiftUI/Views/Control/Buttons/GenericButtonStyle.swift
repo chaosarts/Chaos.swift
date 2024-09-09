@@ -17,13 +17,13 @@ public struct GenericButtonStyle<Content>: ButtonStyle where Content: View {
         !isEnabled || isBusy
     }
 
-    private let content: (Configuration, isEnabled: Bool, isBusy: Bool) -> Content
+    private let content: (Configuration, _ isEnabled: Bool, _ isBusy: Bool) -> Content
 
-    public init(@ViewBuilder _ content: @escaping (Configuration) -> Content) {
+    public init(@ViewBuilder _ content: @escaping (Configuration, _ isEnabled: Bool, _ isBusy: Bool) -> Content) {
         self.content = content
     }
 
-    func makeBody(configuration: Configuration) -> some View {
+    public func makeBody(configuration: Configuration) -> some View {
         content(configuration, isEnabled, isBusy)
     }
 }
