@@ -18,7 +18,7 @@ class NavigationStateTests: XCTestCase {
 
         navigationState.popTo(item: NavigationItem.edit)
         XCTAssertEqual(navigationState.count, 7)
-        
+
         navigationState.popTo(item: NavigationItem.results)
         XCTAssertEqual(navigationState.count, 4)
     }
