@@ -5,7 +5,11 @@
 import SwiftUI
 
 extension View {
-    func sizeThatFits(_ size: CGSize) -> CGSize {
+    public func sizeThatFits(_ size: CGSize) -> CGSize {
         UIHostingController(rootView: self).view.sizeThatFits(size)
+    }
+
+    public func apply(@ViewBuilder modifier: (Self) -> some View) -> some View {
+        modifier(self)
     }
 }

@@ -12,16 +12,16 @@ public extension Double {
     // MARK: Constant Angles
 
     /// Represents the angle pointing north on a circle in UIKit
-    static let circleTopAngle: Double = .pi * 1.5
+    static let north: Double = .pi * 1.5
 
     /// Represents the angle pointing east on a circle in UIKit
-    static let circleRightAngle: Double = 0.0
+    static let east: Double = 0.0
 
     /// Represents the angle pointing south on a circle in UIKit
-    static let circleBottomAngle: Double = .pi * 0.5
+    static let south: Double = .pi * 0.5
 
     /// Represents the angle pointing west on a circle in UIKit
-    static let circleLeftAngle: Double = .pi
+    static let west: Double = .pi
 
 
     // MARK: Conversion
@@ -35,4 +35,8 @@ public extension Double {
     static func radian (_ deg: Double) -> Double {
         return deg / 180 * .pi
     }
+
+    var deg: Double { Self.degree(self) }
+    
+    var rad: Double { Self.radian(self) }
 }

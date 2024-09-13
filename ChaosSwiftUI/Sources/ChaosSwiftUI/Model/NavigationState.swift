@@ -8,24 +8,24 @@
 import SwiftUI
 
 public class NavigationState: ObservableObject {
-    @Published public var path = NavigationPath()
+    @Published var path = NavigationPath()
 
-    private var anchors: [Anchor] = []
+    private var bookmarks: [Bookmark] = []
 
     public var count: Int { path.count }
 
     public init() {}
 
-    public func push<Item>(_ item: Item, isAnchor: Bool = false) where Item: Hashable {
+    public func push<Item>(_ item: Item, bookmark: Bool = false) where Item: Hashable {
         path.append(item)
-        if isAnchor {
-            anchors.append(Anchor(item: item, index: path.count))
+        if bookmark {
+            bookmarks.append(Bookmark(index: count, item: item))
         }
     }
 
     public func pop(_ k: Int = 1) {
         path.removeLast(k)
-        updateAnchors()
+        updateBookmarks()
     }
 
     public func popTo(index: Int) {
@@ -34,22 +34,41 @@ public class NavigationState: ObservableObject {
 
     public func popTo<Item>(item: Item) where Item: Hashable {
         let item: AnyHashable = item
-        guard let anchor = anchors.last(where: { $0.item == item }) else {
+        guard let bookmark = bookmarks.last(where: { $0.item == item }) else {
             return
         }
-        popTo(index: anchor.index)
+        popTo(index: bookmark.index)
     }
 
     public func popToRoot() {
         pop(path.count)
     }
 
-    private func updateAnchors() {
-        anchors.removeAll { $0.index > path.count }
+    private func updateBookmarks() {
+        bookmarks.removeAll { $0.index >= count }
+    }
+}
+
+extension NavigationState {
+    private struct Bookmark: Equatable {
+        let index: Int
+        let item: AnyHashable
+    }
+}
+
+public struct ChaosNavigationStack<Root>: View where Root: View {
+    
+    @ObservedObject var navigationState: NavigationState
+
+    private let root: () -> Root
+
+    public init(navigationState: NavigationState, @ViewBuilder root: @escaping () -> Root) {
+        self.navigationState = navigationState
+        self.root = root
     }
 
-    private struct Anchor {
-        let item: AnyHashable
-        let index: Int
+    public var body: some View {
+        NavigationStack(path: $navigationState.path, root: root)
+            .environmentObject(navigationState)
     }
 }

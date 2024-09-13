@@ -59,6 +59,10 @@ public struct Carousel<Content>: View where Content: View {
      */
     private let content: () -> Content
 
+    /**
+     Provides an identifier to define a coordinate space to enabled scroll tracking of the content relative to the
+     surrounding scroll view.
+     */
     private let coordinateSpaceName: String = "ChaosSwiftUI.Carousel"
 
     /**
@@ -110,24 +114,19 @@ public struct Carousel<Content>: View where Content: View {
     }
 
     public var body: some View {
-        if #available(iOS 17, *) {
-            ScrollView(.horizontal) {
-                HStack(alignment: alignment, spacing: spacing) {
-                    content()
-                }
-                .scrollTracking(coordinateSpace: .named(coordinateSpaceName))
+        ScrollView(.horizontal) {
+            HStack(alignment: alignment, spacing: spacing) {
+                content()
             }
-            .coordinateSpace(.named(coordinateSpaceName))
-            .scrollIndicators(.hidden)
-        } else {
-            ScrollView(.horizontal) {
-                HStack(alignment: alignment, spacing: spacing) {
-                    content()
-                }
-                .scrollTracking(coordinateSpace: .named(coordinateSpaceName))
-            }
-            .coordinateSpace(name: coordinateSpaceName)
-            .scrollIndicators(.hidden)
+            .scrollTracking(coordinateSpace: .named(coordinateSpaceName))
         }
+        .apply { content in
+            if #available(iOS 17, *) {
+                content.coordinateSpace(.named(coordinateSpaceName))
+            } else {
+                content.coordinateSpace(name: coordinateSpaceName)
+            }
+        }
+        .scrollIndicators(.hidden)
     }
 }

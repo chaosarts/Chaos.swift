@@ -33,6 +33,12 @@ let package = Package(
             dependencies: [
                 "ChaosMath", "ChaosSwiftUIMacros"
             ]
+        ),
+        .testTarget(
+            name: "ChaosSwiftUITests",
+            dependencies: [
+                "ChaosSwiftUI"
+            ]
         )
     ]
 )
