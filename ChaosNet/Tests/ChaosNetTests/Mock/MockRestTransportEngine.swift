@@ -8,11 +8,11 @@
 @testable import ChaosNet
 import Foundation
 
-enum MockRestTransportEngineError: Error {
+enum MockLegacyRestTransportEngineError: Error {
     case misconfiguration
 }
 
-class MockRestTransportEngine: RestTransportEngine {
+class MockLegacyRestTransportEngine: LegacyRestTransportEngine {
 
 
     private(set) var requests: [URLRequest] = []

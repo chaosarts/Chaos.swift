@@ -1,30 +1,20 @@
 //
-//  RestResult.swift
-//  ChaosNet
-//
-//  Created by Fu Lam Diep on 18.08.21.
+//  Copyright © 2024 Fu Lam Diep <fulam.diep@gmail.com>
 //
 
 import Foundation
 
-public class RestResponse<D> {
+public struct RestResponse<Data> {
+    let data: Data
+    let httpResponse: HTTPURLResponse
 
-    public let request: RestRequest
-
-    public let data: D
-
-    public let headers: [String: String]
-
-    public init (to request: RestRequest, data: D, headers: [String: String] = [:]) {
-        self.request = request
+    init(_ data: Data, httpResponse: HTTPURLResponse) {
         self.data = data
-        self.headers = headers
+        self.httpResponse = httpResponse
     }
-}
 
-public extension RestResponse where D == Void {
-    convenience init (to request: RestRequest, headers: [String: String] = [:]) {
-        let void: Void
-        self.init(to: request, data: void, headers: headers)
+    init(httpResponse: HTTPURLResponse) where Data == Void {
+        self.data = Void()
+        self.httpResponse = httpResponse
     }
 }

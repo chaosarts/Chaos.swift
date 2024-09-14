@@ -8,49 +8,49 @@
 import Foundation
 import ChaosNet
 
-public class MockRestClientDelegate: RestClientDelegate {
+public class MockRestClientDelegate: LegacyRestClientDelegate {
 
     public var callHistory: [CallHistoryItem] = []
 
-    public var acceptsResponse: ((RestRawResponse, RestRequest) -> Bool)?
+    public var acceptsResponse: ((RestRawResponse, LegacyRestRequest) -> Bool)?
 
-    public var shouldRescueRequest: ((RestRequest, RestRawResponse) -> Bool)?
+    public var shouldRescueRequest: ((LegacyRestRequest, RestRawResponse) -> Bool)?
 
-    public var rescueRequest: ((RestRequest, RestRawResponse) async throws -> RestRawResponse)?
+    public var rescueRequest: ((LegacyRestRequest, RestRawResponse) async throws -> RestRawResponse)?
 
-    public func restClient(_ restClient: RestClient, sendingRequestDidFailWithError error: Error, forRequest request: RestRequest, relativeTo url: URL?) {
+    public func restClient(_ restClient: LegacyRestClient, sendingRequestDidFailWithError error: Error, forRequest request: LegacyRestRequest, relativeTo url: URL?) {
         callHistory.append(.sendingRequestDidFailWithError(error, request))
     }
 
-    public func restClient(_ restClient: RestClient, acceptsResponse response: RestRawResponse, forRequest request: RestRequest, relativeTo url: URL?) -> Bool {
+    public func restClient(_ restClient: LegacyRestClient, acceptsResponse response: RestRawResponse, forRequest request: LegacyRestRequest, relativeTo url: URL?) -> Bool {
         callHistory.append(.acceptsResponse(response, request))
         return acceptsResponse?(response, request) ?? false
     }
 
-    public func restClient(_ restClient: RestClient, shouldRescueRequest request: RestRequest, withResponse response: RestRawResponse, relativeTo url: URL?) -> Bool {
+    public func restClient(_ restClient: LegacyRestClient, shouldRescueRequest request: LegacyRestRequest, withResponse response: RestRawResponse, relativeTo url: URL?) -> Bool {
         callHistory.append(.shouldRescueRequest(request, response))
         return shouldRescueRequest?(request, response) ?? false
     }
 
-    public func restClient(_ restClient: RestClient, rescueRequest request: RestRequest, withResponse response: RestRawResponse, relativeTo url: URL?) async throws -> RestRawResponse {
+    public func restClient(_ restClient: LegacyRestClient, rescueRequest request: LegacyRestRequest, withResponse response: RestRawResponse, relativeTo url: URL?) async throws -> RestRawResponse {
         callHistory.append(.rescueRequest(request, response))
         return try await rescueRequest?(request, response) ?? response
     }
 
-    public func restClient(_ restClient: RestClient, responseProcessingDidFailWithError error: Error, forRequest request: RestRequest, relativeTo url: URL?) {
+    public func restClient(_ restClient: LegacyRestClient, responseProcessingDidFailWithError error: Error, forRequest request: LegacyRestRequest, relativeTo url: URL?) {
         callHistory.append(.responseProcessingDidFailWithError(error, request))
     }
 }
 
 public extension MockRestClientDelegate {
     enum CallHistoryItem {
-        case sendingRequestDidFailWithError(Error, RestRequest)
-        case acceptsResponse(RestRawResponse, RestRequest)
-        case shouldRescueRequest(RestRequest, RestRawResponse)
-        case rescueRequest(RestRequest, RestRawResponse)
-        case responseProcessingDidFailWithError(Error, RestRequest)
+        case sendingRequestDidFailWithError(Error, LegacyRestRequest)
+        case acceptsResponse(RestRawResponse, LegacyRestRequest)
+        case shouldRescueRequest(LegacyRestRequest, RestRawResponse)
+        case rescueRequest(LegacyRestRequest, RestRawResponse)
+        case responseProcessingDidFailWithError(Error, LegacyRestRequest)
 
-        public var restRequest: RestRequest {
+        public var restRequest: LegacyRestRequest {
             switch self {
             case .sendingRequestDidFailWithError(_, let request), .acceptsResponse(_, let request),
                     .shouldRescueRequest(let request, _), .rescueRequest(let request, _),

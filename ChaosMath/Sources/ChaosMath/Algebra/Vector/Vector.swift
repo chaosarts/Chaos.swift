@@ -73,11 +73,11 @@ public extension Vector {
         hasher.combine(components.map({ "\($0)" }).joined(separator: ","))
     }
 
-    public init(_ components: Component...) {
+    init(_ components: Component...) {
         self.init(components: components)
     }
 
-    public init(arrayLiteral elements: Component...) {
+    init(arrayLiteral elements: Component...) {
         self.init(components: elements)
     }
 

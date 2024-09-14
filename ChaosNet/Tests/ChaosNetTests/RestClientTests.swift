@@ -13,11 +13,11 @@ public class RestClientTests: XCTestCase {
 
     let baseURL: URL = URL(string: "https://test.com/api")!
 
-    let restTransportEngine = MockRestTransportEngine()
+    let restTransportEngine = MockLegacyRestTransportEngine()
 
     let restClientDelegate = MockRestClientDelegate()
 
-    lazy var restClient: RestClient = RestClient(transportEngine: restTransportEngine, dataDecoder: JSONDecoder(), dataEncoder: JSONEncoder())
+    lazy var restClient: LegacyRestClient = LegacyRestClient(transportEngine: restTransportEngine, dataDecoder: JSONDecoder(), dataEncoder: JSONEncoder())
 
     var user: User!
 
@@ -48,12 +48,12 @@ public class RestClientTests: XCTestCase {
     public func testSend_sendsURLRequest () async {
         // Assign
         let requests = [
-            RestRequest("user/data")
+            LegacyRestRequest("user/data")
                 .setQueryParameter("query1", value: "value")
                 .setQueryParameter("query2", value: nil)
                 .setHeader("header1", value: "headerValue")
                 .setPayload("".data(using: .utf8)),
-            RestRequest("https://net.chaos.de/user/data")
+            LegacyRestRequest("https://net.chaos.de/user/data")
         ]
 
         // Act
@@ -80,9 +80,9 @@ public class RestClientTests: XCTestCase {
         XCTAssertEqual(restTransportEngine.requests[1].httpBody, nil)
     }
 
-    public func testSend_returnsError_whenRestRequestIsInvalid () async {
+    public func testSend_returnsError_whenLegacyRestRequestIsInvalid () async {
         // Assign
-        let request = RestRequest("hps://fulam@chrono24:bam")
+        let request = LegacyRestRequest("hps://fulam@chrono24:bam")
 
         // Act
         var catchedError: URLError?
@@ -100,7 +100,7 @@ public class RestClientTests: XCTestCase {
 
     public func testSend_returnsError_whenSendingRequestFails () async {
         // Assign
-        let request = RestRequest("user/data")
+        let request = LegacyRestRequest("user/data")
         let transportEngineError = URLError(.notConnectedToInternet)
         restTransportEngine.results = [.failure(transportEngineError)]
 
@@ -123,7 +123,7 @@ public class RestClientTests: XCTestCase {
 
     public func testSend_returnsError_whenDelegateNotRescuingNonSuccessResponse () async {
         // Assign
-        let request = RestRequest("user/data")
+        let request = LegacyRestRequest("user/data")
         restTransportEngine.results = [unauthorizedResponseResult(for: baseURL)]
 
         restClientDelegate.acceptsResponse = { _, _ in false }
@@ -145,7 +145,7 @@ public class RestClientTests: XCTestCase {
 
     public func testSend_returnsError_whenDelegateNotRescuingNonSuccessRescueResponse () async {
         // Assign
-        let request = RestRequest("user/data")
+        let request = LegacyRestRequest("user/data")
         restClient.maxRescueCount = 2
         restTransportEngine.results = [unauthorizedResponseResult(for: baseURL)]
 
@@ -173,7 +173,7 @@ public class RestClientTests: XCTestCase {
 
     public func testSend_returnsError_whenRequestRescueCountExceedsMaxRescueCount () async {
         // Assign
-        let request = RestRequest("user/data")
+        let request = LegacyRestRequest("user/data")
         restClient.maxRescueCount = 2
         restTransportEngine.results = [unauthorizedResponseResult(for: baseURL)]
 
@@ -203,7 +203,7 @@ public class RestClientTests: XCTestCase {
 
     public func testSend_returnsResponse_whenDelegateAcceptsNonSuccessRescuedResponse () async {
         // Assign
-        let request = RestRequest("user/data")
+        let request = LegacyRestRequest("user/data")
         restTransportEngine.results = [unauthorizedResponseResult(for: baseURL)]
 
         restClientDelegate.acceptsResponse = { _, _ in request.rescueCount > 0 }
@@ -224,7 +224,7 @@ public class RestClientTests: XCTestCase {
 
     public func testSend_returnsResponse_whenDelegateAcceptsSuccessRescuedResponse () async {
         // Assign
-        let request = RestRequest("user/data")
+        let request = LegacyRestRequest("user/data")
         restTransportEngine.results = [unauthorizedResponseResult(for: baseURL)]
 
         restClientDelegate.acceptsResponse = { response, _ in response.httpURLResponse.statusCode == 200 }
@@ -245,7 +245,7 @@ public class RestClientTests: XCTestCase {
 
     public func testSend_returnsResponse_whenDelegateAcceptsNonSuccessResponse () async {
         // Assign
-        let request = RestRequest("user/data")
+        let request = LegacyRestRequest("user/data")
         restTransportEngine.results = [unauthorizedResponseResult(for: baseURL)]
         restClientDelegate.acceptsResponse = { _, _ in true }
 
@@ -259,7 +259,7 @@ public class RestClientTests: XCTestCase {
 
     public func testSend_returnsResponse_whenTransportEngineReturnsSuccessResponse () async {
         // Assign
-        let request = RestRequest("user/data")
+        let request = LegacyRestRequest("user/data")
         restTransportEngine.results = [okResponseResult(for: baseURL)]
         restClientDelegate.acceptsResponse = { _, _ in true }
 
@@ -276,7 +276,7 @@ public class RestClientTests: XCTestCase {
 
     public func testSend_returnsError_whenReponseMethodFails_forVoidResponse () async {
         // Assign
-        let request = RestRequest("user/data")
+        let request = LegacyRestRequest("user/data")
         let transportEngineError = URLError(.notConnectedToInternet)
         restTransportEngine.results = [.failure(transportEngineError)]
 
@@ -294,7 +294,7 @@ public class RestClientTests: XCTestCase {
 
     public func testSend_returnsResponse_whenReponseMethodSucceeds_forVoidResponse () async {
         // Assign
-        let request = RestRequest("user/data")
+        let request = LegacyRestRequest("user/data")
         restTransportEngine.results = [okResponseResult(for: baseURL)]
 
         // Act
@@ -308,7 +308,7 @@ public class RestClientTests: XCTestCase {
 
     public func testSend_returnsError_whenReponseMethodFails_forObjectResponse () async {
         // Assign
-        let request = RestRequest("user/data")
+        let request = LegacyRestRequest("user/data")
         let transportEngineError = URLError(.notConnectedToInternet)
         restTransportEngine.results = [.failure(transportEngineError)]
 
@@ -326,7 +326,7 @@ public class RestClientTests: XCTestCase {
 
     public func testSend_returnsError_whenReponseMethodReturnsInvalidData_forObjectResponse () async {
         // Assign
-        let request = RestRequest("user/data")
+        let request = LegacyRestRequest("user/data")
         let transportEngineError = URLError(.notConnectedToInternet)
         restTransportEngine.results = [.failure(transportEngineError)]
 
@@ -344,7 +344,7 @@ public class RestClientTests: XCTestCase {
 
     public func testSend_returnsResponse_whenReponseMethodSucceeds_forObjectResponse () async {
         // Assign
-        let request = RestRequest("user/data")
+        let request = LegacyRestRequest("user/data")
         restTransportEngine.results = [okResponseResult(for: baseURL, data: userData)]
 
         // Act
@@ -356,7 +356,7 @@ public class RestClientTests: XCTestCase {
     }
 
 
-    public func testSend_sendsURLRequest_withRestRequestBuilder () async {
+    public func testSend_sendsURLRequest_withLegacyRestRequestBuilder () async {
         let _ = try? await restClient.send {
             Method(.DELETE)
             Path("/user/data")
