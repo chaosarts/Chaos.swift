@@ -70,7 +70,8 @@ extension Angle {
     }
 }
 
-extension Angle: VectorArithmetic {
+extension Angle: @retroactive AdditiveArithmetic {}
+extension Angle: @retroactive VectorArithmetic {
     public mutating func scale(by rhs: Double) {
         animatableData *= rhs
     }

@@ -10,7 +10,7 @@ import Foundation
 /*
  This extension provides the implementation for coding key to use String objects as coding keys right away.
  */
-extension String: CodingKey {
+extension String: @retroactive CodingKey {
 
     // MARK: - CodingKey implementation
 

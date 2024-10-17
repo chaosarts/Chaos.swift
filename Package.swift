@@ -2,6 +2,7 @@
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
+import CompilerPluginSupport
 
 let package = Package(
     name: "Chaos",
@@ -9,37 +10,110 @@ let package = Package(
     platforms: [.iOS(.v16), .macOS(.v14)],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
-        .library(name: "Chaos", targets: ["Chaos"])
+        .library(name: "ChaosCore", targets:["ChaosCore"]),
+        .library(name: "ChaosAnimation", targets:["ChaosAnimation"]),
+        .library(name: "ChaosCombine", targets:["ChaosCombine"]),
+        .library(name: "ChaosGraphics", targets:["ChaosGraphics"]),
+        .library(name: "ChaosMath", targets:["ChaosMath"]),
+        .library(name: "ChaosMetal", targets:["ChaosMetal"]),
+        .library(name: "ChaosNet", targets:["ChaosNet"]),
+        .library(name: "ChaosSwiftUI", targets:["ChaosSwiftUI"]),
     ],
     dependencies: [
-        .package(path: "ChaosAnimation"),
-        .package(path: "ChaosCore"),
-        .package(path: "ChaosCombine"),
-        .package(path: "ChaosGraphics"),
-        .package(path: "ChaosKit"),
-        .package(path: "ChaosMath"),
-        .package(path: "ChaosMetal"),
-        .package(path: "ChaosNet"),
-        .package(path: "ChaosThree"),
-        .package(path: "ChaosUi"),
-        .package(path: "ChaosSwiftUI"),
+        .package(url: "https://github.com/apple/swift-syntax.git", from: "510.0.3")
     ],
     targets: [
         .target(
-            name: "Chaos",
+            name: "ChaosMacroKit",
             dependencies: [
-                "ChaosAnimation",
+                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+                .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
+            ],
+            path: "ChaosMacroKit"
+        ),
+        .macro(
+            name: "ChaosCoreMacros",
+            dependencies: [
+                "ChaosMacroKit",
+                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+                .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
+            ],
+            path: "ChaosCoreMacros"
+        ),
+        .testTarget(
+            name: "ChaosCoreTests",
+            dependencies: ["ChaosCore"],
+            path: "ChaosCoreTests"
+        ),
+        .target(
+            name: "ChaosCore",
+            dependencies: [
+                "ChaosCoreMacros"
+            ],
+            path: "ChaosCore"
+        ),
+
+        .target(
+            name: "ChaosCombine",
+            path: "ChaosCombine"
+        ),
+
+        .target(
+            name: "ChaosMath",
+            path: "ChaosMath"
+        ),
+        .testTarget(
+            name: "ChaosMathTests",
+            dependencies: [
                 "ChaosCore",
-                "ChaosCombine",
-                "ChaosGraphics",
-                "ChaosKit",
-                "ChaosMath",
-                "ChaosMetal",
-                "ChaosNet",
-                "ChaosThree",
-                "ChaosUi",
-                "ChaosSwiftUI"
-            ]
-        )
+                "ChaosMath"
+            ],
+            path: "ChaosMathTests"
+        ),
+
+        .target(
+            name: "ChaosGraphics",
+            dependencies: [
+                "ChaosMath"
+            ],
+            path: "ChaosGraphics"
+        ),
+
+
+        .target(
+            name: "ChaosAnimation",
+            dependencies: [
+                "ChaosGraphics"
+            ],
+            path: "ChaosAnimation"
+        ),
+
+        .target(
+            name: "ChaosMetal",
+            path: "ChaosMetal"
+        ),
+        .target(
+            name: "ChaosNet",
+            path: "ChaosNet"
+        ),
+
+        .macro(
+            name: "ChaosSwiftUIMacros",
+            dependencies: [
+                "ChaosCore",
+                "ChaosMacroKit",
+                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+                .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
+            ],
+            path: "ChaosSwiftUIMacros"
+        ),
+        .target(
+            name: "ChaosSwiftUI",
+            dependencies: [
+                "ChaosCore",
+                "ChaosSwiftUIMacros"
+            ],
+            path: "ChaosSwiftUI"
+        ),
     ]
 )
