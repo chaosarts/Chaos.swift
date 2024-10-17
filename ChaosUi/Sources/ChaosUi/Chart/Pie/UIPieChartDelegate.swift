@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  UIPieChartDelegate.swift
 //  ChaosUi
@@ -10,3 +11,5 @@ import Foundation
 @objc public protocol UIPieChartDelegate: AnyObject {
     @objc optional func pieChart (_ pieChart: UIPieChart, didSelectSegmentAt index: Int)
 }
+
+#endif

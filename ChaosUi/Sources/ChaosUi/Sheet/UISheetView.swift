@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  File.swift
 //  
@@ -38,3 +39,5 @@ open class UISheetView: UIView {
 public protocol UISheetDelegate: AnyObject {
 
 }
+
+#endif

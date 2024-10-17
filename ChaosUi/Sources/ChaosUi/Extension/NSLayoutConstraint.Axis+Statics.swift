@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  NSLayoutConstraint.Axis+Statics.swift
 //  Chaos
@@ -19,3 +20,5 @@ public extension NSLayoutConstraint.Axis {
         }
     }
 }
+
+#endif

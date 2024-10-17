@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  UITimelineViewMilestoneCell.swift
 //  Chaos
@@ -71,3 +72,5 @@ internal class UITimelineViewMilestoneCellImpl<Milestone: UITimelineViewMileston
         return targetSize
     }
 }
+
+#endif

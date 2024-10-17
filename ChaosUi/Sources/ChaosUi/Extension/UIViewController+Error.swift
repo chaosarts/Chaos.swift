@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  UIViewController+Error.swift
 //  ChaosUi
@@ -13,3 +14,5 @@ public extension UIViewController {
         present(controller, animated: true, completion: nil)
     }
 }
+
+#endif

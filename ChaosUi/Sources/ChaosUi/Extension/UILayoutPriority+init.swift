@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  UILayoutPriority+init.swift
 //  ChaosUi
@@ -18,3 +19,5 @@ extension UILayoutPriority: ExpressibleByFloatLiteral {
         self.init(value)
     }
 }
+
+#endif

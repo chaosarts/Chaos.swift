@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  UIPieChart.swift
 //  ChaosUi
@@ -338,3 +339,5 @@ open class UIPieChart: UIView, CAAnimationDelegate {
     }
 }
 
+
+#endif

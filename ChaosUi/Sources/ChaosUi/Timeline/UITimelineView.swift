@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  UITimelineView.swift
 //  ChaosUi
@@ -325,3 +326,5 @@ extension UITimelineView: UICollectionViewDelegateFlowLayout {
         milestoneSpacing
     }
 }
+
+#endif

@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  UITimelineViewConnector.swift
 //  Chaos
@@ -103,3 +104,5 @@ public class UITimelineViewDottedConnector: NSObject, UITimelineViewConnector {
 //    
 //}
 
+
+#endif

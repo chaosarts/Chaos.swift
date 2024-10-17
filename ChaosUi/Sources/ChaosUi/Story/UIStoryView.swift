@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  UIStoryView.swift
 //  ChaosUi
@@ -16,3 +17,5 @@ open class UIStoryView: UIView {
 @objc public protocol UIStoryViewDataSource: AnyObject {
 
 }
+
+#endif

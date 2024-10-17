@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  UITimelineViewDataSource.swift
 //  Chaos
@@ -21,3 +22,5 @@ import UIKit
 
     @objc optional func timelineView (_ timelineView: UITimelineView, connectorForItemAt index: Int) -> UITimelineViewConnector?
 }
+
+#endif

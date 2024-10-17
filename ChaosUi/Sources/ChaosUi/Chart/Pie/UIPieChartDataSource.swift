@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  UIPieChartDataSource.swift
 //  ChaosUi
@@ -34,3 +35,5 @@ import UIKit
     /// - returns: The title of the segment
     @objc optional func pieChart (_ pieChart: UIPieChart, titleForSegmentAt index: Int) -> String?
 }
+
+#endif

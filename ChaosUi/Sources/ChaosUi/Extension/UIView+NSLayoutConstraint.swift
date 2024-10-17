@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  UIView+NSLayoutConstraint.swift
 //  Chaos
@@ -94,3 +95,5 @@ public extension UIView {
         return [widthConstraint, heightConstraint]
     }
 }
+
+#endif

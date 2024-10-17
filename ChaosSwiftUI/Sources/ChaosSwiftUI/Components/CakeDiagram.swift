@@ -23,7 +23,7 @@ public struct CakeDiagram<Value, Wedge>: View where Value: BinaryFloatingPoint, 
 
     init(values: [Value],
          startAngle: Angle = .north,
-         wedgeShape: @escaping (Array<BinaryFloatingPoint>.Index, WedgeShape) -> Wedge) {
+         wedgeShape: @escaping (Array<Value>.Index, WedgeShape) -> Wedge) {
         self.values = values
         self.startAngle = startAngle
         self.wedgeShape = wedgeShape

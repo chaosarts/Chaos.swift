@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  UISettingsViewController.swift
 //  ChaosAnimation
@@ -75,3 +76,5 @@ extension UISettingsView: UITableViewDataSource {
 @objc public protocol UISettingsViewDelegate: AnyObject {
     @objc optional func settingsView (_ view: UISettingsView, didChangeValueAt indexPath: IndexPath)
 }
+
+#endif

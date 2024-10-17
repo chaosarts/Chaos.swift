@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  File.swift
 //  
@@ -54,3 +55,5 @@ public extension KeyPath where Root == UIView, Value == NSLayoutDimension {
         }
     }
 }
+
+#endif

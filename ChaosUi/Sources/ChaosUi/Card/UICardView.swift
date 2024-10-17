@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  File.swift
 //  
@@ -45,3 +46,5 @@ open class UICardView: UIView {
     }
 }
 
+
+#endif

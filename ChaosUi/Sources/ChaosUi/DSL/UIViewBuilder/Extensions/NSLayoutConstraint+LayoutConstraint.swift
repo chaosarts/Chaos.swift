@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  File.swift
 //  
@@ -25,3 +26,5 @@ public extension NSLayoutConstraint {
         priority = constraint.priority ?? .defaultHigh
     }
 }
+
+#endif

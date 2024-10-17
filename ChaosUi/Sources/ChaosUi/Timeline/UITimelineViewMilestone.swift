@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  UITimelineViewMilestone.swift
 //  ChaosUi
@@ -287,3 +288,5 @@ open class UITimelineViewMilestone: UIView {
 @objc public extension UITimelineViewMilestone {
     typealias Alignment = UITimelineView.Alignment
 }
+
+#endif

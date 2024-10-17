@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  UITicketView.swift
 //  Chaos
@@ -147,3 +148,5 @@ open class UITicketView: UIView {
         }
     }
 }
+
+#endif

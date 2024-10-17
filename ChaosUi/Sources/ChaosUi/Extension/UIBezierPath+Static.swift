@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  UITicketShape.swift
 //  Chaos
@@ -84,3 +85,5 @@ public extension UIBezierPath {
         return bezierPath
     }
 }
+
+#endif

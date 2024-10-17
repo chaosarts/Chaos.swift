@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  UIClockProgress.swift
 //  ChaosAnimation
@@ -27,3 +28,5 @@ open class UIClockProgress: UIView {
         return CGSize(width: diameter, height: diameter)
     }
 }
+
+#endif

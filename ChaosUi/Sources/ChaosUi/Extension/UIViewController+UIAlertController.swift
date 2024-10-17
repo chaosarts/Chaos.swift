@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  UIViewController+UIAlertViewController.swift
 //  ChaosUi
@@ -31,3 +32,5 @@ public extension UIViewController {
 }
 
 
+
+#endif

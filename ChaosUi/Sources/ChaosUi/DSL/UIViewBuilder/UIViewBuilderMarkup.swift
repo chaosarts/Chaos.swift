@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  File.swift
 //  
@@ -26,3 +27,5 @@ public extension Array where Element == UIViewBuilderMarkup {
         first { $0.identifier == identifier }
     }
 }
+
+#endif

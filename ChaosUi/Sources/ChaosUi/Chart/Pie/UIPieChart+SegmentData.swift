@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  UIPieChart+Segment.swift
 //  ChaosUi
@@ -14,3 +15,5 @@ internal extension UIPieChart {
         var color: UIColor = .systemBlue
     }
 }
+
+#endif

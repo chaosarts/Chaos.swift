@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  File.swift
 //  
@@ -57,3 +58,5 @@ public enum UIViewBuilder {
         [UIViewBuilderMarkup(view: expression, constraints: [])]
     }
 }
+
+#endif

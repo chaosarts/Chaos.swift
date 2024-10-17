@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  File.swift
 //  
@@ -42,3 +43,5 @@ public extension UIView {
         }
     }
 }
+
+#endif

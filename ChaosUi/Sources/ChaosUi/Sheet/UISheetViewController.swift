@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  File.swift
 //  
@@ -10,3 +11,5 @@ import UIKit
 open class UISheetViewController: UIViewController {
     
 }
+
+#endif

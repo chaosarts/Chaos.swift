@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  File.swift
 //  
@@ -33,3 +34,5 @@ public enum LayoutConstraintBuilder {
         [expression]
     }
 }
+
+#endif

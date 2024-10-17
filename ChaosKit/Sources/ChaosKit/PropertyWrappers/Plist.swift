@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  Plist.swift
 //  ChaosKit
@@ -28,3 +29,5 @@ public struct Plist<Value: Decodable> {
         self.wrappedValue = wrappedValue
     }
 }
+
+#endif

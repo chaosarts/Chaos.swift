@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  UIStackViewItem.swift
 //  Chaos
@@ -22,3 +23,5 @@ open class UISizableView: UIView {
                height: intrinsicHeight ?? super.intrinsicContentSize.height)
     }
 }
+
+#endif

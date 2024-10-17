@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  File.swift
 //
@@ -18,3 +19,5 @@ public extension UIStackView {
         }
     }
 }
+
+#endif

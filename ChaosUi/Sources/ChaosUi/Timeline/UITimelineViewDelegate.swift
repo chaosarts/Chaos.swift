@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  UITimelineViewDelegate.swift
 //  Chaos
@@ -9,3 +10,5 @@ import UIKit
 
 @objc public protocol UITimelineViewDelegate: AnyObject {
 }
+
+#endif

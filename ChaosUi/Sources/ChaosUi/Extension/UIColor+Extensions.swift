@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  File.swift
 //  
@@ -46,3 +47,5 @@ public extension UIColor {
 //        self.init(hex: value)
 //    }
 //}
+
+#endif

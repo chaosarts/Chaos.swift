@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  NSLayoutAnchor+constraint.swift
 //  ChaosUi
@@ -28,3 +29,5 @@ public extension NSLayoutAnchor {
         return constraint
     }
 }
+
+#endif

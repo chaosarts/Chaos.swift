@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  File.swift
 //  
@@ -101,3 +102,5 @@ public struct LayoutConstraint {
                          priority: priority)
     }
 }
+
+#endif

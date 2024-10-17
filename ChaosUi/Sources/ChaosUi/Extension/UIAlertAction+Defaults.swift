@@ -1,3 +1,4 @@
+#if canImport(UIKit)
 //
 //  UIAlertAction+Defaults.swift
 //  ChaosUi
@@ -24,3 +25,5 @@ public extension UIAlertAction {
         return UIAlertAction(title: title, style: .destructive, handler: handler)
     }
 }
+
+#endif
