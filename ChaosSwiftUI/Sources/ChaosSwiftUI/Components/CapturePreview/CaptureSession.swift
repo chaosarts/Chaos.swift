@@ -5,6 +5,7 @@
 //  Created by Fu Lam Diep on 23.08.24.
 //
 
+#if canImport(UIKit)
 import SwiftUI
 
 public struct CaptureSession<Proxy, Content>: View where Proxy: CaptureSessionProxy, Content: View {
@@ -21,3 +22,4 @@ public struct CaptureSession<Proxy, Content>: View where Proxy: CaptureSessionPr
         content(proxy)
     }
 }
+#endif

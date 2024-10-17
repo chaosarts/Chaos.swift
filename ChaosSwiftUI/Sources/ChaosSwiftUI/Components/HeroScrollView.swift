@@ -64,7 +64,7 @@ public struct HeroScrollView<HeroView, Content>: View where HeroView: View, Cont
             }
             .background {
                 GeometryReader { proxy in
-                    Color.clear.onChange(of: proxy.frame(in: .named(coordinateSpaceName))) { value in
+                    Color.clear.onChange(of: proxy.frame(in: .named(coordinateSpaceName))) { _, value in
                         scrollFrame = value
                     }
                 }
@@ -82,7 +82,7 @@ public struct HeroScrollView<HeroView, Content>: View where HeroView: View, Cont
         @State var isFavorite = false
 
         let imageURLs: [URL?] = [
-            URL(string: "https://picsum.photos/id/203/400/800"),
+            URL(string: "https://picsum.photos/id/203/800/400"),
             URL(string: "https://picsum.photos/id/201/800/400"),
             URL(string: "https://picsum.photos/id/301/800/400"),
         ]
@@ -100,8 +100,7 @@ public struct HeroScrollView<HeroView, Content>: View where HeroView: View, Cont
                             .tag(index)
                         }
                     }
-                    .frame(minHeight: 200, alignment: .top)
-                    .tabViewStyle(.page(indexDisplayMode: .never))
+                    .tabViewStyle(.automatic)
                 } content: {
                     VStack(spacing: 24) {
                         ForEach(0..<3, id: \.self) { _ in
@@ -115,13 +114,11 @@ public struct HeroScrollView<HeroView, Content>: View where HeroView: View, Cont
                     .padding()
                 }
                 .navigationTitle("Hello")
-                .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     Toggle(isOn: $isFavorite) {
                         Label("Add to notepad", systemImage: "heart")
                     }
                 }
-//                .ignoresSafeArea(.all)
             }
         }
     }

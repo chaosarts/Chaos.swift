@@ -81,7 +81,13 @@ public struct Carousel<Content>: View where Content: View {
      Use this initializer, when your collection (at max) can change as whole. If your elements provides properties, that
      require to mutate, use the initializer with data binding.
      */
-    public init<Data, ID, Item>(_ data: Data, id: KeyPath<Data.Element, ID>, alignment: VerticalAlignment = .top, spacing: CGFloat = 0, @ViewBuilder item: @escaping (Data.Element) -> Item) where Data: RandomAccessCollection, ID: Hashable, Item: View, Content == ForEach<Data, ID, Item> {
+    public init<Data, ID, Item>(
+        _ data: Data,
+        id: KeyPath<Data.Element, ID>,
+        alignment: VerticalAlignment = .top,
+        spacing: CGFloat = 0,
+        @ViewBuilder item: @escaping (Data.Element) -> Item
+    ) where Data: RandomAccessCollection, ID: Hashable, Item: View, Content == ForEach<Data, ID, Item> {
         self.init(alignment: alignment, spacing: spacing) {
             ForEach(data, id: id) { element in
                 item(element)
@@ -89,7 +95,12 @@ public struct Carousel<Content>: View where Content: View {
         }
     }
     
-    public init<Data, Item>(_ data: Data, alignment: VerticalAlignment = .top, spacing: CGFloat = 0, @ViewBuilder item: @escaping (Data.Element) -> Item) where Data: RandomAccessCollection, Data.Element: Identifiable, Item: View, Content == ForEach<Data, Data.Element.ID, Item> {
+    public init<Data, Item>(
+        _ data: Data,
+        alignment: VerticalAlignment = .top,
+        spacing: CGFloat = 0,
+        @ViewBuilder item: @escaping (Data.Element) -> Item
+    ) where Data: RandomAccessCollection, Data.Element: Identifiable, Item: View, Content == ForEach<Data, Data.Element.ID, Item> {
         self.init(alignment: alignment, spacing: spacing) {
             ForEach(data, id: \.id) { element in
                 item(element)
@@ -97,7 +108,13 @@ public struct Carousel<Content>: View where Content: View {
         }
     }
     
-    public init<Data, ID, Item>(_ data: Binding<Data>, id: KeyPath<Binding<Data>.Element, ID>, alignment: VerticalAlignment = .top, spacing: CGFloat = 0, @ViewBuilder item: @escaping (Binding<Data.Element>) -> Item) where Data: RandomAccessCollection, ID: Hashable, Item: View, Content == ForEach<Binding<Data>, ID, Item> {
+    public init<Data, ID, Item>(
+        _ data: Binding<Data>,
+        id: KeyPath<Binding<Data>.Element, ID>,
+        alignment: VerticalAlignment = .top,
+        spacing: CGFloat = 0,
+        @ViewBuilder item: @escaping (Binding<Data.Element>) -> Item
+    ) where Data: RandomAccessCollection, ID: Hashable, Item: View, Content == ForEach<Binding<Data>, ID, Item> {
         self.init(alignment: alignment, spacing: spacing) {
             ForEach(data, id: id) { element in
                 item(element)
@@ -105,7 +122,12 @@ public struct Carousel<Content>: View where Content: View {
         }
     }
     
-    public init<Data, Item>(_ data: Binding<Data>, alignment: VerticalAlignment = .top, spacing: CGFloat = 0, @ViewBuilder item: @escaping (Binding<Data.Element>) -> Item) where Data: RandomAccessCollection, Data.Element: Identifiable, Item: View, Content == ForEach<Binding<Data>, Data.Element.ID, Item> {
+    public init<Data, Item>(
+        _ data: Binding<Data>,
+        alignment: VerticalAlignment = .top,
+        spacing: CGFloat = 0,
+        @ViewBuilder item: @escaping (Binding<Data.Element>) -> Item
+    ) where Data: RandomAccessCollection, Data.Element: Identifiable, Item: View, Content == ForEach<Binding<Data>, Data.Element.ID, Item> {
         self.init(alignment: alignment, spacing: spacing) {
             ForEach(data, id: \.id) { element in
                 item(element)

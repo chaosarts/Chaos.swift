@@ -4,6 +4,7 @@
 //  Created by Fu Lam Diep on 23.08.24.
 //
 
+#if canImport(UIKit)
 import AVFoundation
 import SwiftUI
 
@@ -29,3 +30,4 @@ public struct CaptureVideoPreview<Proxy>: UIViewControllerRepresentable where Pr
         controller?.setSessionRunning(isRunning)
     }
 }
+#endif

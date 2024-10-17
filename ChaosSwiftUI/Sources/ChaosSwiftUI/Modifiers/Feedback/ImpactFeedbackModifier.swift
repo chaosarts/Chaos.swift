@@ -5,6 +5,7 @@
 //  Created by Fu Lam Diep on 15.04.22.
 //
 
+#if canImport(UIKit)
 import SwiftUI
 
 public struct ImpactFeedbackModifier: ViewModifier {
@@ -47,3 +48,5 @@ public extension View {
         modifier(ImpactFeedbackModifier(style: style, event: event, intensity: intensity))
     }
 }
+
+#endif

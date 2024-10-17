@@ -4,6 +4,8 @@
 //
 //  Created by Fu Lam Diep on 23.08.24.
 //
+
+#if canImport(UIKit)
 import AVFoundation
 import UIKit
 
@@ -40,3 +42,4 @@ class UICaptureVideoCapturePreviewController: UIViewController {
         session?.stopRunning()
     }
 }
+#endif
