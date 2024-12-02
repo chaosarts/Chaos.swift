@@ -26,7 +26,6 @@ public struct GenericButtonStyle<Content>: ButtonStyle where Content: View {
 }
 
 extension ButtonStyle where Self == GenericButtonStyle<AnyView> {
-    #if DEBUG
     static var example: some ButtonStyle {
         GenericButtonStyle{ configuration, isEnabled, isBusy in
             configuration.label
@@ -46,7 +45,6 @@ extension ButtonStyle where Self == GenericButtonStyle<AnyView> {
                 }
         }
     }
-    #endif
 }
 
 #Preview {

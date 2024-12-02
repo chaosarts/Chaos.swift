@@ -64,7 +64,7 @@ public struct HeroScrollView<HeroView, Content>: View where HeroView: View, Cont
             }
             .background {
                 GeometryReader { proxy in
-                    Color.clear.onChange(of: proxy.frame(in: .named(coordinateSpaceName))) { _, value in
+                    Color.clear.onChange(of: proxy.frame(in: .named(coordinateSpaceName))) { value in
                         scrollFrame = value
                     }
                 }

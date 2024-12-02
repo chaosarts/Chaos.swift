@@ -8,21 +8,23 @@ struct RippleEffectModifier: ViewModifier {
 
     static let coordinateSpaceName: String = "ChaosSwiftUI.RippleEffectModifier"
 
-    @State private var data: Data = Data(position: .zero,
-                                         opacity: .zero,
-                                         scale: .zero)
+    @State private var data = Data(position: .zero, opacity: 1, scale: 0)
 
     private let rippleColor: Color
 
     var tapGesture: some Gesture {
+
         SpatialTapGesture(coordinateSpace: .named(Self.coordinateSpaceName))
             .onEnded { value in
-                data.scale = 0
-                data.opacity = 1
-                data.position = value.location
-                withAnimation(.easeInOut(duration: 0.5)) {
+                withAnimation(.easeIn(duration: 0)) {
+                    data = Data(position: value.location, opacity: 1, scale: 0)
+                }
+                withAnimation(.easeInOut(duration: 1.5)) {
                     data.scale = 3
                     data.opacity = 0
+                }
+                withAnimation(.easeIn.delay(1.5)) {
+                    data = Data(position: .zero, opacity: 1, scale: 0)
                 }
             }
     }
@@ -61,7 +63,6 @@ extension View {
 }
 
 extension ButtonStyle where Self == GenericButtonStyle<AnyView> {
-#if DEBUG
     static var rippleExample: some ButtonStyle {
         GenericButtonStyle { configuration, isEnabled, isBusy in
             configuration.label
@@ -71,9 +72,8 @@ extension ButtonStyle where Self == GenericButtonStyle<AnyView> {
                 .frame(minWidth: 44, minHeight: 44)
                 .background(.black)
                 .foregroundStyle(.white)
-                .rippleEffect(.white.opacity(0.3))
+                .rippleEffect(.white.opacity(0.5))
                 .clipShape(RoundedRectangle(cornerRadius: 8))
-                .opacity(configuration.isPressed ? 0.5 : 1)
                 .opacity(!isEnabled || isBusy ? 0.5 : 1)
                 .overlay {
                     if isBusy {
@@ -82,7 +82,6 @@ extension ButtonStyle where Self == GenericButtonStyle<AnyView> {
                 }
         }
     }
-#endif
 }
 
 #Preview {

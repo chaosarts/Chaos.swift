@@ -60,6 +60,9 @@ let package = Package(
 
         .target(
             name: "ChaosMath",
+            dependencies: [
+                "ChaosCore"
+            ],
             path: "ChaosMath"
         ),
         .testTarget(
@@ -90,10 +93,16 @@ let package = Package(
 
         .target(
             name: "ChaosMetal",
+            dependencies: [
+                "ChaosMath"
+            ],
             path: "ChaosMetal"
         ),
         .target(
             name: "ChaosNet",
+            dependencies: [
+                "ChaosCore"
+            ],
             path: "ChaosNet"
         ),
 

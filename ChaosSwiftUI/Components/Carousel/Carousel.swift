@@ -38,8 +38,8 @@ import SwiftUI
  }
  ```
  */
-public struct Carousel<Content>: View where Content: View {
-    
+public struct Carousel<Content>: CarouselView where Content: View {
+
     /**
      Provides the vertical alignment of the elements within the carousel.
      
@@ -68,71 +68,10 @@ public struct Carousel<Content>: View where Content: View {
     /**
      Initializes the carousel, where elements may be arbitrary.
      */
-    public init(alignment: VerticalAlignment = .top, spacing: CGFloat = 0, content: @escaping () -> Content) {
+    public init(alignment: VerticalAlignment, spacing: CGFloat, @ViewBuilder content: @escaping () -> Content) {
         self.alignment = alignment
         self.spacing = spacing
         self.content = content
-    }
-    
-    /**
-     Initializes the carousel with a collection of data and a view builder, that returns a view for eacht element of the
-     collection.
-     
-     Use this initializer, when your collection (at max) can change as whole. If your elements provides properties, that
-     require to mutate, use the initializer with data binding.
-     */
-    public init<Data, ID, Item>(
-        _ data: Data,
-        id: KeyPath<Data.Element, ID>,
-        alignment: VerticalAlignment = .top,
-        spacing: CGFloat = 0,
-        @ViewBuilder item: @escaping (Data.Element) -> Item
-    ) where Data: RandomAccessCollection, ID: Hashable, Item: View, Content == ForEach<Data, ID, Item> {
-        self.init(alignment: alignment, spacing: spacing) {
-            ForEach(data, id: id) { element in
-                item(element)
-            }
-        }
-    }
-    
-    public init<Data, Item>(
-        _ data: Data,
-        alignment: VerticalAlignment = .top,
-        spacing: CGFloat = 0,
-        @ViewBuilder item: @escaping (Data.Element) -> Item
-    ) where Data: RandomAccessCollection, Data.Element: Identifiable, Item: View, Content == ForEach<Data, Data.Element.ID, Item> {
-        self.init(alignment: alignment, spacing: spacing) {
-            ForEach(data, id: \.id) { element in
-                item(element)
-            }
-        }
-    }
-    
-    public init<Data, ID, Item>(
-        _ data: Binding<Data>,
-        id: KeyPath<Binding<Data>.Element, ID>,
-        alignment: VerticalAlignment = .top,
-        spacing: CGFloat = 0,
-        @ViewBuilder item: @escaping (Binding<Data.Element>) -> Item
-    ) where Data: RandomAccessCollection, ID: Hashable, Item: View, Content == ForEach<Binding<Data>, ID, Item> {
-        self.init(alignment: alignment, spacing: spacing) {
-            ForEach(data, id: id) { element in
-                item(element)
-            }
-        }
-    }
-    
-    public init<Data, Item>(
-        _ data: Binding<Data>,
-        alignment: VerticalAlignment = .top,
-        spacing: CGFloat = 0,
-        @ViewBuilder item: @escaping (Binding<Data.Element>) -> Item
-    ) where Data: RandomAccessCollection, Data.Element: Identifiable, Item: View, Content == ForEach<Binding<Data>, Data.Element.ID, Item> {
-        self.init(alignment: alignment, spacing: spacing) {
-            ForEach(data, id: \.id) { element in
-                item(element)
-            }
-        }
     }
 
     public var body: some View {
