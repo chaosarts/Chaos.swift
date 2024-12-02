@@ -28,13 +28,19 @@ public struct WebView: UIViewRepresentable {
         navigator.wkWebView = wkWebView
         wkWebView.navigationDelegate = context.coordinator
         wkWebView.uiDelegate = context.coordinator
-
         context.coordinator.environment = context.environment
         return wkWebView
     }
 
     public func updateUIView(_ wkWebView: WKWebView, context: Context) {
         context.coordinator.environment = context.environment
+        for (name, _) in context.environment.scriptMessageHandlers {
+            wkWebView.configuration.userContentController.add(context.coordinator, name: name)
+        }
+
+        for (name, _) in context.environment.scriptMessageHandlersWithReply {
+            wkWebView.configuration.userContentController.addScriptMessageHandler(context.coordinator, contentWorld: WKContentWorld.defaultClient, name: name)
+        }
     }
 }
 
