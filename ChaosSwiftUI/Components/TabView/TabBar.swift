@@ -6,13 +6,13 @@ import SwiftUI
 
 public struct TabBar<Selection, Content>: View where Selection: Hashable, Content: View {
 
-    @Binding var selection: Selection?
+    @Binding var selection: Selection
 
     private let spacing: CGFloat
 
     private let content: () -> Content
 
-    public init(selection: Binding<Selection?>, spacing: CGFloat = .zero, @ViewBuilder content: @escaping () -> Content) {
+    public init(selection: Binding<Selection>, spacing: CGFloat = 8, @ViewBuilder content: @escaping () -> Content) {
         self._selection = selection
         self.spacing = spacing
         self.content = content
@@ -21,7 +21,7 @@ public struct TabBar<Selection, Content>: View where Selection: Hashable, Conten
     public init<Data, Label>(
         _ data: Data,
         id: KeyPath<Data.Element, Selection>,
-        selection: Binding<Selection?>,
+        selection: Binding<Selection>,
         spacing: CGFloat = .zero,
         @ViewBuilder label: @escaping (Data.Element) -> Label
     ) where Data: RandomAccessCollection, Label: View, Content == ForEach<Data, Selection, Label> {
@@ -34,7 +34,7 @@ public struct TabBar<Selection, Content>: View where Selection: Hashable, Conten
 
     public init<Data, Label>(
         _ data: Data,
-        selection: Binding<Selection?>,
+        selection: Binding<Selection>,
         spacing: CGFloat = .zero,
         @ViewBuilder label: @escaping (Data.Element) -> Label
     ) where Data: RandomAccessCollection, Data.Element: Identifiable, Data.Element.ID == Selection, Label: View, Content == ForEach<Data, Selection, Label> {
@@ -52,18 +52,22 @@ public struct TabBar<Selection, Content>: View where Selection: Hashable, Conten
     }
 }
 
-extension LabelStyle where Self == GenericLabelStyle<AnyView> {
-    static var tabBar: some LabelStyle {
-        GenericLabelStyle { configuration in
-            configuration.title
-                .underline()
-        }
+struct TabBarSelectionLabelStyle<Value>: LabelStyle {
+
+    @EnvironmentObject var tabBarSelection: TabBarSelection<Value>
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.title
     }
 }
 
+@available(iOS 17, *)
 #Preview {
-    TabBar(selection: .constant(0)) {
+    @Previewable @State var selection: Int = 0
+    TabBar(selection: $selection) {
         Label("Test", image: "")
+        Label("Hallo", image: "")
     }
-    .labelStyle(.tabBar)
+    .labelStyle(TabBarSelectionLabelStyle<Int>())
+    .tabBarSelection($selection)
 }
