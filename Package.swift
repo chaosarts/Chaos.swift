@@ -50,8 +50,7 @@ let package = Package(
             dependencies: [
                 "ChaosCoreMacros"
             ],
-            path: "ChaosCore",
-            swiftSettings: [.unsafeFlags(["-enable-bare-slash-regex"])]
+            path: "ChaosCore"
         ),
 
         .target(
