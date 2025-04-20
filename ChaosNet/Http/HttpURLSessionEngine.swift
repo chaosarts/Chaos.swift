@@ -2,9 +2,12 @@
 //  Copyright © 2024 Fu Lam Diep <fulam.diep@gmail.com>
 //
 
+import ChaosCore
 import Foundation
 
 public class HttpURLSessionEngine: NSObject, HttpEngine {
+
+    private var logger: Log = Log(HttpURLSessionEngine.self)
 
     private var urlSession: URLSession
 
@@ -65,7 +68,8 @@ public class HttpURLSessionEngine: NSObject, HttpEngine {
         }
     }
 
-    private func registerRequest<Output>(request: URLRequest, publisher: (any HttpRequestState.Publisher)?, action: () async throws -> (Output, URLResponse)) async throws -> (Output, HTTPURLResponse) {
+    private func registerRequest<Output>(request: URLRequest, publisher: (any HttpRequestState.Publisher)?, action: () async throws -> (Output, URLResponse)) async throws -> (Output, HTTPURLResponse)
+    where Output: CustomDebugStringConvertible {
         if let publisher {
             publishers[request.hashValue] = publisher
             publisher.send(.pending)
@@ -78,11 +82,13 @@ public class HttpURLSessionEngine: NSObject, HttpEngine {
             }
         }
 
+        logger.info(format: "Sending request: \n@%", request.debugDescription)
         let (output, response) = try await action()
         guard let response = response as? HTTPURLResponse else {
+            logger.error(format: "Non HTTPURLResponse received: @%", response.debugDescription)
             throw URLError(.cannotParseResponse)
         }
-
+        logger.info(format: "Server Response:\nHTTP: @%\nOutput: %@", response.debugDescription, output.debugDescription)
         return (output, response)
     }
 }

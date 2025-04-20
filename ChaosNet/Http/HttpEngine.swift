@@ -31,15 +31,15 @@ public protocol HttpEngine: AnyObject {
 
 
 extension HttpEngine {
-    func data(for request: URLRequest) async throws -> (Data, HTTPURLResponse) {
+    public func data(for request: URLRequest) async throws -> DataResponse {
         try await data(for: request, publisher: nil)
     }
 
-    func download(for request: URLRequest) async throws -> (URL, HTTPURLResponse) {
+    public func download(for request: URLRequest) async throws -> DownloadResponse {
         try await download(for: request, publisher: nil)
     }
 
-    func upload(for request: URLRequest, from data: Data) async throws -> (Data, HTTPURLResponse) {
+    public func upload(for request: URLRequest, from data: Data) async throws -> UploadResponse {
         try await upload(for: request, from: data, publisher: nil)
     }
 }

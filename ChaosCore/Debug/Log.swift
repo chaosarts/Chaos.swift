@@ -175,7 +175,7 @@ public class Log {
 
 // MARK: - Static Extension
 
-public extension Log {
+extension Log {
 
     // MARK: Nested Types
 
@@ -187,9 +187,9 @@ public extension Log {
 
     // MARK: Properties
 
-    static var output: LogOutput = PrintLogOutput()
+    public static var output: LogOutput = PrintLogOutput()
 
-    static weak var delegate: LogDelegate?
+    public static weak var delegate: LogDelegate?
 
     private static var configurations: [Configuration] = []
 
@@ -197,13 +197,13 @@ public extension Log {
     // MARK: Control Log Level by Type
 
     @discardableResult
-    static func enable(_ levels: [Level], forType type: Any.Type? = nil) -> Log.Type {
+    public static func enable(_ levels: [Level], forType type: Any.Type? = nil) -> Log.Type {
         let levelOptions = LevelOptions(levels: levels)
         return enable(levelOptions, forType: type)
     }
 
     @discardableResult
-    static func enable(_ levelOptions: LevelOptions, forType type: Any.Type? = nil) -> Log.Type {
+    public static func enable(_ levelOptions: LevelOptions, forType type: Any.Type? = nil) -> Log.Type {
         add(configuration: Configuration(type: type, options: levelOptions))
         return self
     }
@@ -218,7 +218,7 @@ public extension Log {
         return self
     }
 
-    static func isLevelEnabled(_ level: Level, forType type: Any.Type?) -> Bool {
+    public static func isLevelEnabled(_ level: Level, forType type: Any.Type?) -> Bool {
         configurations.first(where: { $0.type == type })?.options.contains(level: level) ?? false
     }
 }

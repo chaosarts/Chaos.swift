@@ -68,3 +68,10 @@ public extension Color {
         }
     }
 }
+
+
+extension Color: @retroactive ExpressibleByIntegerLiteral {
+    public init(integerLiteral value: IntegerLiteralType) {
+        self.init(hex: value)
+    }
+}

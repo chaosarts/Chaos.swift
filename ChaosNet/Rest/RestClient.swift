@@ -24,19 +24,36 @@ public class RestClient {
 
     public init() {}
 
-    public func data<Data>(for restCall: RestCall, relativeTo baseURL: URL? = nil) async throws -> RestResponse<Data> where Data: Decodable {
+    @discardableResult
+    public func rawData(for restCall: RestCall, relativeTo baseURL: URL? = nil) async throws -> HttpEngine.DataResponse {
         let urlRequest = try restCall.urlRequest(relativeTo: baseURL)
-        let response = try await httpEngine.data(for: urlRequest, publisher: restCall.publisher)
-        let data = try decoder.decode(Data.self, from: response.0)
-        return RestResponse(data, httpResponse: response.1)
+        return try await httpEngine.data(for: urlRequest, publisher: restCall.publisher)
+    }
+
+    public func data<Data>(for restCall: RestCall, relativeTo baseURL: URL? = nil) async throws(RestError) -> RestResponse<Data> where Data: Decodable {
+        let response: HttpEngine.DataResponse
+        do {
+            response = try await rawData(for: restCall, relativeTo: baseURL)
+        } catch {
+            throw RestError.engineError(error)
+        }
+
+        do {
+            let data = try decoder.decode(Data.self, from: response.0)
+            return RestResponse(data, httpResponse: response.1)
+        } catch {
+            throw .invalidDataResponse(response)
+        }
     }
 
     public func data(for restCall: RestCall, relativeTo baseURL: URL? = nil) async throws -> RestResponse<Void> {
-        let urlRequest = try restCall.urlRequest(relativeTo: baseURL)
-        let response = try await httpEngine.data(for: urlRequest, publisher: restCall.publisher)
-        return RestResponse(httpResponse: response.1)
+        do {
+            let response = try await rawData(for: restCall, relativeTo: baseURL)
+            return RestResponse(httpResponse: response.1)
+        } catch {
+            throw RestError.engineError(error)
+        }
     }
-
 
     public func create<Input, Output>(at endpoint: String, with input: Input, relativeTo baseURL: URL? = nil) async throws -> RestResponse<Output> where Input: Encodable, Output: Decodable {
         try await data(for: RestCall(.create(encoder.encode(input)),

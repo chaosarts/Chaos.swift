@@ -20,7 +20,7 @@ let package = Package(
         .library(name: "ChaosSwiftUI", targets:["ChaosSwiftUI"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-syntax.git", from: "510.0.3")
+        .package(url: "https://github.com/apple/swift-syntax.git", from: "601.0.0")
     ],
     targets: [
         .target(

@@ -23,12 +23,11 @@ fileprivate struct BusyViewModifier: ViewModifier {
 }
 
 extension EnvironmentValues {
-    @EnvironmentValue
-    public fileprivate(set) var isBusy: Bool = false
+    @Entry public fileprivate(set) var isBusy: Bool = false
 }
 
 extension View {
-    public func busy(_ value: Bool) -> some View {
+    public func busy(_ value: Bool = true) -> some View {
         modifier(BusyViewModifier(value))
     }
 }

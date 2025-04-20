@@ -10,6 +10,6 @@ import SwiftSyntaxMacros
 @main
 struct ChaosSwiftUIMacroPlugin: CompilerPlugin {
     var providingMacros: [Macro.Type] = [
-        EnvironmentValueMacro.self
+        
     ]
 }

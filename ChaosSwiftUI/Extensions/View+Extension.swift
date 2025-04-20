@@ -8,4 +8,8 @@ extension View {
     public func apply(@ViewBuilder modifier: (Self) -> some View) -> some View {
         modifier(self)
     }
+
+    public func tintStyle(_ style: some ShapeStyle) -> some View {
+        tint(style)
+    }
 }
